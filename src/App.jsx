@@ -1,19 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
-import FeaturedStoryCard from './components/FeaturedStoryCard';
+import SectorNav from './components/SectorNav';
 import StoryGrid from './components/StoryGrid';
-import ProcessPipeline from './components/ProcessPipeline';
 import StoryPage from './components/StoryPage';
-import ExperimentsSection from './components/ExperimentsSection';
-import AboutSection from './components/AboutSection';
 import Footer from './components/Footer';
 import SearchModal from './components/SearchModal';
-import { FEATURED_STORY, STORIES_LIST } from './data/storiesData';
+import { STORIES_LIST } from './data/storiesData';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState('home');
   const [currentStory, setCurrentStory] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState('All');
   const [searchOpen, setSearchOpen] = useState(false);
 
   // Sync hash routing for GitHub Pages URL navigation compatibility
@@ -28,12 +25,10 @@ export default function App() {
           window.scrollTo({ top: 0, behavior: 'smooth' });
           return;
         }
-      } else if (['experiments', 'how-it-works', 'about', 'stories'].includes(hash)) {
+      } else if (hash === 'stories') {
         setCurrentStory(null);
-        setActiveTab(hash);
-        const elem = document.getElementById(hash);
+        const elem = document.getElementById('stories');
         if (elem) elem.scrollIntoView({ behavior: 'smooth' });
-        return;
       }
     };
 
@@ -54,87 +49,67 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleSelectStoryBySlug = (slug) => {
-    const found = STORIES_LIST.find(s => s.slug === slug || s.id === slug);
-    if (found) {
-      handleSelectStory(found);
+  const handleSelectSector = (category) => {
+    setCurrentStory(null);
+    setSelectedCategory(category);
+    window.location.hash = 'stories';
+    const elem = document.getElementById('stories');
+    if (elem) {
+      elem.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
-  const handleNavClick = (tabId) => {
+  const handleGoHome = () => {
     setCurrentStory(null);
-    setActiveTab(tabId);
-    if (tabId === 'home') {
-      window.location.hash = '';
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    } else {
-      window.location.hash = tabId;
-      const elem = document.getElementById(tabId);
-      if (elem) elem.scrollIntoView({ behavior: 'smooth' });
-    }
+    setSelectedCategory('All');
+    window.location.hash = '';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
     <div className="min-h-screen flex flex-col justify-between selection:bg-amber-200">
-      
+
       {/* Top Navbar */}
-      <Navbar 
-        activeTab={activeTab} 
-        setActiveTab={handleNavClick}
+      <Navbar
+        onSelectSector={handleSelectSector}
         onOpenSearch={() => setSearchOpen(true)}
-        currentStory={currentStory}
+        onGoHome={handleGoHome}
       />
 
       {/* Main View Area */}
       <main className="grow">
         {currentStory ? (
-          <StoryPage 
-            story={currentStory} 
-            onBack={handleBackToGrid} 
+          <StoryPage
+            story={currentStory}
+            onBack={handleBackToGrid}
           />
         ) : (
           <>
-            {/* Hero Banner */}
-            <Hero 
-              onExploreClick={() => handleNavClick('stories')}
-              onHowItWorksClick={() => handleNavClick('how-it-works')}
-              onFeaturedClick={() => handleSelectStory(FEATURED_STORY)}
-            />
+            {/* Hero: brand + basic description */}
+            <Hero onExploreClick={() => handleSelectSector('All')} />
 
-            {/* Featured Story Section */}
-            <FeaturedStoryCard 
-              story={FEATURED_STORY} 
-              onSelectStory={handleSelectStory} 
-            />
+            {/* Topic Sectors */}
+            <SectorNav onSelectSector={handleSelectSector} />
 
-            {/* Explore StoryLettrs Grid */}
-            <StoryGrid 
-              onSelectStory={handleSelectStory} 
-            />
-
-            {/* How StoryLettr Works Pipeline */}
-            <ProcessPipeline />
-
-            {/* Empirical Experiments Showcase */}
-            <ExperimentsSection 
-              onSelectStoryBySlug={handleSelectStoryBySlug} 
-            />
-
-            {/* About & Methodology */}
-            <AboutSection 
-              onExploreClick={() => handleNavClick('stories')} 
+            {/* Story Grid, filterable by sector */}
+            <StoryGrid
+              selectedCategory={selectedCategory}
+              onSelectCategory={setSelectedCategory}
+              onSelectStory={handleSelectStory}
             />
           </>
         )}
       </main>
 
       {/* Global Footer */}
-      <Footer onNavClick={handleNavClick} />
+      <Footer onSelectSector={handleSelectSector} onGoHome={handleGoHome} />
 
       {/* Global Search Modal */}
-      <SearchModal 
-        isOpen={searchOpen} 
-        onClose={() => setSearchOpen(false)} 
+      <SearchModal
+        isOpen={searchOpen}
+        onClose={() => setSearchOpen(false)}
         onSelectStory={handleSelectStory}
       />
 

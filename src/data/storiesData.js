@@ -1,11 +1,11 @@
 export const CATEGORIES = [
   'All',
   'Business',
-  'Careers',
-  'Money',
-  'Technology',
-  'Creators',
-  'Unusual Experiences'
+  'Science & Tech',
+  'History',
+  'Geopolitics',
+  'Culture',
+  'Entertainment'
 ];
 
 export const FEATURED_STORY = {
@@ -113,7 +113,7 @@ export const STORIES_LIST = [
     slug: 'gen-z-personal-finance-portfolio',
     title: 'The Index Fund Illusion: Why 80% of Gen Z Financial Advice on TikTok misses Risk Scenarios',
     hook: 'We audited 150 top financial influencer videos with a certified financial planner. Here is what they leave out about liquidity, index overlap, and tax Drag.',
-    category: 'Money',
+    category: 'Business',
     readTime: '6 min read',
     date: 'Sept 12, 2026',
     contributor: {
@@ -131,7 +131,7 @@ export const STORIES_LIST = [
     slug: 'ai-code-assistants-in-production',
     title: 'We Let AI Write 50% of Our Production Code for 60 Days: The Bug Report Summary',
     hook: 'A senior engineering lead at a fintech startup breaks down code velocity vs security vulnerabilities when using LLM code generation at scale.',
-    category: 'Technology',
+    category: 'Science & Tech',
     readTime: '8 min read',
     date: 'Sept 10, 2026',
     contributor: {
@@ -149,7 +149,7 @@ export const STORIES_LIST = [
     slug: 'creator-newsletter-monetization',
     title: 'From 0 to 25,000 Paid Subscribers: The Math Behind Niche Editorial Newsletters',
     hook: 'A former investigative reporter turned solo creator shares open financial ledgers, acquisition costs, open rates, and churn statistics.',
-    category: 'Creators',
+    category: 'Entertainment',
     readTime: '6 min read',
     date: 'Sept 04, 2026',
     contributor: {
@@ -167,7 +167,7 @@ export const STORIES_LIST = [
     slug: 'living-in-co-housing-commune',
     title: 'I Spent 6 Months Living in an Autonomous Tech Co-Living Cooperative in Berlin',
     hook: 'What happens when 18 remote workers share income pools, weekly chores, and decentralised governance? An unfiltered look into modern communal living.',
-    category: 'Unusual Experiences',
+    category: 'Culture',
     readTime: '9 min read',
     date: 'Aug 28, 2026',
     contributor: {
@@ -185,7 +185,7 @@ export const STORIES_LIST = [
     slug: 'pivoting-career-at-27',
     title: 'Quitting Corporate Law to Launch a Specialty Coffee Roastery: Year 1 Profitability Audit',
     hook: 'The unvarnished cost breakdown of leases, commercial roasters, foot traffic modeling, and survival in a hyper-competitive retail market.',
-    category: 'Careers',
+    category: 'Business',
     readTime: '7 min read',
     date: 'Aug 20, 2026',
     contributor: {
