@@ -1,42 +1,131 @@
 @import "tailwindcss";
 
-@layer base {
-  body {
-    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-    color: #1E293B;
-  }
+:root {
+  --paper: #E6EDF2;
+  --ink: #1B2A4A;
+  --postmark: #B0362B;
+  --action: #F2C230;
+  --action-ink: #1B2A4A; /* text on the action button is always the light-mode ink value */
+  /* #61656B, not the brief's original #8A9099, so muted text still clears
+     WCAG AA's 4.5:1 body-text contrast against --paper. */
+  --forward: #61656B;
+}
 
-  h1, h2, h3, .font-serif-editorial {
-    font-family: 'Instrument Serif', Georgia, serif;
-  }
-
-  code, pre, .font-mono-code {
-    font-family: 'JetBrains Mono', monospace;
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #141C2E;
+    --ink: #E4EAF0;
+    --postmark: #E0705F;
+    /* #848C9A, lightened from the brief's #6E7580 for the same 4.5:1 AA
+       reason as the light-mode value above. */
+    --forward: #848C9A;
+    /* --action stays #F2C230 in both modes */
   }
 }
 
-/* Custom scrollbar */
+@layer base {
+  html {
+    color-scheme: light dark;
+  }
+
+  body {
+    background-color: var(--paper);
+    color: var(--ink);
+    font-family: 'Hind', system-ui, -apple-system, sans-serif;
+  }
+
+  h1, h2, h3, .font-headline {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 500;
+  }
+
+  .font-body {
+    font-family: 'Source Serif 4', Georgia, serif;
+  }
+
+  .font-devanagari-headline {
+    font-family: 'Tiro Devanagari Hindi', 'Tiro Devanagari Marathi', 'Fraunces', Georgia, serif;
+  }
+
+  .font-devanagari-body {
+    font-family: 'Hind', 'Source Serif 4', Georgia, serif;
+  }
+
+  /* Sentence case everywhere by convention (written into copy), except inside
+     postmarks, where full caps are authentic to a real stamp. */
+  a, button {
+    text-underline-offset: 2px;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--postmark);
+    outline-offset: 2px;
+  }
+}
+
+/* Postmark stamp -------------------------------------------------- */
+
+.postmark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transform: rotate(-3deg);
+}
+
+.postmark--rotate-2 { transform: rotate(2deg); }
+.postmark--rotate-3 { transform: rotate(-3deg); }
+.postmark--rotate-4 { transform: rotate(4deg); }
+
+.postmark-stamp-in {
+  animation: postmarkStamp 300ms ease-out both;
+}
+
+@keyframes postmarkStamp {
+  from {
+    opacity: 0;
+    transform: scale(1.5) rotate(-8deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(var(--postmark-final-rotate, -3deg));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .postmark-stamp-in {
+    animation: none;
+  }
+}
+
+/* Tap-for-context terms --------------------------------------------- */
+
+.context-term {
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-decoration-color: var(--forward);
+  text-underline-offset: 3px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  font: inherit;
+  color: inherit;
+  padding: 0;
+}
+
+/* Custom scrollbar --------------------------------------------------- */
+
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #FDFBF7;
+  background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: #CBD5E1;
+  background: var(--forward);
   border-radius: 3px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #94A3B8;
+  opacity: 0.5;
 }
 
-/* Subtle editorial animations */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(6px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.animate-fade-in {
-  animation: fadeIn 0.35s ease-out forwards;
-}
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }

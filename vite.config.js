@@ -5,5 +5,5 @@ import tailwindcss from '@tailwindcss/vite'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  base: './', // Ensures GitHub Pages deployment works cleanly from any repository path
+  base: '/', // Served from storylettr.com at the domain root (custom domain via CNAME)
 })

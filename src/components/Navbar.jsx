@@ -1,58 +1,81 @@
 import React, { useState } from 'react';
-import { Search, Menu, X } from 'lucide-react';
-import { CATEGORIES } from '../data/storiesData';
+import { Link, NavLink } from 'react-router-dom';
+import { Search, Menu, X, Mail } from 'lucide-react';
+import Logo from './Logo';
 
-export default function Navbar({ onSelectSector, onOpenSearch, onGoHome }) {
+const NAV_ITEMS = [
+  { to: '/', label: 'Stories', end: true },
+  { to: '/mumbai', label: 'Browse by station' },
+  { to: '/truth-desk', label: 'Truth Desk' },
+  { to: '/about', label: 'About' },
+];
+
+export default function Navbar({ onOpenSearch }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const sectors = CATEGORIES.filter((c) => c !== 'All');
-
-  const handleSector = (sector) => {
-    onSelectSector(sector);
-    setMobileMenuOpen(false);
-  };
 
   return (
-    <header className="sticky top-0 z-40 bg-[#FDFBF7]/95 backdrop-blur-md border-b border-slate-200">
+    <header
+      className="sticky top-0 z-40 backdrop-blur-md border-b"
+      style={{ backgroundColor: 'color-mix(in srgb, var(--paper) 92%, transparent)', borderColor: 'var(--forward)' }}
+    >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-
-          {/* Wordmark */}
-          <button
-            onClick={onGoHome}
-            className="flex items-baseline gap-2 cursor-pointer focus:outline-none"
-          >
-            <span className="font-serif-editorial text-xl font-bold tracking-tight text-slate-900">
-              StoryLettr
+          <Link to="/" className="flex items-center gap-2.5 cursor-pointer focus:outline-none" onClick={() => setMobileMenuOpen(false)}>
+            <Logo size={30} />
+            <span className="font-headline text-lg font-medium tracking-tight" style={{ color: 'var(--ink)' }}>
+              StoryLettr.com
             </span>
-          </button>
+          </Link>
 
-          {/* Sector Links */}
           <nav className="hidden lg:flex items-center gap-7">
-            {sectors.map((sector) => (
-              <button
-                key={sector}
-                onClick={() => handleSector(sector)}
-                className="text-[13px] font-medium text-slate-600 hover:text-slate-950 transition-colors cursor-pointer"
+            {NAV_ITEMS.map((item) => (
+              <NavLink
+                key={item.to}
+                to={item.to}
+                end={item.end}
+                className={({ isActive }) =>
+                  `text-[13px] font-medium transition-opacity hover:opacity-100 ${isActive ? 'opacity-100 underline underline-offset-4' : 'opacity-75'}`
+                }
+                style={{ color: 'var(--ink)' }}
               >
-                {sector}
-              </button>
+                {item.label}
+              </NavLink>
             ))}
           </nav>
 
-          {/* Search & Mobile Toggle */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
             <button
               onClick={onOpenSearch}
-              className="flex items-center gap-2 text-xs text-slate-500 hover:text-slate-900 border border-slate-200 hover:border-slate-300 px-3 py-1.5 rounded-md transition-colors cursor-pointer"
-              title="Search StoryLettrs"
+              className="hidden sm:flex items-center gap-2 text-xs border rounded-md px-3 py-1.5 cursor-pointer"
+              style={{ color: 'var(--ink)', borderColor: 'var(--forward)' }}
+              title="Search StoryLettr.com"
             >
               <Search className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">Search</span>
+              <span>Search</span>
+            </button>
+
+            <Link
+              to="/newsletter"
+              className="hidden md:inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-md"
+              style={{ backgroundColor: 'var(--action)', color: 'var(--action-ink)' }}
+            >
+              <Mail className="w-3.5 h-3.5" />
+              Get the letter
+            </Link>
+
+            <button
+              onClick={onOpenSearch}
+              className="sm:hidden p-2 -mr-1"
+              style={{ color: 'var(--ink)' }}
+              aria-label="Search"
+            >
+              <Search className="w-5 h-5" />
             </button>
 
             <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-2 -mr-2 text-slate-600 hover:text-slate-900 focus:outline-none"
+              onClick={() => setMobileMenuOpen((v) => !v)}
+              className="lg:hidden p-2 -mr-2"
+              style={{ color: 'var(--ink)' }}
               aria-label="Toggle menu"
             >
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -61,18 +84,29 @@ export default function Navbar({ onSelectSector, onOpenSearch, onGoHome }) {
         </div>
       </div>
 
-      {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden border-t border-slate-200 bg-[#FDFBF7] px-4 pt-3 pb-5 space-y-1 animate-fade-in">
-          {sectors.map((sector) => (
-            <button
-              key={sector}
-              onClick={() => handleSector(sector)}
-              className="block w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-100 transition-colors cursor-pointer"
+        <div className="lg:hidden border-t px-4 pt-3 pb-5 space-y-1" style={{ borderColor: 'var(--forward)' }}>
+          {NAV_ITEMS.map((item) => (
+            <NavLink
+              key={item.to}
+              to={item.to}
+              end={item.end}
+              onClick={() => setMobileMenuOpen(false)}
+              className="block w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium"
+              style={{ color: 'var(--ink)' }}
             >
-              {sector}
-            </button>
+              {item.label}
+            </NavLink>
           ))}
+          <Link
+            to="/newsletter"
+            onClick={() => setMobileMenuOpen(false)}
+            className="mt-2 flex items-center justify-center gap-1.5 text-sm font-semibold px-3 py-2.5 rounded-lg"
+            style={{ backgroundColor: 'var(--action)', color: 'var(--action-ink)' }}
+          >
+            <Mail className="w-4 h-4" />
+            Get the letter
+          </Link>
         </div>
       )}
     </header>
