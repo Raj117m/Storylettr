@@ -1,11 +1,27 @@
 import React, { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 
+function Section({ title, items }) {
+  if (!items || items.length === 0) return null;
+  return (
+    <div>
+      <h4 className="font-interface text-sm font-semibold mb-1.5" style={{ color: 'var(--forward)' }}>
+        {title}
+      </h4>
+      <ul className="space-y-1.5 list-disc pl-5">
+        {items.map((item, i) => (
+          <li key={i} className="leading-normal">{item}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 /**
- * Collapsed-by-default drawer styled like an envelope flap. Lists
+ * Collapsed-by-default drawer styled like an envelope flap. Lists the
  * sources, what was verified, and what couldn't be.
  */
-export default function HowWeKnowThis({ verified = [], couldNotVerify = [] }) {
+export default function HowWeKnowThis({ sources = [], verified = [], couldNotVerify = [] }) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -20,41 +36,20 @@ export default function HowWeKnowThis({ verified = [], couldNotVerify = [] }) {
           clipPath: 'polygon(0 0, 50% 12px, 100% 0, 100% 100%, 0 100%)',
         }}
       >
-        <span className="font-headline text-base" style={{ color: 'var(--ink)' }}>
+        <span className="font-headline text-lg font-semibold" style={{ color: 'var(--ink)' }}>
           How we know this
         </span>
         <ChevronDown
-          className="w-4 h-4 shrink-0 transition-transform"
+          className="w-4 h-4 shrink-0"
           style={{ color: 'var(--ink)', transform: open ? 'rotate(180deg)' : 'none' }}
         />
       </button>
 
       {open && (
-        <div className="px-4 py-4 space-y-4 text-sm" style={{ color: 'var(--ink)' }}>
-          {verified.length > 0 && (
-            <div>
-              <h4 className="text-xs font-semibold uppercase tracking-wider mb-1.5" style={{ color: 'var(--forward)' }}>
-                Verified
-              </h4>
-              <ul className="space-y-1.5 list-disc list-inside">
-                {verified.map((item, i) => (
-                  <li key={i} className="leading-relaxed">{item}</li>
-                ))}
-              </ul>
-            </div>
-          )}
-          {couldNotVerify.length > 0 && (
-            <div>
-              <h4 className="text-xs font-semibold uppercase tracking-wider mb-1.5" style={{ color: 'var(--forward)' }}>
-                Could not verify
-              </h4>
-              <ul className="space-y-1.5 list-disc list-inside">
-                {couldNotVerify.map((item, i) => (
-                  <li key={i} className="leading-relaxed">{item}</li>
-                ))}
-              </ul>
-            </div>
-          )}
+        <div className="font-interface px-4 py-4 space-y-4 text-[15px]" style={{ color: 'var(--ink)' }}>
+          <Section title="Sources" items={sources} />
+          <Section title="What we verified" items={verified} />
+          <Section title="What we couldn't verify" items={couldNotVerify} />
         </div>
       )}
     </div>

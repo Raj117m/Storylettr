@@ -12,35 +12,35 @@ export const CHAPTERS = [
 
 export const chapterById = (id) => CHAPTERS.find((c) => c.id === id);
 
-// The engraved deco map's winding route, roughly north to south along
-// Mumbai and its extended suburbs — a stylised, representative order (not
-// a literal, to-scale geography) used to lay neighbourhoods out along one
-// continuous line on /mumbai.
-export const NEIGHBOURHOOD_ROUTE = [
-  'thane', 'borivali', 'ghatkopar', 'andheri', 'vashi', 'kurla',
-  'bandra', 'panvel', 'wadala', 'dadar', 'byculla', 'mumbai-central',
-  'csmt', 'churchgate', 'colaba',
-];
-
 export const STATIONS = {
   'colaba': { name: 'Colaba' },
   'churchgate': { name: 'Churchgate' },
   'mumbai-central': { name: 'Mumbai Central' },
   'dadar': { name: 'Dadar' },
-  'bandra': { name: 'Bandra' },
-  'andheri': { name: 'Andheri' },
-  'borivali': { name: 'Borivali' },
+  'bandra': { name: 'Bandra', dateline: 'BANDRA W' },
+  'andheri': { name: 'Andheri', dateline: 'ANDHERI W' },
+  'borivali': { name: 'Borivali', dateline: 'BORIVALI W' },
   'csmt': { name: 'CSMT' },
   'byculla': { name: 'Byculla' },
   'kurla': { name: 'Kurla' },
   'ghatkopar': { name: 'Ghatkopar' },
-  'thane': { name: 'Thane' },
+  'thane': { name: 'Thane', dateline: 'THANE W' },
   'wadala': { name: 'Wadala' },
   'vashi': { name: 'Vashi' },
   'panvel': { name: 'Panvel' },
 };
 
 export const stationName = (slug) => STATIONS[slug]?.name || slug;
+
+// The capitalised locality on a seal's dateline, e.g. "THANE W". Most
+// neighbourhoods use their plain name; a few carry the West/East suffix
+// people actually use for them.
+export const datelineName = (slug) =>
+  slug ? (STATIONS[slug]?.dateline || stationName(slug).toUpperCase()) : 'STORYLETTR.COM DESK';
+
+// Only a fact-check's seal is shown broken open; every other letter
+// (stories and explainers) carries the laurel-pressed, verified seal.
+export const sealStatus = (item) => (item.type === 'fact-check' ? 'checked' : 'verified');
 
 export const AUTHORS = {
   'priya-nair': {
@@ -93,10 +93,15 @@ export const CONTENT = [
       'At 8:02 sharp, the fast local pulls into Andheri platform 4, and the same forty or so regulars fall into positions they have held for years. Ramesh Iyer, who has ridden this train to his accounting job near Churchgate for eleven years, takes the third window seat from the door. He says he has never had to ask for it back.',
       '"We do not know each other’s surnames," he says, "but I know whose knee replacement surgery went well, whose daughter got into engineering college, and who is worried about their job this month." The compartment functions less like public transit and more like a standing appointment, forty minutes long, five days a week.',
       'This is not sentimental exaggeration. Over three weeks, this reporter rode the 8:02 daily and counted the same core group boarding at the same doors, in the same order, often trading the same newspaper section down the row. A retired railway employee two seats down called it "a committee meeting that happens to move at 60 kilometres an hour."',
-      'The economics explain some of the loyalty. A monthly season ticket between Andheri and Churchgate costs a small fraction of even a single app-based cab ride over the same distance, and regulars who spoke to StoryLettr said that gap, more than habit, is what keeps them on the train even as the compartment gets more crowded every year.',
+      'The economics explain some of the loyalty. A monthly season ticket between Andheri and Churchgate costs a small fraction of even a single app-based cab ride over the same distance, and regulars who spoke to StoryLettr.com said that gap, more than habit, is what keeps them on the train even as the compartment gets more crowded every year.',
       'What the 8:02 shows, more than anything, is how much informal infrastructure Mumbai runs on that never appears in any transport survey — a self-organised seating order, a mutual-aid network for missed trains and family emergencies, all built by people who mostly know each other by which door they board from.',
     ],
     howWeKnowThis: {
+      sources: [
+        'Reporting on the 8:02 Andheri–Churchgate fast local, fifteen weekday mornings',
+        'Fare chart posted at Andheri station',
+        'In-person interviews with regular commuters, including Ramesh Iyer',
+      ],
       verified: [
         'Reporter rode the Andheri–Churchgate fast local on the 8:02 departure for fifteen weekday mornings across three weeks.',
         'Season ticket costs were confirmed against the fare chart posted at Andheri station and cross-checked with three regular commuters’ tickets.',
@@ -133,6 +138,11 @@ export const CONTENT = [
       'Several vendors said unpredictable flower supply — driven by weather affecting farms outside the city — causes far more price swings than any change in city-side demand. A heavy rain upcountry, they said, is felt in the price of a garland the very next morning.',
     ],
     howWeKnowThis: {
+      sources: [
+        'Four pre-dawn visits to the Dadar wholesale flower market',
+        'Interview with wholesaler Suresh Koli',
+        'Roadside flower sellers in three western suburbs',
+      ],
       verified: [
         'Reporter visited the Dadar wholesale flower market on four mornings between 5am and 7am.',
         'Prices quoted were observed directly and cross-checked against three independent roadside sellers in different suburbs the same day.',
@@ -166,9 +176,16 @@ export const CONTENT = [
       '"We keep the sandbags ready from June," says Nasir Sheikh, who has run a stationery shop near the station for fifteen years. "The board outside says the work is done. My shop floor says something else."',
       'This is not a case of nothing being built. A visibly new drainage channel exists along part of the stretch. But residents and two civic engineers who reviewed photographs and the public works record for this story say the newer channel appears to feed into an older, narrower pipe further down that was never upgraded — creating a bottleneck exactly where the water needs to move fastest.',
       '"It is a common pattern," said one of the engineers, who reviewed the case on condition their name not be used because they still do government-linked project work. "A visible piece gets rebuilt, it gets marked complete, but the pipe it connects to downstream doesn’t get touched, and that’s where it backs up."',
-      'Local residents have raised the issue at ward-level meetings for two consecutive years, according to minutes shared with StoryLettr. No new capacity work on the connecting pipe has been recorded as of this story’s last update.',
+      'Local residents have raised the issue at ward-level meetings for two consecutive years, according to minutes shared with StoryLettr.com. No new capacity work on the connecting pipe has been recorded as of this story’s last update.',
     ],
     howWeKnowThis: {
+      sources: [
+        'Site visits to the Kurla station approach road during and after heavy rain',
+        'Municipal public works completion record for the drainage segment',
+        'Two civic engineers (one quoted, anonymously)',
+        'Ward-level meeting minutes from the past two years',
+        'Interview with shop owner Nasir Sheikh',
+      ],
       verified: [
         'Reporter visited the site during and after a heavy rain spell in September and photographed standing water at the approach road.',
         'Public works completion record for the drainage segment was reviewed and is on file.',
@@ -176,7 +193,7 @@ export const CONTENT = [
         'Ward meeting minutes referencing the issue over two years were reviewed.',
       ],
       couldNotVerify: [
-        'The exact pipe diameter downstream could not be independently confirmed without access to underground survey records StoryLettr has requested but not yet received.',
+        'The exact pipe diameter downstream could not be independently confirmed without access to underground survey records StoryLettr.com has requested but not yet received.',
       ],
     },
     tapForContext: [],
@@ -194,7 +211,7 @@ export const CONTENT = [
       'A season ticket is cheaper per trip than single tickets for anyone travelling the same route regularly, usually breaking even within the first couple of weeks of a month.',
       'First class costs several times more than second class for the same route and is primarily about guaranteed space, not speed.',
     ],
-    postmark: { station: null, date: '2026-09-10', status: 'checked' },
+    postmark: { station: null, date: '2026-09-10', status: 'verified' },
     byline: 'priya-nair',
     readingTimeMin: 4,
     lastUpdated: '2026-09-10',
@@ -205,6 +222,9 @@ export const CONTENT = [
       'First class carriages, marked with a yellow stripe, cost several times more than second class for an identical route. The difference does not buy a faster train — first class trains are not scheduled any quicker — it buys a less crowded compartment.',
     ],
     howWeKnowThis: {
+      sources: [
+        'Fare charts posted at Andheri and Dadar stations',
+      ],
       verified: [
         'Fare structure described here was confirmed against fare charts posted at Andheri and Dadar stations.',
       ],
@@ -232,16 +252,22 @@ export const CONTENT = [
     heroCaption: null,
     rumour: {
       text: '"Breaking 🚨 Mumbai local trains STOP COMPLETELY from Monday, all lines, no service until further notice. Plan accordingly and forward to family."',
-      spread: 'Shared in 11+ groups seen by StoryLettr',
+      spread: 'Shared in 11+ groups seen by StoryLettr.com',
     },
     body: [
-      'A message warning that "Mumbai local trains STOP COMPLETELY from Monday" began circulating on WhatsApp this week, urging recipients to forward it to family. It names no source, no official notice, and no line.',
+      'Is it true Mumbai locals will stop from Monday? No. A message warning that "Mumbai local trains STOP COMPLETELY from Monday" began circulating on WhatsApp this week, urging recipients to forward it to family. It names no source, no official notice, and no line.',
       'There is no citywide suspension of suburban services scheduled. What does exist, and is publicly posted, is a narrower maintenance block: overnight engineering work on one line, affecting only late-night services across two nights, with normal daytime service unaffected on every other day.',
       'This is a familiar pattern for transit rumours in the city: a real, limited, technical notice gets reshared without the detail that limits it, and by the third or fourth forward, "overnight, one line, two nights" has become "all lines, no service, indefinitely."',
       'If you are trying to decide whether to plan around a train disruption message, check whether it names a specific line, specific dates, and specific hours. A warning with none of those three is a strong sign it has been stripped down through forwarding, not a sign the disruption is bigger than stated.',
     ],
+    // One plain line stating the finding, used on the link-preview image.
+    finding: 'False. No citywide shutdown is scheduled — only a two-night overnight maintenance block on one line.',
     verdict: 'False as stated. A limited, two-night overnight maintenance block on one line exists and is genuine; the claim of a full citywide shutdown does not.',
     howWeKnowThis: {
+      sources: [
+        'Copies of the forwarded message sent in by readers from eleven WhatsApp groups',
+        'The publicly posted engineering block schedule',
+      ],
       verified: [
         'The forwarded message was collected from readers who received it in at least eleven different WhatsApp groups.',
         'The genuine, narrower maintenance notice it appears to originate from was confirmed against the publicly posted engineering block schedule.',
@@ -264,6 +290,24 @@ export const getByChapter = (chapterId) =>
   CONTENT.filter((c) => c.chapter === chapterId).sort((a, b) => (a.postmark.date < b.postmark.date ? 1 : -1));
 export const allSortedByDate = () =>
   [...CONTENT].sort((a, b) => (a.postmark.date < b.postmark.date ? 1 : -1));
+// Related letters for a story page: others from the same locality first
+// (newest first), topped up from the item's hand-picked related list when
+// that locality has fewer than two others.
+export const relatedFor = (item, max = 3) => {
+  const sameLocality = item.station
+    ? CONTENT.filter((c) => c !== item && c.station === item.station)
+        .sort((a, b) => (a.postmark.date < b.postmark.date ? 1 : -1))
+    : [];
+  const picked = [...sameLocality];
+  if (picked.length < 2) {
+    (item.related || [])
+      .map((slug) => CONTENT.find((c) => c.slug === slug))
+      .filter((c) => c && c !== item && !picked.includes(c))
+      .forEach((c) => picked.push(c));
+  }
+  return { items: picked.slice(0, max), sameLocalityCount: Math.min(sameLocality.length, max) };
+};
+
 export const stationsWithContent = () =>
   new Set(CONTENT.filter((c) => c.station).map((c) => c.station));
 

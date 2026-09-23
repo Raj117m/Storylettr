@@ -32,6 +32,11 @@
     background-color: var(--paper);
     color: var(--ink);
     font-family: 'Libre Franklin', system-ui, -apple-system, sans-serif;
+    line-height: 1.5;
+  }
+
+  .font-interface {
+    font-family: 'Libre Franklin', system-ui, -apple-system, sans-serif;
   }
 
   h1, h2, h3, .font-headline {
@@ -58,8 +63,10 @@
     text-underline-offset: 2px;
   }
 
+  /* Sapphire, not oxblood: oxblood is reserved for seals and
+     Checked/Verified marks. */
   :focus-visible {
-    outline: 2px solid var(--seal);
+    outline: 2px solid var(--primary);
     outline-offset: 2px;
   }
 }

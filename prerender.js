@@ -14,9 +14,10 @@ const finalDir = path.join(__dirname, 'dist');
 const { render } = await import(path.join(serverDir, 'entry-server.js'));
 // Plain data, no JSX/React involved, so it's safe to import directly
 // from source here to enumerate routes.
-const { CHAPTERS, STATIONS, AUTHORS, GLOSSARY, CONTENT } = await import(
+const { CHAPTERS, STATIONS, AUTHORS, GLOSSARY, CONTENT, datelineName, chapterById } = await import(
   path.join(__dirname, 'src/data/content.js')
 );
+const og = await import(path.join(__dirname, 'scripts/og.js'));
 
 const ORIGIN = 'https://storylettr.com';
 
@@ -42,6 +43,25 @@ CONTENT.forEach((item) => routes.add(routeHrefFor(item)));
 
 const template = fs.readFileSync(path.join(clientDir, 'index.html'), 'utf-8');
 
+// --- Link-preview images (1200x630) and app icons ----------------------
+// Each story, explainer and fact-check gets its own card; a fact-check's
+// card shows the finding itself, not a teaser. Every other page uses the
+// site's default card.
+og.writeIcons(clientDir);
+og.writePng(path.join(clientDir, 'og/default.png'), og.defaultCard());
+const OG_BY_ROUTE = {};
+for (const item of CONTENT) {
+  const route = routeHrefFor(item);
+  const file = `og/${item.type}-${item.slug}.png`;
+  const dateline = `${datelineName(item.station)} · ${og.datelineDate(item.postmark.date)}`;
+  const svg = item.type === 'fact-check'
+    ? og.factCheckCard({ question: item.headline, finding: item.finding || item.verdict, datelineText: dateline })
+    : og.storyCard({ chapter: chapterById(item.chapter)?.name || '', headline: item.headline, summary: item.summary, datelineText: dateline });
+  og.writePng(path.join(clientDir, file), svg);
+  OG_BY_ROUTE[route] = { url: `${ORIGIN}/${file}`, alt: item.type === 'fact-check' ? `${item.headline} ${item.finding || item.verdict}` : item.headline };
+}
+const DEFAULT_OG = { url: `${ORIGIN}/og/default.png`, alt: "StoryLettr.com: Mumbai's news, told as it happened." };
+
 function buildHeadTags(head, urlPath) {
   if (!head) return '';
   const { title, description, canonical, image, type, siteName } = head;
@@ -55,7 +75,17 @@ function buildHeadTags(head, urlPath) {
     `<meta property="og:description" content="${esc(description)}" />`,
     `<meta property="og:url" content="${esc(canonical)}" />`,
   ];
-  if (image) tags.push(`<meta property="og:image" content="${esc(image)}" />`);
+  const ogImage = OG_BY_ROUTE[urlPath] || DEFAULT_OG;
+  tags.push(
+    `<meta property="og:image" content="${esc(image || ogImage.url)}" />`,
+    `<meta property="og:image:width" content="1200" />`,
+    `<meta property="og:image:height" content="630" />`,
+    `<meta property="og:image:alt" content="${esc(ogImage.alt)}" />`,
+    `<meta name="twitter:card" content="summary_large_image" />`,
+    `<meta name="twitter:title" content="${esc(title)}" />`,
+    `<meta name="twitter:description" content="${esc(description)}" />`,
+    `<meta name="twitter:image" content="${esc(image || ogImage.url)}" />`,
+  );
   tags.push(`<link rel="canonical" href="${esc(canonical)}" />`);
   return tags.join('\n    ');
 }
@@ -102,7 +132,7 @@ const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://w
 fs.writeFileSync(path.join(clientDir, 'sitemap.xml'), sitemap, 'utf-8');
 fs.writeFileSync(path.join(clientDir, 'robots.txt'), `User-agent: *\nAllow: /\nSitemap: ${ORIGIN}/sitemap.xml\n`, 'utf-8');
 
-console.log(`Prerendered ${count} routes + 404.html + sitemap.xml`);
+console.log(`Prerendered ${count} routes + 404.html + sitemap.xml + ${Object.keys(OG_BY_ROUTE).length + 1} share images + app icons`);
 
 // Promote dist/client to the final dist/, drop the server-only build.
 fs.rmSync(finalDir + '__old', { recursive: true, force: true });

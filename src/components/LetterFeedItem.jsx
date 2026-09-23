@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Clock } from 'lucide-react';
 import Seal, { SealDateline } from './Seal';
-import { chapterById } from '../data/content';
+import { chapterById, sealStatus } from '../data/content';
 
 // Chapter tints are muted blends of the sapphire primary and espresso ink
 // only, per the brief — never new bright colours. Because both source
@@ -37,18 +37,18 @@ export default function LetterFeedItem({ item, seed = 0 }) {
       style={{ borderColor: 'color-mix(in srgb, var(--forward) 35%, transparent)', borderLeft: `3px solid ${tint}` }}
     >
       <div className="flex-1 min-w-0">
-        <div className="text-[11px] font-semibold uppercase tracking-wider mb-1" style={{ color: 'var(--forward)' }}>
+        <div className="text-sm font-semibold mb-1" style={{ color: 'var(--forward)' }}>
           {chapter?.name}
         </div>
         <Link to={hrefFor(item)} className="block">
-          <h3 className="font-headline text-xl leading-snug hover:underline" style={{ color: 'var(--ink)' }}>
+          <h3 className="font-headline text-[24px] leading-[1.15] hover:underline" style={{ color: 'var(--ink)' }}>
             {item.headline}
           </h3>
         </Link>
         <p className="mt-1.5 text-sm leading-relaxed max-w-2xl" style={{ color: 'var(--ink)', opacity: 0.75 }}>
           {item.summary}
         </p>
-        <div className="mt-2.5 flex items-center gap-3 text-xs" style={{ color: 'var(--forward)' }}>
+        <div className="mt-2.5 flex items-center gap-3 text-sm" style={{ color: 'var(--forward)' }}>
           <span className="flex items-center gap-1">
             <Clock className="w-3.5 h-3.5" />
             {item.readingTimeMin} min read
@@ -56,7 +56,7 @@ export default function LetterFeedItem({ item, seed = 0 }) {
         </div>
       </div>
       <div className="shrink-0 flex flex-col items-center gap-1">
-        <Seal station={item.station} date={item.postmark.date} status={item.postmark.status} size={64} seed={seed} />
+        <Seal station={item.station} date={item.postmark.date} status={sealStatus(item)} size={64} seed={seed} />
         <SealDateline station={item.station} date={item.postmark.date} />
       </div>
     </article>

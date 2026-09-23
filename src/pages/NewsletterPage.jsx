@@ -20,13 +20,13 @@ export default function NewsletterPage() {
         path="/newsletter"
       />
       <div className="max-w-md mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
-        <h1 className="font-headline text-3xl font-medium mb-3" style={{ color: 'var(--ink)' }}>Get the letter</h1>
+        <h1 className="font-headline text-3xl font-semibold mb-3" style={{ color: 'var(--ink)' }}>Get the letter</h1>
         <p className="text-sm mb-8" style={{ color: 'var(--ink)', opacity: 0.8 }}>
           A verified story from StoryLettr.com, delivered to your inbox.
         </p>
 
         {subscribed ? (
-          <div className="flex items-center justify-center gap-2 text-sm font-semibold" style={{ color: 'var(--seal)' }}>
+          <div className="flex items-center justify-center gap-2 text-sm font-semibold" style={{ color: 'var(--primary)' }}>
             <Check className="w-4 h-4" />
             You're on the list.
           </div>

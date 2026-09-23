@@ -6,10 +6,10 @@ export default function ChapterFilterRow() {
   const { pathname } = useLocation();
 
   return (
-    <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1">
+    <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1">
       <Link
         to="/"
-        className="px-3.5 py-1.5 rounded-full text-xs font-medium whitespace-nowrap border"
+        className="px-3 py-1.5 rounded-full text-sm font-medium whitespace-nowrap border"
         style={
           pathname === '/'
             ? { backgroundColor: 'var(--ink)', color: 'var(--paper)', borderColor: 'var(--ink)' }
@@ -24,7 +24,7 @@ export default function ChapterFilterRow() {
           <Link
             key={chapter.id}
             to={`/chapters/${chapter.id}`}
-            className="px-3.5 py-1.5 rounded-full text-xs font-medium whitespace-nowrap border"
+            className="px-3 py-1.5 rounded-full text-sm font-medium whitespace-nowrap border"
             style={
               active
                 ? { backgroundColor: 'var(--ink)', color: 'var(--paper)', borderColor: 'var(--ink)' }

@@ -1,99 +1,170 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PageMeta from '../components/PageMeta';
-import { STATIONS, stationName, stationsWithContent, NEIGHBOURHOOD_ROUTE } from '../data/content';
+import { MiniSeal } from '../components/Seal';
+import { STATIONS, stationName, stationsWithContent } from '../data/content';
 
-// Lays neighbourhoods out along a single winding "coastline" route rather
-// than a literal train-schematic — an engraved deco map, not to scale.
-// `vertical` produces a tall desktop layout (north at top); the mobile
-// variant transposes the same wave onto a wide, horizontally-scrolling
-// strip instead.
-function routePoints({ vertical, count, length, amplitude, margin }) {
-  return NEIGHBOURHOOD_ROUTE.map((slug, i) => {
-    const t = count > 1 ? i / (count - 1) : 0;
-    const along = margin + t * (length - margin * 2);
-    const wave = Math.sin(t * Math.PI * 3.1 + 0.4) * amplitude;
-    return vertical
-      ? { slug, x: 90 + wave, y: along }
-      : { slug, x: along, y: 90 + wave };
-  });
-}
+// An engraved deco map of Mumbai and its extended suburbs, from Colaba and
+// Borivali to Thane and Navi Mumbai. Positions follow real geography,
+// loosened for legibility (the island city is spread out so its
+// neighbourhoods don't overlap) — stylised, not to scale. North is up.
+const W = 600;
+const H = 780;
 
-function routePath(points) {
-  return points.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x.toFixed(1)} ${p.y.toFixed(1)}`).join(' ');
-}
+const PLACES = {
+  borivali: { x: 170, y: 100, label: 'right' },
+  thane: { x: 400, y: 150, label: 'right' },
+  andheri: { x: 178, y: 262, label: 'right' },
+  ghatkopar: { x: 300, y: 318, label: 'left' },
+  bandra: { x: 162, y: 382, label: 'left' },
+  kurla: { x: 268, y: 392, label: 'right' },
+  vashi: { x: 452, y: 402, label: 'right' },
+  dadar: { x: 190, y: 470, label: 'left' },
+  wadala: { x: 268, y: 482, label: 'right' },
+  panvel: { x: 520, y: 520, label: 'left' },
+  byculla: { x: 242, y: 556, label: 'right' },
+  'mumbai-central': { x: 176, y: 560, label: 'left' },
+  csmt: { x: 252, y: 632, label: 'right' },
+  churchgate: { x: 192, y: 642, label: 'left' },
+  colaba: { x: 206, y: 716, label: 'left' },
+};
 
-// A small irregular wax dot marking a neighbourhood on the map — a
-// simplified cousin of the full wax Seal, sized for legibility at map
-// scale rather than carrying its monogram.
-function WaxDot({ x, y, populated }) {
-  const r = populated ? 7 : 5;
+// Coastlines, as the edges of the water polygons.
+const ARABIAN_SEA = 'M 0 0 L 125 0 L 118 150 L 128 250 L 112 330 L 128 410 L 142 470 L 132 540 L 150 610 L 172 665 L 190 780 L 0 780 Z';
+const HARBOUR_AND_CREEK =
+  'M 240 780 L 262 700 L 285 640 L 300 580 L 318 520 L 335 450 L 350 400 L 360 340 L 368 270 L 378 210 L 392 185 ' +
+  'L 410 190 L 405 260 L 400 330 L 410 370 L 425 420 L 430 470 L 470 540 L 560 600 L 600 640 L 600 780 Z';
+
+// Faint engraved rail lines tying the neighbourhoods together.
+const RAIL = [
+  ['borivali', 'andheri', 'bandra', 'dadar', 'mumbai-central', 'churchgate'],
+  ['thane', 'ghatkopar', 'kurla', 'dadar', 'byculla', 'csmt'],
+  ['csmt', 'wadala', 'kurla', 'vashi', 'panvel'],
+];
+
+function CornerFan({ x, y, rotate }) {
   return (
-    <>
-      <circle cx={x} cy={y} r={r + 3} fill="none" stroke={populated ? 'var(--seal)' : 'var(--forward)'} strokeWidth="1" opacity={populated ? 0.35 : 0.25} />
-      <circle cx={x} cy={y} r={r} fill={populated ? 'var(--seal)' : 'var(--paper)'} stroke={populated ? 'var(--seal)' : 'var(--forward)'} strokeWidth="2" />
-      {populated && <circle cx={x - r * 0.3} cy={y - r * 0.3} r={r * 0.35} fill="#FFFFFF" opacity="0.3" />}
-    </>
+    <g transform={`rotate(${rotate} ${x} ${y})`}>
+      {[0, 1, 2, 3, 4].map((i) => {
+        const rad = (((i / 4) * 60 - 30) * Math.PI) / 180;
+        return <line key={i} x1={x} y1={y} x2={x + 24 * Math.sin(rad)} y2={y - 24 * Math.cos(rad)} stroke="var(--primary)" strokeWidth="1" opacity="0.6" />;
+      })}
+    </g>
   );
 }
 
-// Deco corner ornament: a small fan/sunburst motif, the one flourish this
-// otherwise plain engraved frame allows itself.
-function CornerFan({ x, y, rotate }) {
-  const rays = [0, 1, 2, 3, 4].map((i) => {
-    const a = (i / 4) * 60 - 30;
-    const rad = (a * Math.PI) / 180;
-    return (
-      <line key={i} x1={x} y1={y} x2={x + 22 * Math.sin(rad)} y2={y - 22 * Math.cos(rad)} stroke="var(--action)" strokeWidth="1.2" opacity="0.55" />
-    );
-  });
-  return <g transform={`rotate(${rotate} ${x} ${y})`}>{rays}</g>;
+function Compass({ x, y }) {
+  return (
+    <g stroke="var(--primary)" fill="none" opacity="0.8">
+      <circle cx={x} cy={y} r="22" strokeWidth="1" />
+      <circle cx={x} cy={y} r="17" strokeWidth="0.6" />
+      <path d={`M ${x} ${y - 30} L ${x + 5} ${y} L ${x} ${y + 30} L ${x - 5} ${y} Z`} fill="var(--primary)" fillOpacity="0.25" strokeWidth="0.8" />
+      <path d={`M ${x - 30} ${y} L ${x} ${y - 5} L ${x + 30} ${y} L ${x} ${y + 5} Z`} strokeWidth="0.8" />
+      <text x={x} y={y - 36} textAnchor="middle" fontSize="13" fill="var(--primary)" stroke="none" fontFamily="'Cormorant Garamond', Georgia, serif" fontWeight="600">N</text>
+    </g>
+  );
 }
 
-function DecoMap({ vertical, hasContent }) {
-  const count = NEIGHBOURHOOD_ROUTE.length;
-  const length = vertical ? 720 : 1180;
-  const width = vertical ? 260 : length;
-  const height = vertical ? length : 260;
-  const points = routePoints({ vertical, count, length, amplitude: vertical ? 55 : 55, margin: 60 });
-  const d = routePath(points);
+function RegionLabel({ x, y, rotate = 0, children }) {
+  return (
+    <text
+      x={x}
+      y={y}
+      transform={rotate ? `rotate(${rotate} ${x} ${y})` : undefined}
+      textAnchor="middle"
+      fontSize="17"
+      fontStyle="italic"
+      letterSpacing="1.5"
+      fill="var(--primary)"
+      fontFamily="'Cormorant Garamond', Georgia, serif"
+      fontWeight="600"
+      paintOrder="stroke"
+      stroke="var(--paper)"
+      strokeWidth="5"
+    >
+      {children}
+    </text>
+  );
+}
 
+function EngravedMap({ hasContent, idPrefix }) {
+  const hatch = `${idPrefix}-hatch`;
   return (
     <svg
-      width={width}
-      height={height}
-      viewBox={`0 0 ${width} ${height}`}
+      viewBox={`0 0 ${W} ${H}`}
+      width={W}
+      height={H}
+      className="block max-w-none"
       role="img"
-      aria-label="Engraved deco map of Mumbai and its extended suburbs, from Colaba and Borivali to Thane and Navi Mumbai"
+      aria-label="Engraved map of Mumbai and its extended suburbs, from Colaba and Borivali to Thane and Navi Mumbai. Wax seals mark neighbourhoods with letters."
     >
-      <rect x="6" y="6" width={width - 12} height={height - 12} fill="none" stroke="var(--primary)" strokeWidth="1.5" rx="4" opacity="0.5" />
-      <rect x="12" y="12" width={width - 24} height={height - 24} fill="none" stroke="var(--primary)" strokeWidth="0.75" rx="2" opacity="0.3" />
+      <defs>
+        <clipPath id={`${idPrefix}-frame`}>
+          <rect x="14" y="14" width={W - 28} height={H - 28} />
+        </clipPath>
+        <pattern id={hatch} width="7" height="7" patternUnits="userSpaceOnUse">
+          <line x1="0" y1="3.5" x2="7" y2="3.5" stroke="var(--primary)" strokeWidth="0.8" opacity="0.35" />
+        </pattern>
+      </defs>
 
-      <CornerFan x={26} y={26} rotate={45} />
-      <CornerFan x={width - 26} y={26} rotate={135} />
-      <CornerFan x={26} y={height - 26} rotate={-45} />
-      <CornerFan x={width - 26} y={height - 26} rotate={-135} />
+      {/* water, engraved as fine hatching; land stays the paper itself */}
+      <g clipPath={`url(#${idPrefix}-frame)`}>
+        <path d={ARABIAN_SEA} fill={`url(#${hatch})`} />
+        <path d={HARBOUR_AND_CREEK} fill={`url(#${hatch})`} />
+        <path d={ARABIAN_SEA} fill="none" stroke="var(--primary)" strokeWidth="1.2" opacity="0.7" />
+        <path d={HARBOUR_AND_CREEK} fill="none" stroke="var(--primary)" strokeWidth="1.2" opacity="0.7" />
+      </g>
 
-      <path d={d} fill="none" stroke="var(--primary)" strokeWidth="1.5" opacity="0.55" />
-      <path d={d} fill="none" stroke="var(--primary)" strokeWidth="4" opacity="0.12" />
+      <rect x="8" y="8" width={W - 16} height={H - 16} fill="none" stroke="var(--primary)" strokeWidth="1.5" />
+      <rect x="14" y="14" width={W - 28} height={H - 28} fill="none" stroke="var(--primary)" strokeWidth="0.6" />
+      <CornerFan x={30} y={30} rotate={45} />
+      <CornerFan x={W - 30} y={30} rotate={135} />
+      <CornerFan x={30} y={H - 30} rotate={-45} />
+      <CornerFan x={W - 30} y={H - 30} rotate={-135} />
 
-      {points.map((p, i) => {
-        const populated = hasContent.has(p.slug);
-        const labelBelow = vertical ? i % 2 === 0 : false;
-        const labelSide = !vertical ? (i % 2 === 0 ? 1 : -1) : 1;
+      {RAIL.map((line, i) => (
+        <polyline
+          key={i}
+          points={line.map((slug) => `${PLACES[slug].x},${PLACES[slug].y}`).join(' ')}
+          fill="none"
+          stroke="var(--ink)"
+          strokeWidth="1"
+          strokeDasharray="1 4"
+          strokeLinecap="round"
+          opacity="0.45"
+        />
+      ))}
+
+      <Compass x={66} y={96} />
+      <RegionLabel x={62} y={420} rotate={-90}>Arabian Sea</RegionLabel>
+      <RegionLabel x={392} y={246} rotate={-84}>Thane Creek</RegionLabel>
+      <RegionLabel x={372} y={712}>Mumbai Harbour</RegionLabel>
+      <RegionLabel x={505} y={458}>Navi Mumbai</RegionLabel>
+
+      {Object.entries(PLACES).map(([slug, p], i) => {
+        const populated = hasContent.has(slug);
+        const dx = p.label === 'right' ? (populated ? 20 : 11) : -(populated ? 20 : 11);
         return (
-          <Link key={p.slug} to={`/mumbai/${p.slug}`}>
+          <Link key={slug} to={`/mumbai/${slug}`} aria-label={`${stationName(slug)}${populated ? '' : ', no letters yet'}`}>
             <g>
-              <WaxDot x={p.x} y={p.y} populated={populated} />
+              {populated ? (
+                <MiniSeal x={p.x} y={p.y} r={14} seed={i} id={`${idPrefix}-seal-${slug}`} />
+              ) : (
+                <circle cx={p.x} cy={p.y} r="5" fill="var(--paper)" stroke="var(--forward)" strokeWidth="1.5" />
+              )}
               <text
-                x={vertical ? p.x + 16 : p.x}
-                y={vertical ? p.y + 4 : p.y + (labelSide > 0 ? 22 : -16)}
-                fontSize="11"
-                fontWeight={populated ? 700 : 500}
-                textAnchor={vertical ? 'start' : 'middle'}
+                x={p.x + dx}
+                y={p.y + 5}
+                textAnchor={p.label === 'right' ? 'start' : 'end'}
+                fontSize={populated ? 17 : 15}
+                fontWeight={populated ? 600 : 400}
                 fill={populated ? 'var(--ink)' : 'var(--forward)'}
+                fontFamily={populated ? "'Cormorant Garamond', Georgia, serif" : "'Libre Franklin', system-ui, sans-serif"}
+                paintOrder="stroke"
+                stroke="var(--paper)"
+                strokeWidth="4"
               >
-                {stationName(p.slug)}
+                {stationName(slug)}
               </text>
             </g>
           </Link>
@@ -105,7 +176,7 @@ function DecoMap({ vertical, hasContent }) {
 
 export default function StationsPage() {
   const hasContent = stationsWithContent();
-  const allStationSlugs = Object.keys(STATIONS).sort((a, b) => stationName(a).localeCompare(stationName(b)));
+  const allSlugs = Object.keys(STATIONS).sort((a, b) => stationName(a).localeCompare(stationName(b)));
 
   return (
     <>
@@ -115,37 +186,41 @@ export default function StationsPage() {
         path="/mumbai"
       />
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <h1 className="font-headline text-3xl font-medium mb-2" style={{ color: 'var(--ink)' }}>Browse by neighbourhood</h1>
-        <p className="text-sm mb-8 max-w-2xl" style={{ color: 'var(--ink)', opacity: 0.75 }}>
-          Tap a wax seal on the map for every letter, explainer and fact-check from that neighbourhood.
-          Neighbourhoods without letters yet are greyed out &mdash; tap one to suggest a story from there.
+        <h1 className="font-headline text-[32px] sm:text-[40px] leading-[1.1] font-semibold mb-3" style={{ color: 'var(--ink)' }}>
+          Browse by neighbourhood
+        </h1>
+        <p className="text-base mb-8 max-w-2xl" style={{ color: 'var(--ink)', opacity: 0.8 }}>
+          Tap a wax seal for every letter, explainer and fact-check from that neighbourhood. Neighbourhoods
+          without a seal don't have letters yet &mdash; tap one to suggest a story from there.
         </p>
 
-        <div className="hidden sm:flex justify-center overflow-x-auto border rounded-lg p-4" style={{ borderColor: 'var(--forward)' }}>
-          <DecoMap vertical hasContent={hasContent} />
+        {/* One map; on small screens it scrolls sideways inside its own container. */}
+        <div className="overflow-x-auto rounded-lg border mb-8" style={{ borderColor: 'var(--primary)' }}>
+          <div className="w-fit mx-auto p-2">
+            <EngravedMap hasContent={hasContent} idPrefix="map" />
+          </div>
         </div>
 
-        {/* Mobile: the same deco map, transposed to scroll horizontally inside its own container */}
-        <div className="sm:hidden overflow-x-auto border rounded-lg p-3 mb-6" style={{ borderColor: 'var(--forward)' }}>
-          <DecoMap vertical={false} hasContent={hasContent} />
-        </div>
-
-        <div className="sm:hidden">
-          <h2 className="text-xs font-semibold uppercase tracking-wider mb-3" style={{ color: 'var(--forward)' }}>All neighbourhoods, A&ndash;Z</h2>
-          <ul className="grid grid-cols-2 gap-2">
-            {allStationSlugs.map((slug) => (
-              <li key={slug}>
-                <Link
-                  to={`/mumbai/${slug}`}
-                  className="block text-sm px-3 py-2 rounded-md border"
-                  style={{ borderColor: 'var(--forward)', color: hasContent.has(slug) ? 'var(--ink)' : 'var(--forward)' }}
-                >
-                  {stationName(slug)}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <h2 className="font-interface text-sm font-semibold mb-3" style={{ color: 'var(--forward)' }}>
+          All neighbourhoods, A&ndash;Z
+        </h2>
+        <ul className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
+          {allSlugs.map((slug) => (
+            <li key={slug}>
+              <Link
+                to={`/mumbai/${slug}`}
+                className="block text-sm px-3 py-2 rounded-md border"
+                style={{
+                  borderColor: hasContent.has(slug) ? 'var(--primary)' : 'color-mix(in srgb, var(--forward) 50%, transparent)',
+                  color: hasContent.has(slug) ? 'var(--ink)' : 'var(--forward)',
+                  fontWeight: hasContent.has(slug) ? 600 : 400,
+                }}
+              >
+                {stationName(slug)}
+              </Link>
+            </li>
+          ))}
+        </ul>
       </div>
     </>
   );

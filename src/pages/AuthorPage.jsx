@@ -23,11 +23,11 @@ export default function AuthorPage() {
     <>
       <PageMeta title={`${author.name} | StoryLettr.com`} description={author.bio} path={`/authors/${author.slug}`} />
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <h1 className="font-headline text-3xl font-medium mb-1" style={{ color: 'var(--ink)' }}>{author.name}</h1>
+        <h1 className="font-headline text-3xl font-semibold mb-1" style={{ color: 'var(--ink)' }}>{author.name}</h1>
         <p className="text-sm font-semibold mb-3" style={{ color: 'var(--forward)' }}>{author.role}</p>
         <p className="text-sm leading-relaxed mb-10 max-w-xl" style={{ color: 'var(--ink)', opacity: 0.85 }}>{author.bio}</p>
 
-        <h2 className="text-xs font-semibold uppercase tracking-wider mb-3" style={{ color: 'var(--forward)' }}>Bylines</h2>
+        <h2 className="font-interface text-sm font-semibold mb-3" style={{ color: 'var(--forward)' }}>Bylines</h2>
         {items.map((item, i) => <LetterFeedItem key={item.slug} item={item} seed={i} />)}
       </div>
     </>

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { setHead } from '../head';
 
 const SITE = 'StoryLettr.com';
@@ -11,7 +11,28 @@ const ORIGIN = 'https://storylettr.com';
  * script; in the browser, a client-side route change re-applies them
  * directly to the DOM.
  */
-export default function PageMeta({ title, description, path, image, type = 'website' }) {
+// Section index pages a nested path can point back to in its breadcrumbs.
+const SECTION_INDEXES = {
+  mumbai: { name: 'Browse by neighbourhood', path: '/mumbai' },
+};
+
+// BreadcrumbList for any page, built from its path and title:
+// StoryLettr.com > (section index, when one exists) > this page.
+function breadcrumbsFor(path, title) {
+  const home = { name: SITE, path: '/' };
+  if (path === '/') return [home];
+  const crumbs = [home];
+  const section = SECTION_INDEXES[path.split('/')[1]];
+  if (section && section.path !== path) crumbs.push(section);
+  crumbs.push({ name: title.split(' | ')[0], path });
+  return crumbs;
+}
+
+/**
+ * Pages that build their own, more specific BreadcrumbList (stories,
+ * explainers and fact-checks) pass breadcrumbs={false}.
+ */
+export default function PageMeta({ title, description, path, image, type = 'website', breadcrumbs = true }) {
   const canonical = `${ORIGIN}${path}`;
   const head = { title, description, canonical, image, type, siteName: SITE };
 
@@ -46,5 +67,16 @@ export default function PageMeta({ title, description, path, image, type = 'webs
     link.setAttribute('href', canonical);
   }, [title, description, canonical]);
 
-  return null;
+  if (!breadcrumbs || path === '/404') return null;
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: breadcrumbsFor(path, title).map((c, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: c.name,
+      item: `${ORIGIN}${c.path}`,
+    })),
+  };
+  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />;
 }

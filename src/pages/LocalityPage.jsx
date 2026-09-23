@@ -18,13 +18,13 @@ export default function LocalityPage() {
         path={`/mumbai/${station}`}
       />
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <nav className="text-xs mb-4" style={{ color: 'var(--forward)' }}>
+        <nav className="text-sm mb-4" style={{ color: 'var(--forward)' }}>
           <Link to="/mumbai" className="hover:underline">Browse by neighbourhood</Link>
           <span className="mx-1.5">/</span>
           <span>{name}</span>
         </nav>
 
-        <h1 className="font-headline text-3xl font-medium mb-8" style={{ color: 'var(--ink)' }}>{name}</h1>
+        <h1 className="font-headline text-3xl font-semibold mb-8" style={{ color: 'var(--ink)' }}>{name}</h1>
 
         {!known ? (
           <div className="text-center py-16 border border-dashed rounded-lg" style={{ borderColor: 'var(--forward)', color: 'var(--forward)' }}>
@@ -36,7 +36,7 @@ export default function LocalityPage() {
             <a
               href={`mailto:tips@storylettr.com?subject=${encodeURIComponent(`Story idea: ${name}`)}`}
               className="inline-block text-sm font-semibold underline"
-              style={{ color: 'var(--seal)' }}
+              style={{ color: 'var(--primary)' }}
             >
               Know something happening in {name}? Suggest a story
             </a>

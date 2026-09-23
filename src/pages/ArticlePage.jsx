@@ -2,12 +2,12 @@ import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Clock } from 'lucide-react';
 import PageMeta from '../components/PageMeta';
-import Seal, { SealDateline } from '../components/Seal';
+import Seal, { SealDateline, SealMark } from '../components/Seal';
 import HowWeKnowThis from '../components/HowWeKnowThis';
 import SendThisInstead from '../components/SendThisInstead';
 import LetterFeedItem from '../components/LetterFeedItem';
 import renderWithGlossary from '../components/renderWithGlossary';
-import { getBySlug, chapterById, CONTENT, AUTHORS } from '../data/content';
+import { getBySlug, chapterById, AUTHORS, sealStatus, relatedFor, stationName } from '../data/content';
 
 const ORIGIN = 'https://storylettr.com';
 
@@ -27,9 +27,8 @@ export default function ArticlePage({ type }) {
   const chapter = chapterById(item.chapter);
   const author = AUTHORS[item.byline];
   const url = `${ORIGIN}/${type === 'explainer' ? 'explainers' : 'stories'}/${item.slug}`;
-  const related = (item.related || [])
-    .map((s) => CONTENT.find((c) => c.slug === s))
-    .filter(Boolean);
+  const { items: related, sameLocalityCount } = relatedFor(item);
+  const relatedHeading = sameLocalityCount > 0 && item.station ? `More from ${stationName(item.station)}` : 'More letters';
 
   const newsArticleJsonLd = {
     '@context': 'https://schema.org',
@@ -60,17 +59,18 @@ export default function ArticlePage({ type }) {
         description={item.summary}
         path={`/${type === 'explainer' ? 'explainers' : 'stories'}/${item.slug}`}
         type="article"
+        breadcrumbs={false}
       />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(newsArticleJsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
 
       <article className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-10 pb-24">
         <header className="mb-8 space-y-4">
-          <div className="text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--forward)' }}>
+          <div className="text-sm font-semibold" style={{ color: 'var(--forward)' }}>
             {chapter?.name}
           </div>
 
-          <h1 className="font-headline text-3xl sm:text-4xl font-medium leading-tight" style={{ color: 'var(--ink)' }}>
+          <h1 className="font-headline text-[30px] sm:text-[42px] leading-[1.1] font-semibold" style={{ color: 'var(--ink)' }}>
             {item.headline}
           </h1>
 
@@ -80,8 +80,9 @@ export default function ArticlePage({ type }) {
 
           <div className="flex items-center gap-4 flex-wrap pt-1">
             <div className="flex flex-col items-center gap-1">
-              <Seal station={item.station} date={item.postmark.date} status={item.postmark.status} size={72} animate seed={1} />
+              <Seal station={item.station} date={item.postmark.date} status={sealStatus(item)} size={72} animate seed={1} />
               <SealDateline station={item.station} date={item.postmark.date} />
+              <SealMark status={sealStatus(item)} />
             </div>
             <div className="text-sm" style={{ color: 'var(--ink)' }}>
               {author && (
@@ -89,7 +90,7 @@ export default function ArticlePage({ type }) {
                   {author.name}
                 </Link>
               )}
-              <div className="flex items-center gap-1 text-xs mt-0.5" style={{ color: 'var(--forward)' }}>
+              <div className="flex items-center gap-1 text-sm mt-0.5" style={{ color: 'var(--forward)' }}>
                 <Clock className="w-3.5 h-3.5" />
                 {item.readingTimeMin} min read
               </div>
@@ -98,14 +99,14 @@ export default function ArticlePage({ type }) {
         </header>
 
         <div
-          className="rounded-md p-5 mb-8 space-y-2 font-devanagari-body"
+          className="rounded-md p-5 mb-8 space-y-2 font-interface"
           style={{ backgroundColor: 'color-mix(in srgb, var(--forward) 10%, transparent)', color: 'var(--ink)' }}
         >
-          <h2 className="text-xs font-semibold uppercase tracking-wider mb-2" style={{ color: 'var(--forward)' }}>
+          <h2 className="font-interface text-sm font-semibold mb-2" style={{ color: 'var(--forward)' }}>
             The short version
           </h2>
           {item.shortVersion.map((sentence, i) => (
-            <p key={i} className="text-sm leading-relaxed">{sentence}</p>
+            <p key={i} className="text-[15px] leading-normal">{sentence}</p>
           ))}
         </div>
 
@@ -117,21 +118,21 @@ export default function ArticlePage({ type }) {
         </div>
 
         <div className="mb-8">
-          <HowWeKnowThis verified={item.howWeKnowThis.verified} couldNotVerify={item.howWeKnowThis.couldNotVerify} />
+          <HowWeKnowThis sources={item.howWeKnowThis.sources} verified={item.howWeKnowThis.verified} couldNotVerify={item.howWeKnowThis.couldNotVerify} />
         </div>
 
-        <div className="text-xs mb-10" style={{ color: 'var(--forward)' }}>
+        <div className="text-sm mb-10" style={{ color: 'var(--forward)' }}>
           Last updated {item.lastUpdated}
         </div>
 
-        <div className="flex items-center justify-between flex-wrap gap-4 pt-6 border-t" style={{ borderColor: 'var(--forward)' }}>
+        <div className="flex items-center justify-between flex-wrap gap-4 pt-6 border-t" style={{ borderColor: 'var(--primary)' }}>
           <SendThisInstead headline={item.headline} summary={item.summary} url={url} />
         </div>
 
         {related.length > 0 && (
           <div className="mt-12">
-            <h2 className="text-xs font-semibold uppercase tracking-wider mb-3" style={{ color: 'var(--forward)' }}>
-              Related
+            <h2 className="font-interface text-sm font-semibold mb-3" style={{ color: 'var(--forward)' }}>
+              {relatedHeading}
             </h2>
             {related.map((r, i) => (
               <LetterFeedItem key={r.slug} item={r} seed={i} />

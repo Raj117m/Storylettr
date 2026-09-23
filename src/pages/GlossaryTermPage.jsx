@@ -20,8 +20,8 @@ export default function GlossaryTermPage() {
     <>
       <PageMeta title={`${entry.term} | Glossary | StoryLettr.com`} description={entry.short} path={`/glossary/${term}`} />
       <div className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="text-xs font-semibold uppercase tracking-wider mb-2" style={{ color: 'var(--forward)' }}>Glossary</div>
-        <h1 className="font-headline text-2xl font-medium mb-4" style={{ color: 'var(--ink)' }}>{entry.term}</h1>
+        <div className="text-sm font-semibold mb-2" style={{ color: 'var(--forward)' }}>Glossary</div>
+        <h1 className="font-headline text-2xl font-semibold mb-4" style={{ color: 'var(--ink)' }}>{entry.term}</h1>
         <p className="text-base leading-relaxed" style={{ color: 'var(--ink)' }}>{entry.short}</p>
       </div>
     </>

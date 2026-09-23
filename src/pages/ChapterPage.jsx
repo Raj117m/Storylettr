@@ -27,7 +27,7 @@ export default function ChapterPage() {
         path={`/chapters/${chapter.id}`}
       />
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <h1 className="font-headline text-3xl font-medium mb-6" style={{ color: 'var(--ink)' }}>{chapter.name}</h1>
+        <h1 className="font-headline text-3xl font-semibold mb-6" style={{ color: 'var(--ink)' }}>{chapter.name}</h1>
         <div className="mb-8">
           <ChapterFilterRow />
         </div>

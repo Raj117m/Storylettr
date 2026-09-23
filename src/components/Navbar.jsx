@@ -16,13 +16,13 @@ export default function Navbar({ onOpenSearch }) {
   return (
     <header
       className="sticky top-0 z-40 backdrop-blur-md border-b"
-      style={{ backgroundColor: 'color-mix(in srgb, var(--paper) 92%, transparent)', borderColor: 'var(--forward)' }}
+      style={{ backgroundColor: 'color-mix(in srgb, var(--paper) 92%, transparent)', borderColor: 'var(--primary)' }}
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <Link to="/" className="flex items-center gap-2.5 cursor-pointer focus:outline-none" onClick={() => setMobileMenuOpen(false)}>
-            <Logo size={30} />
-            <span className="font-headline text-lg font-medium tracking-tight" style={{ color: 'var(--ink)' }}>
+            <Logo size={32} />
+            <span className="font-headline text-[22px] font-semibold" style={{ color: 'var(--ink)' }}>
               StoryLettr.com
             </span>
           </Link>
@@ -34,9 +34,9 @@ export default function Navbar({ onOpenSearch }) {
                 to={item.to}
                 end={item.end}
                 className={({ isActive }) =>
-                  `text-[13px] font-medium transition-opacity hover:opacity-100 ${isActive ? 'opacity-100 underline underline-offset-4' : 'opacity-75'}`
+                  `text-sm font-medium transition-opacity hover:opacity-100 ${isActive ? 'opacity-100 underline underline-offset-4' : 'opacity-75'}`
                 }
-                style={{ color: 'var(--ink)' }}
+                style={{ color: 'var(--primary)' }}
               >
                 {item.label}
               </NavLink>
@@ -46,7 +46,7 @@ export default function Navbar({ onOpenSearch }) {
           <div className="flex items-center gap-2">
             <button
               onClick={onOpenSearch}
-              className="hidden sm:flex items-center gap-2 text-xs border rounded-md px-3 py-1.5 cursor-pointer"
+              className="hidden sm:flex items-center gap-2 text-sm border rounded-md px-3 py-1.5 cursor-pointer"
               style={{ color: 'var(--ink)', borderColor: 'var(--forward)' }}
               title="Search StoryLettr.com"
             >
@@ -56,8 +56,8 @@ export default function Navbar({ onOpenSearch }) {
 
             <Link
               to="/newsletter"
-              className="hidden md:inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-md"
-              style={{ backgroundColor: 'var(--action)', color: 'var(--action-ink)' }}
+              className="hidden md:inline-flex items-center gap-1.5 text-sm font-semibold px-3 py-1.5 rounded-md"
+              style={{ backgroundColor: 'var(--primary)', color: 'var(--paper)' }}
             >
               <Mail className="w-3.5 h-3.5" />
               Get the letter
@@ -85,7 +85,7 @@ export default function Navbar({ onOpenSearch }) {
       </div>
 
       {mobileMenuOpen && (
-        <div className="lg:hidden border-t px-4 pt-3 pb-5 space-y-1" style={{ borderColor: 'var(--forward)' }}>
+        <div className="lg:hidden border-t px-4 pt-3 pb-5 space-y-1" style={{ borderColor: 'var(--primary)' }}>
           {NAV_ITEMS.map((item) => (
             <NavLink
               key={item.to}
@@ -93,7 +93,7 @@ export default function Navbar({ onOpenSearch }) {
               end={item.end}
               onClick={() => setMobileMenuOpen(false)}
               className="block w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium"
-              style={{ color: 'var(--ink)' }}
+              style={{ color: 'var(--primary)' }}
             >
               {item.label}
             </NavLink>
@@ -102,7 +102,7 @@ export default function Navbar({ onOpenSearch }) {
             to="/newsletter"
             onClick={() => setMobileMenuOpen(false)}
             className="mt-2 flex items-center justify-center gap-1.5 text-sm font-semibold px-3 py-2.5 rounded-lg"
-            style={{ backgroundColor: 'var(--action)', color: 'var(--action-ink)' }}
+            style={{ backgroundColor: 'var(--primary)', color: 'var(--paper)' }}
           >
             <Mail className="w-4 h-4" />
             Get the letter

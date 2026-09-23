@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { stationName } from '../data/content';
+import { stationName, datelineName } from '../data/content';
 
 const MONTHS = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
 
@@ -76,7 +76,7 @@ function LaurelSprig({ flip = false }) {
 export default function Seal({ station, date, status = 'verified', size = 84, animate = false, seed = 0 }) {
   const rotateClass = ROTATIONS[seed % ROTATIONS.length];
   const broken = status === 'checked';
-  const locality = station ? `${stationName(station).toUpperCase()} W` : 'STORYLETTR DESK';
+  const locality = datelineName(station);
   const dateLabel = formatDatelineDate(date);
   const gradientId = `seal-sheen-${station || 'desk'}-${date}-${seed}`;
   const label = broken ? 'Checked' : 'Verified';
@@ -164,12 +164,40 @@ export default function Seal({ station, date, status = 'verified', size = 84, an
 }
 
 /**
+ * A small wax seal for stamping inside another SVG (the neighbourhood
+ * map): the same irregular oxblood medallion, sheen and signet ring,
+ * with a compact SL monogram. Returns a <g>, not a standalone <svg>.
+ */
+export function MiniSeal({ x, y, r = 13, seed = 0, id }) {
+  const k = r / 45;
+  const blob = blobPath(50, 50, 45, seed * 97 + 11);
+  return (
+    <g transform={`translate(${x - 50 * k} ${y - 50 * k}) scale(${k}) rotate(-4 50 50)`}>
+      <defs>
+        <radialGradient id={id} cx="38%" cy="32%" r="65%">
+          <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.32" />
+          <stop offset="55%" stopColor="#FFFFFF" stopOpacity="0.08" />
+          <stop offset="100%" stopColor="#FFFFFF" stopOpacity="0" />
+        </radialGradient>
+      </defs>
+      <path d={blob} fill="var(--seal)" />
+      <path d={blob} fill={`url(#${id})`} />
+      <circle cx="50" cy="50" r="35" fill="none" stroke="var(--paper)" strokeWidth="2" opacity="0.55" />
+      <g fill="var(--paper)" fontFamily="'Cormorant Garamond', Georgia, serif" fontWeight="600" fontSize="38">
+        <text x="40" y="64" textAnchor="middle">S</text>
+        <text x="61" y="54" textAnchor="middle">L</text>
+      </g>
+    </g>
+  );
+}
+
+/**
  * The small capitalised dateline that sits beneath a wax seal, e.g.
  * "THANE W · 21 SEP 2026" — reads like the line under an old letter's
  * seal, and links through to that locality's hub page.
  */
 export function SealDateline({ station, date, className = '' }) {
-  const locality = station ? `${stationName(station).toUpperCase()} W` : 'STORYLETTR DESK';
+  const locality = datelineName(station);
   const dateLabel = formatDatelineDate(date);
   const text = (
     <span className={`text-[11px] font-semibold tracking-wider ${className}`} style={{ color: 'var(--forward)' }}>
@@ -184,6 +212,19 @@ export function SealDateline({ station, date, className = '' }) {
     );
   }
   return text;
+}
+
+/**
+ * The visible oxblood mark that names what a seal means: "Verified" for a
+ * laurel-pressed story seal, "Checked" for a fact-check's broken seal.
+ * Oxblood is reserved for exactly this and the seals themselves.
+ */
+export function SealMark({ status = 'verified', className = '' }) {
+  return (
+    <span className={`font-interface text-sm font-semibold ${className}`} style={{ color: 'var(--seal)' }}>
+      {status === 'checked' ? 'Checked' : 'Verified'}
+    </span>
+  );
 }
 
 export { formatDatelineDate };

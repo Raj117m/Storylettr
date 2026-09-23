@@ -28,20 +28,20 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 pb-10 border-b" style={{ borderColor: 'color-mix(in srgb, var(--paper) 20%, transparent)' }}>
           <div className="md:col-span-5 space-y-3">
             <Link to="/" className="flex items-center gap-2.5">
-              <Logo size={26} />
-              <span className="font-headline text-lg font-medium" style={{ color: 'var(--paper)' }}>StoryLettr.com</span>
+              <Logo size={32} />
+              <span className="font-headline text-[22px] font-semibold" style={{ color: 'var(--paper)' }}>StoryLettr.com</span>
             </Link>
-            <p className="text-sm italic" style={{ color: 'var(--action)' }}>
+            <p className="font-headline text-lg italic" style={{ color: 'var(--paper)' }}>
               Sharing stories, building real human connection.
             </p>
-            <p className="text-xs max-w-sm leading-relaxed" style={{ opacity: 0.75 }}>
+            <p className="text-sm max-w-sm leading-relaxed" style={{ opacity: 0.75 }}>
               Every story is a letter from the city, closed with a wax seal showing where and when it came
               from, so you always know what has been checked.
             </p>
           </div>
 
-          <div className="md:col-span-3 space-y-3 text-xs">
-            <h4 className="font-semibold uppercase tracking-wider text-[11px]" style={{ opacity: 0.65 }}>Chapters</h4>
+          <div className="md:col-span-3 space-y-3 text-sm">
+            <h4 className="font-semibold text-sm" style={{ opacity: 0.65 }}>Chapters</h4>
             <ul className="space-y-2" style={{ opacity: 0.85 }}>
               {CHAPTERS.map((chapter) => (
                 <li key={chapter.id}>
@@ -53,18 +53,18 @@ export default function Footer() {
             </ul>
           </div>
 
-          <div className="md:col-span-4 space-y-3 text-xs">
-            <h4 className="font-semibold uppercase tracking-wider text-[11px]" style={{ opacity: 0.65 }}>More</h4>
+          <div className="md:col-span-4 space-y-3 text-sm">
+            <h4 className="font-semibold text-sm" style={{ opacity: 0.65 }}>More</h4>
             <ul className="space-y-2 mb-4" style={{ opacity: 0.85 }}>
               <li><Link to="/about" className="hover:underline transition-colors">About / How we report</Link></li>
               <li><Link to="/corrections" className="hover:underline transition-colors">Corrections policy</Link></li>
               <li><Link to="/mumbai" className="hover:underline transition-colors">Browse by neighbourhood</Link></li>
             </ul>
-            <h4 className="font-semibold uppercase tracking-wider text-[11px]" style={{ opacity: 0.65 }}>Get the letter</h4>
+            <h4 className="font-semibold text-sm" style={{ opacity: 0.65 }}>Get the letter</h4>
             <form
               onSubmit={handleSubscribe}
               className="flex items-center border rounded-md overflow-hidden"
-              style={{ backgroundColor: 'color-mix(in srgb, var(--ink) 60%, black)', borderColor: 'color-mix(in srgb, var(--paper) 20%, transparent)' }}
+              style={{ backgroundColor: 'color-mix(in srgb, var(--paper) 12%, var(--ink))', borderColor: 'color-mix(in srgb, var(--paper) 20%, transparent)' }}
             >
               <input
                 type="email"
@@ -72,14 +72,14 @@ export default function Footer() {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Email address"
                 aria-label="Email subscription input"
-                className="w-full bg-transparent px-3 py-2.5 text-xs focus:outline-none"
+                className="w-full bg-transparent px-3 py-2.5 text-sm focus:outline-none"
                 style={{ color: 'var(--paper)' }}
                 required
               />
               <button
                 type="submit"
-                className="font-semibold px-3.5 py-2.5 text-xs flex items-center gap-1 shrink-0"
-                style={{ backgroundColor: 'var(--action)', color: 'var(--action-ink)' }}
+                className="font-semibold px-3.5 py-2.5 text-sm flex items-center gap-1 shrink-0"
+                style={{ backgroundColor: 'var(--paper)', color: 'var(--ink)' }}
               >
                 {subscribed ? (<><Check className="w-3.5 h-3.5" /><span>Joined</span></>) : (<><span>Join</span><ArrowRight className="w-3.5 h-3.5" /></>)}
               </button>
@@ -87,7 +87,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="pt-7 flex flex-col sm:flex-row items-center justify-between text-xs gap-4" style={{ opacity: 0.75 }}>
+        <div className="pt-7 flex flex-col sm:flex-row items-center justify-between text-sm gap-4" style={{ opacity: 0.75 }}>
           <p>&copy; {new Date().getFullYear()} StoryLettr.com. All rights reserved.</p>
           <div className="flex items-center gap-5">
             <a href="https://instagram.com" target="_blank" rel="noreferrer" className="hover:underline transition-colors">Instagram</a>

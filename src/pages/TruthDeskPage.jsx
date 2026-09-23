@@ -14,7 +14,7 @@ export default function TruthDeskPage() {
         path="/truth-desk"
       />
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <h1 className="font-headline text-3xl font-medium mb-2" style={{ color: 'var(--ink)' }}>Truth Desk</h1>
+        <h1 className="font-headline text-3xl font-semibold mb-2" style={{ color: 'var(--ink)' }}>Truth Desk</h1>
         <p className="text-sm mb-8 max-w-2xl" style={{ color: 'var(--ink)', opacity: 0.75 }}>
           Forward vs. Letter: the claims spreading fastest on WhatsApp and Instagram, checked against
           what actually happened.
