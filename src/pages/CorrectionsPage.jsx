@@ -36,7 +36,7 @@ export default function CorrectionsPage() {
         </h2>
         <ul className="space-y-4">
           {CORRECTIONS_LOG.map((c, i) => (
-            <li key={i} className="border-l-2 pl-4" style={{ borderColor: 'var(--postmark)' }}>
+            <li key={i} className="border-l-2 pl-4" style={{ borderColor: 'var(--seal)' }}>
               <div className="text-xs font-semibold" style={{ color: 'var(--forward)' }}>{c.date}</div>
               <div className="text-sm font-semibold" style={{ color: 'var(--ink)' }}>{c.story}</div>
               <p className="text-sm mt-0.5" style={{ color: 'var(--ink)', opacity: 0.85 }}>{c.note}</p>

@@ -5,7 +5,7 @@ import Logo from './Logo';
 
 const NAV_ITEMS = [
   { to: '/', label: 'Stories', end: true },
-  { to: '/mumbai', label: 'Browse by station' },
+  { to: '/mumbai', label: 'Browse by neighbourhood' },
   { to: '/truth-desk', label: 'Truth Desk' },
   { to: '/about', label: 'About' },
 ];

@@ -11,7 +11,7 @@ export default function NotFoundPage() {
         <p className="text-sm mb-6" style={{ color: 'var(--ink)', opacity: 0.75 }}>
           The page you're looking for doesn't exist.
         </p>
-        <Link to="/" className="underline text-sm font-semibold" style={{ color: 'var(--postmark)' }}>
+        <Link to="/" className="underline text-sm font-semibold" style={{ color: 'var(--seal)' }}>
           Back to Today's letter
         </Link>
       </div>

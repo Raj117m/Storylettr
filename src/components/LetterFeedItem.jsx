@@ -1,16 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Clock } from 'lucide-react';
-import Postmark from './Postmark';
+import Seal, { SealDateline } from './Seal';
 import { chapterById } from '../data/content';
 
+// Chapter tints are muted blends of the sapphire primary and espresso ink
+// only, per the brief — never new bright colours. Because both source
+// tokens swap with light/dark mode, these mixes automatically adapt too.
 const CHAPTER_TINTS = {
-  'city-life': '#8A93A6',
-  'work-money': '#7A8A6E',
-  'politics': '#9A7A7A',
-  'culture': '#7A8A9A',
-  'environment': '#6E8A78',
-  'truth-desk': '#B0362B',
+  'city-life': 'color-mix(in srgb, var(--primary) 85%, transparent)',
+  'work-money': 'color-mix(in srgb, var(--ink) 55%, var(--primary) 45%)',
+  'politics': 'color-mix(in srgb, var(--ink) 75%, var(--primary) 25%)',
+  'culture': 'color-mix(in srgb, var(--primary) 55%, transparent)',
+  'environment': 'color-mix(in srgb, var(--ink) 40%, var(--primary) 60%)',
+  'truth-desk': 'var(--ink)',
 };
 
 function hrefFor(item) {
@@ -21,7 +24,7 @@ function hrefFor(item) {
 
 /**
  * One row in the index-of-letters feed: headline, one-line summary,
- * postmark, reading time, with a thin left rule in the chapter's tint.
+ * seal, reading time, with a thin left rule in the chapter's tint.
  * This is deliberately not a card grid.
  */
 export default function LetterFeedItem({ item, seed = 0 }) {
@@ -52,8 +55,9 @@ export default function LetterFeedItem({ item, seed = 0 }) {
           </span>
         </div>
       </div>
-      <div className="shrink-0">
-        <Postmark station={item.station} date={item.postmark.date} status={item.postmark.status} size={64} seed={seed} />
+      <div className="shrink-0 flex flex-col items-center gap-1">
+        <Seal station={item.station} date={item.postmark.date} status={item.postmark.status} size={64} seed={seed} />
+        <SealDateline station={item.station} date={item.postmark.date} />
       </div>
     </article>
   );

@@ -16,22 +16,23 @@ export default function AboutPage() {
 
         <div className="space-y-5 font-body text-base leading-relaxed" style={{ color: 'var(--ink)', maxWidth: '65ch' }}>
           <p>
-            StoryLettr.com treats every story as a letter from the city. A letter carries a postmark, and a
-            postmark proves where and when something came from &mdash; which is exactly what a forwarded
-            WhatsApp message lacks. That's the gap we're trying to close.
+            StoryLettr.com treats every story as a letter from the city, closed with a wax seal. A wax seal
+            proves a letter is genuine and untampered &mdash; sealed by a specific hand, at a specific place
+            and time &mdash; which is exactly what a forwarded WhatsApp message can never carry. That's the
+            gap we're trying to close.
           </p>
           <h2 className="font-headline text-xl font-medium pt-2" style={{ color: 'var(--ink)' }}>How we report</h2>
           <p>
             Every story on this site is reported and written by a named person, not generated. Before a
-            postmark reads "Verified," the facts in that story have been checked against on-the-record
+            seal is pressed with its laurel, the facts in that story have been checked against on-the-record
             sources, documents, or direct observation &mdash; all listed in that story's "How we know this"
             section, along with anything we could not independently confirm.
           </p>
           <p>
             Our Truth Desk chapter exists specifically to check claims spreading on WhatsApp and Instagram
-            groups before they harden into assumed fact. Those pieces carry a "Checked" postmark instead of
-            "Verified," since the work there is evaluating someone else's claim rather than reporting a new
-            one.
+            groups before they harden into assumed fact. Those pieces carry a seal shown broken open and
+            labelled "Checked" instead of a laurel, since the work there is evaluating someone else's claim
+            rather than reporting a new one.
           </p>
           <h2 className="font-headline text-xl font-medium pt-2" style={{ color: 'var(--ink)' }}>What we get wrong</h2>
           <p>

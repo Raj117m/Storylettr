@@ -19,7 +19,7 @@ export default function LocalityPage() {
       />
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <nav className="text-xs mb-4" style={{ color: 'var(--forward)' }}>
-          <Link to="/mumbai" className="hover:underline">Browse by station</Link>
+          <Link to="/mumbai" className="hover:underline">Browse by neighbourhood</Link>
           <span className="mx-1.5">/</span>
           <span>{name}</span>
         </nav>
@@ -28,7 +28,7 @@ export default function LocalityPage() {
 
         {!known ? (
           <div className="text-center py-16 border border-dashed rounded-lg" style={{ borderColor: 'var(--forward)', color: 'var(--forward)' }}>
-            We don't have that station mapped yet.
+            We don't have that neighbourhood mapped yet.
           </div>
         ) : items.length === 0 ? (
           <div className="text-center py-16 border border-dashed rounded-lg space-y-3" style={{ borderColor: 'var(--forward)' }}>
@@ -36,7 +36,7 @@ export default function LocalityPage() {
             <a
               href={`mailto:tips@storylettr.com?subject=${encodeURIComponent(`Story idea: ${name}`)}`}
               className="inline-block text-sm font-semibold underline"
-              style={{ color: 'var(--postmark)' }}
+              style={{ color: 'var(--seal)' }}
             >
               Know something happening in {name}? Suggest a story
             </a>

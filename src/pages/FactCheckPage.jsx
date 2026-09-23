@@ -2,7 +2,7 @@ import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Clock, MessageSquareWarning } from 'lucide-react';
 import PageMeta from '../components/PageMeta';
-import Postmark from '../components/Postmark';
+import Seal, { SealDateline } from '../components/Seal';
 import HowWeKnowThis from '../components/HowWeKnowThis';
 import SendThisInstead from '../components/SendThisInstead';
 import LetterFeedItem from '../components/LetterFeedItem';
@@ -66,14 +66,17 @@ export default function FactCheckPage() {
 
       <article className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-10 pb-24">
         <header className="mb-8 space-y-4">
-          <div className="text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--postmark)' }}>
+          <div className="text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--seal)' }}>
             Truth Desk &middot; Forward vs. Letter
           </div>
           <h1 className="font-headline text-3xl sm:text-4xl font-medium leading-tight" style={{ color: 'var(--ink)' }}>
             {item.headline}
           </h1>
           <div className="flex items-center gap-4 flex-wrap pt-1">
-            <Postmark station={item.station} date={item.postmark.date} status="checked" size={72} animate seed={2} />
+            <div className="flex flex-col items-center gap-1">
+              <Seal station={item.station} date={item.postmark.date} status="checked" size={72} animate seed={2} />
+              <SealDateline station={item.station} date={item.postmark.date} />
+            </div>
             <div className="text-sm" style={{ color: 'var(--ink)' }}>
               {author && <Link to={`/authors/${author.slug}`} className="font-semibold hover:underline">{author.name}</Link>}
               <div className="flex items-center gap-1 text-xs mt-0.5" style={{ color: 'var(--forward)' }}>
@@ -97,9 +100,9 @@ export default function FactCheckPage() {
         {/* The letter: what actually happened, stamped Checked */}
         <div
           className="rounded-md p-5 mb-8 border-2"
-          style={{ borderColor: 'var(--postmark)', backgroundColor: 'color-mix(in srgb, var(--postmark) 6%, transparent)' }}
+          style={{ borderColor: 'var(--seal)', backgroundColor: 'color-mix(in srgb, var(--seal) 6%, transparent)' }}
         >
-          <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider mb-2" style={{ color: 'var(--postmark)' }}>
+          <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider mb-2" style={{ color: 'var(--seal)' }}>
             What actually happened
           </div>
           <p className="text-sm font-semibold leading-relaxed" style={{ color: 'var(--ink)' }}>{item.verdict}</p>

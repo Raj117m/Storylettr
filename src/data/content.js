@@ -12,30 +12,18 @@ export const CHAPTERS = [
 
 export const chapterById = (id) => CHAPTERS.find((c) => c.id === id);
 
-// Mumbai suburban rail lines — a stylised, representative subset of stations
-// (real stations, correctly ordered), not every stop on the network.
-export const LINES = [
-  {
-    id: 'western',
-    name: 'Western Line',
-    color: '#B0362B',
-    stations: ['churchgate', 'mumbai-central', 'dadar', 'bandra', 'andheri', 'borivali'],
-  },
-  {
-    id: 'central',
-    name: 'Central Line',
-    color: '#1B2A4A',
-    stations: ['csmt', 'byculla', 'dadar', 'kurla', 'ghatkopar', 'thane'],
-  },
-  {
-    id: 'harbour',
-    name: 'Harbour Line',
-    color: '#8A9099',
-    stations: ['csmt', 'wadala', 'vashi', 'panvel'],
-  },
+// The engraved deco map's winding route, roughly north to south along
+// Mumbai and its extended suburbs — a stylised, representative order (not
+// a literal, to-scale geography) used to lay neighbourhoods out along one
+// continuous line on /mumbai.
+export const NEIGHBOURHOOD_ROUTE = [
+  'thane', 'borivali', 'ghatkopar', 'andheri', 'vashi', 'kurla',
+  'bandra', 'panvel', 'wadala', 'dadar', 'byculla', 'mumbai-central',
+  'csmt', 'churchgate', 'colaba',
 ];
 
 export const STATIONS = {
+  'colaba': { name: 'Colaba' },
   'churchgate': { name: 'Churchgate' },
   'mumbai-central': { name: 'Mumbai Central' },
   'dadar': { name: 'Dadar' },
@@ -278,3 +266,17 @@ export const allSortedByDate = () =>
   [...CONTENT].sort((a, b) => (a.postmark.date < b.postmark.date ? 1 : -1));
 export const stationsWithContent = () =>
   new Set(CONTENT.filter((c) => c.station).map((c) => c.station));
+
+// The homepage's "today's letter" lead rotates across categories and
+// localities on its own schedule, so no single beat or place becomes the
+// site's default example. Narrative stories only (not fact-checks or
+// explainers) — the lead is meant to read as a piece of reporting.
+// Deterministic per calendar day (stable across server + client render,
+// and across every prerendered route within the same build), and reshuffled
+// automatically as the eligible set changes.
+export const pickRotatingLead = (date = new Date()) => {
+  const stories = CONTENT.filter((c) => c.type === 'story');
+  if (stories.length === 0) return null;
+  const dayIndex = Math.floor(date.getTime() / 86400000);
+  return stories[dayIndex % stories.length];
+};

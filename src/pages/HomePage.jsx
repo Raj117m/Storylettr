@@ -1,18 +1,19 @@
 import React from 'react';
-import Postmark from '../components/Postmark';
+import Seal, { SealDateline } from '../components/Seal';
 import LetterFeedItem from '../components/LetterFeedItem';
 import ChapterFilterRow from '../components/ChapterFilterRow';
 import PageMeta from '../components/PageMeta';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
-import { allSortedByDate } from '../data/content';
+import { allSortedByDate, pickRotatingLead } from '../data/content';
 
 export default function HomePage() {
   const all = allSortedByDate();
-  // The homepage's lead "letter" is always a story (not a fact-check or
-  // explainer) — Today's letter is meant to read as a piece of narrative
-  // reporting, with fact-checks and explainers surfacing in the feed below.
-  const lead = all.find((item) => item.type === 'story') || all[0];
+  // The homepage's lead "letter" rotates across categories and localities
+  // on its own schedule (see pickRotatingLead) so no single beat or place
+  // becomes the site's default example; it's always a narrative story, not
+  // a fact-check or explainer, so it reads as a piece of reporting.
+  const lead = pickRotatingLead() || all[0];
   const rest = all.filter((item) => item !== lead);
   const leadHref = lead.type === 'fact-check' ? `/fact-checks/${lead.slug}` : lead.type === 'explainer' ? `/explainers/${lead.slug}` : `/stories/${lead.slug}`;
 
@@ -41,7 +42,10 @@ export default function HomePage() {
           </p>
 
           <div className="flex items-center justify-center gap-4">
-            <Postmark station={lead.station} date={lead.postmark.date} status={lead.postmark.status} size={92} animate seed={0} />
+            <div className="flex flex-col items-center gap-1.5">
+              <Seal station={lead.station} date={lead.postmark.date} status={lead.postmark.status} size={92} animate seed={0} />
+              <SealDateline station={lead.station} date={lead.postmark.date} />
+            </div>
             <Link to={leadHref} className="inline-flex items-center gap-1.5 text-sm font-semibold hover:underline" style={{ color: 'var(--ink)' }}>
               Read the letter
               <ArrowRight className="w-4 h-4" />

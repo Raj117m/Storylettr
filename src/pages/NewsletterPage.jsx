@@ -16,7 +16,7 @@ export default function NewsletterPage() {
     <>
       <PageMeta
         title="Get the letter | StoryLettr.com"
-        description="One StoryLettr.com letter in your inbox, postmarked and ready to read."
+        description="One StoryLettr.com letter in your inbox, sealed and ready to read."
         path="/newsletter"
       />
       <div className="max-w-md mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
@@ -26,7 +26,7 @@ export default function NewsletterPage() {
         </p>
 
         {subscribed ? (
-          <div className="flex items-center justify-center gap-2 text-sm font-semibold" style={{ color: 'var(--postmark)' }}>
+          <div className="flex items-center justify-center gap-2 text-sm font-semibold" style={{ color: 'var(--seal)' }}>
             <Check className="w-4 h-4" />
             You're on the list.
           </div>

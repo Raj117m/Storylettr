@@ -2,7 +2,7 @@ import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Clock } from 'lucide-react';
 import PageMeta from '../components/PageMeta';
-import Postmark from '../components/Postmark';
+import Seal, { SealDateline } from '../components/Seal';
 import HowWeKnowThis from '../components/HowWeKnowThis';
 import SendThisInstead from '../components/SendThisInstead';
 import LetterFeedItem from '../components/LetterFeedItem';
@@ -79,7 +79,10 @@ export default function ArticlePage({ type }) {
           </p>
 
           <div className="flex items-center gap-4 flex-wrap pt-1">
-            <Postmark station={item.station} date={item.postmark.date} status={item.postmark.status} size={72} animate seed={1} />
+            <div className="flex flex-col items-center gap-1">
+              <Seal station={item.station} date={item.postmark.date} status={item.postmark.status} size={72} animate seed={1} />
+              <SealDateline station={item.station} date={item.postmark.date} />
+            </div>
             <div className="text-sm" style={{ color: 'var(--ink)' }}>
               {author && (
                 <Link to={`/authors/${author.slug}`} className="font-semibold hover:underline">
