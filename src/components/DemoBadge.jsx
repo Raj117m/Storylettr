@@ -1,7 +1,7 @@
 import React from 'react';
 
-export default function DemoBadge({ type = 'story', className = '' }) {
-  const label = type === 'data' ? 'Example data' : 'Illustrative story';
+export default function DemoBadge({ type = 'story', label: customLabel, className = '' }) {
+  const label = customLabel || (type === 'data' ? 'Example data' : 'Illustrative story');
   return (
     <span
       className={`text-[11px] font-mono tracking-tight inline-flex items-center gap-1 select-none ${className}`}
