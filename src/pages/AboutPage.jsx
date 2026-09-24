@@ -1,7 +1,7 @@
 import React from 'react';
 import PageMeta from '../components/PageMeta';
 import Logo from '../components/Logo';
-import { ArrowRight, UserCheck, MessageSquare, Filter, ShieldCheck, Layers, Layout, Zap, FlaskConical, BookOpen, Share2 } from 'lucide-react';
+import { ArrowRight, UserCheck, MessageSquare, Filter, ShieldCheck, Layers, Layout, FlaskConical, BookOpen, Share2 } from 'lucide-react';
 
 const PROCESS_STEPS = [
   { step: '01', title: 'Connect', desc: 'Identify practitioners who have built, operated, or solved real problems.', icon: UserCheck },

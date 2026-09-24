@@ -11,10 +11,10 @@ export default function FastStoryCard({ item, seed = 0 }) {
 
   return (
     <article
-      className="group relative rounded-xl p-6 sm:p-7 border font-interface transition-all duration-300 hover:shadow-md flex flex-col justify-between"
+      className="group relative rounded-2xl p-6 sm:p-7 border font-interface transition-all duration-300 card-depth-rich hover:-translate-y-1 hover:shadow-lg flex flex-col justify-between"
       style={{
-        backgroundColor: 'var(--paper)',
-        borderColor: 'color-mix(in srgb, var(--primary) 20%, transparent)',
+        backgroundColor: 'color-mix(in srgb, var(--paper) 98%, white)',
+        borderColor: 'color-mix(in srgb, var(--primary) 22%, transparent)',
       }}
     >
       <div>

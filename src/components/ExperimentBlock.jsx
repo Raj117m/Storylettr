@@ -7,10 +7,10 @@ export default function ExperimentBlock({ experiment }) {
 
   return (
     <div
-      className="rounded-xl p-6 sm:p-8 my-10 border font-interface shadow-md space-y-6"
+      className="relative rounded-2xl p-6 sm:p-9 my-12 border card-depth-rich font-interface space-y-6 overflow-hidden transition-all duration-300"
       style={{
         backgroundColor: 'color-mix(in srgb, var(--primary) 7%, var(--paper))',
-        borderColor: 'var(--primary)',
+        borderColor: 'color-mix(in srgb, var(--primary) 35%, transparent)',
       }}
     >
       {/* Header */}

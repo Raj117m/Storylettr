@@ -70,23 +70,27 @@ export default function HomePage() {
           </p>
 
           {/* Action CTAs */}
-          <div className="flex items-center justify-center gap-3.5 flex-wrap">
+          <div className="flex items-center justify-center gap-4 flex-wrap">
             <a
               href="#todays-letter"
-              className="inline-flex items-center gap-2 text-sm font-semibold px-5 py-3 rounded-md shadow-sm transition-all hover:opacity-95"
+              className="btn-editorial-action group inline-flex items-center gap-2.5 text-sm font-bold px-6 py-3.5 rounded-lg shadow-sm"
               style={{ backgroundColor: 'var(--action)', color: 'var(--action-ink)' }}
             >
               <span>Open Today’s Letter</span>
-              <ArrowRight className="w-4 h-4" />
+              <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
             </a>
 
             <a
               href="#stories"
-              className="inline-flex items-center gap-2 text-sm font-semibold px-5 py-3 rounded-md border transition-all hover:bg-black/5"
-              style={{ borderColor: 'var(--primary)', color: 'var(--primary)' }}
+              className="inline-flex items-center gap-2.5 text-sm font-semibold px-6 py-3.5 rounded-lg border transition-all duration-200 hover:-translate-y-0.5 hover:shadow-xs"
+              style={{
+                borderColor: 'color-mix(in srgb, var(--primary) 45%, transparent)',
+                backgroundColor: 'color-mix(in srgb, var(--paper) 90%, transparent)',
+                color: 'var(--primary)',
+              }}
             >
               <Layers className="w-4 h-4" />
-              <span>Explore Stories</span>
+              <span>Explore Dispatches</span>
             </a>
           </div>
         </div>
@@ -94,103 +98,144 @@ export default function HomePage() {
 
       {/* TODAY'S LETTER: Curiosity-Led Module */}
       {lead && (
-        <section id="todays-letter" className="py-12 border-b" style={{ borderColor: 'var(--primary)' }}>
-          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 font-interface">
+        <section id="todays-letter" className="py-14 border-b" style={{ borderColor: 'color-mix(in srgb, var(--primary) 20%, transparent)' }}>
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 font-interface">
             
             <div
-              className="rounded-2xl p-7 sm:p-10 border shadow-lg space-y-6 relative overflow-hidden"
+              className="relative rounded-3xl p-8 sm:p-12 border card-depth-rich overflow-hidden space-y-7"
               style={{
-                backgroundColor: 'color-mix(in srgb, var(--paper) 98%, white)',
-                borderColor: 'var(--primary)',
+                background: 'radial-gradient(ellipse at 88% 12%, color-mix(in srgb, var(--action) 14%, transparent) 0%, transparent 60%), color-mix(in srgb, var(--paper) 98%, white)',
+                borderColor: 'color-mix(in srgb, var(--primary) 35%, transparent)',
               }}
             >
-              {/* Top Header Pill */}
-              <div className="flex items-center justify-between flex-wrap gap-2 border-b pb-4" style={{ borderColor: 'color-mix(in srgb, var(--primary) 20%, transparent)' }}>
-                <div className="flex items-center gap-2">
+              {/* Subtle Ambient Decorative Glow in Background */}
+              <div
+                className="absolute top-0 right-0 w-80 h-80 rounded-full pointer-events-none pulse-glow blur-3xl opacity-25"
+                style={{
+                  background: 'radial-gradient(circle, var(--action) 0%, transparent 70%)',
+                }}
+                aria-hidden="true"
+              />
+
+              {/* Top Header Eyebrow Bar */}
+              <div className="flex items-center justify-between flex-wrap gap-3 border-b pb-5 relative z-10" style={{ borderColor: 'color-mix(in srgb, var(--primary) 18%, transparent)' }}>
+                <div className="flex items-center gap-2.5">
+                  <div className="flex items-center gap-2 px-3 py-1 rounded-full border shadow-2xs" style={{ backgroundColor: 'var(--primary)', borderColor: 'var(--primary)', color: 'var(--paper)' }}>
+                    <span className="w-2 h-2 rounded-full animate-ping" style={{ backgroundColor: 'var(--action)' }} />
+                    <span className="text-[11px] font-bold uppercase tracking-wider">
+                      Today’s Featured Letter
+                    </span>
+                  </div>
+
                   <span
-                    className="text-xs font-bold uppercase tracking-wider px-2.5 py-0.5 rounded"
+                    className="text-xs font-semibold px-2.5 py-0.5 rounded border"
                     style={{
-                      backgroundColor: 'var(--primary)',
-                      color: 'var(--paper)',
+                      backgroundColor: 'color-mix(in srgb, var(--forward) 10%, var(--paper))',
+                      borderColor: 'color-mix(in srgb, var(--forward) 25%, transparent)',
+                      color: 'var(--forward)',
                     }}
                   >
-                    Today’s Letter
-                  </span>
-                  <span className="text-xs font-semibold" style={{ color: 'var(--forward)' }}>
                     {lead.chapter ? lead.chapter.replace(/-/g, ' ') : 'Money & Business'}
                   </span>
                 </div>
+
                 <DemoBadge />
               </div>
 
               {/* Hook (The Surprising Opening) */}
-              <div className="space-y-2">
-                <span className="text-xs font-bold uppercase tracking-wider block" style={{ color: 'var(--forward)' }}>
-                  The Curiosity Hook:
+              <div className="space-y-1 relative z-10">
+                <span className="font-headline text-5xl sm:text-6xl leading-none block -mb-5 select-none" style={{ color: 'var(--action)', opacity: 0.45 }}>
+                  “
+                </span>
+                <span className="text-[11px] font-bold uppercase tracking-widest block" style={{ color: 'var(--action)' }}>
+                  The Operational Paradox
                 </span>
                 <h2
-                  className="font-headline text-3xl sm:text-4xl font-semibold leading-[1.15]"
+                  className="font-headline text-3xl sm:text-4xl md:text-5xl font-semibold leading-[1.14] pt-1"
                   style={{ color: 'var(--ink)' }}
                 >
-                  “Everyone told him to increase his advertising budget. <br />
-                  He stopped running ads instead.”
+                  Everyone told him to increase his advertising budget. <br className="hidden sm:inline" />
+                  He stopped running ads instead.
                 </h2>
               </div>
 
               {/* Contributor Profile */}
               {contributor && (
-                <div className="flex items-center gap-3 py-1">
-                  <img
-                    src={contributor.avatar}
-                    alt={contributor.name}
-                    className="w-10 h-10 rounded-full object-cover border-2 shrink-0"
-                    style={{ borderColor: 'var(--action)' }}
-                  />
-                  <div>
-                    <span className="font-semibold text-sm block" style={{ color: 'var(--ink)' }}>
-                      {contributor.name}
-                    </span>
-                    <span className="text-xs" style={{ color: 'var(--forward)' }}>
-                      {contributor.role} &bull; {contributor.location}
-                    </span>
+                <div className="flex items-center justify-between flex-wrap gap-4 py-3 px-4 rounded-xl border relative z-10" style={{ backgroundColor: 'color-mix(in srgb, var(--paper) 80%, white)', borderColor: 'color-mix(in srgb, var(--forward) 25%, transparent)' }}>
+                  <div className="flex items-center gap-3.5">
+                    <div className="relative">
+                      <img
+                        src={contributor.avatar}
+                        alt={contributor.name}
+                        className="w-12 h-12 rounded-full object-cover border-2 shadow-xs shrink-0"
+                        style={{ borderColor: 'var(--action)' }}
+                      />
+                      <span className="absolute -bottom-0.5 -right-0.5 w-4 h-4 rounded-full flex items-center justify-center border text-[9px] font-bold" style={{ backgroundColor: 'var(--primary)', color: 'var(--paper)', borderColor: 'var(--paper)' }}>
+                        ✓
+                      </span>
+                    </div>
+
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <span className="font-headline text-lg font-bold block" style={{ color: 'var(--ink)' }}>
+                          {contributor.name}
+                        </span>
+                        <span className="text-[10px] uppercase tracking-wider px-1.5 py-0.5 rounded font-bold" style={{ backgroundColor: 'color-mix(in srgb, var(--primary) 12%, transparent)', color: 'var(--primary)' }}>
+                          Practitioner
+                        </span>
+                      </div>
+                      <span className="text-xs" style={{ color: 'var(--forward)' }}>
+                        {contributor.role} &bull; {contributor.location}
+                      </span>
+                    </div>
                   </div>
+
+                  <span className="text-xs font-mono px-2.5 py-1 rounded border" style={{ borderColor: 'color-mix(in srgb, var(--forward) 30%, transparent)', color: 'var(--forward)' }}>
+                    4 min read &bull; Trial verified
+                  </span>
                 </div>
               )}
 
               {/* Tiny Payoff Visible Immediately */}
               <div
-                className="rounded-lg p-4 border-l-4 space-y-1.5"
+                className="rounded-xl p-5 sm:p-6 border-l-4 space-y-2 relative z-10 shadow-xs"
                 style={{
-                  backgroundColor: 'color-mix(in srgb, var(--primary) 7%, var(--paper))',
-                  borderColor: 'var(--primary)',
+                  backgroundColor: 'color-mix(in srgb, var(--primary) 8%, var(--paper))',
+                  borderColor: 'var(--action)',
                 }}
               >
-                <span className="text-xs font-bold uppercase tracking-wider block" style={{ color: 'var(--primary)' }}>
-                  Tiny Payoff (What He Discovered):
-                </span>
-                <p className="font-body text-base leading-relaxed" style={{ color: 'var(--ink)' }}>
-                  “Three months later, referrals were responsible for most of his new customers. He had replaced ad spend with a deliberate post-milestone physical touchpoint.”
+                <div className="flex items-center gap-2">
+                  <Sparkles className="w-3.5 h-3.5" style={{ color: 'var(--action)' }} />
+                  <span className="text-xs font-bold uppercase tracking-wider block" style={{ color: 'var(--primary)' }}>
+                    Immediate Discovery: What Happened
+                  </span>
+                </div>
+                <p className="font-body text-base sm:text-lg leading-relaxed" style={{ color: 'var(--ink)' }}>
+                  “Three months later, referrals were responsible for most of his new customers. He had replaced ad spend with a deliberate post-milestone physical touchpoint that clients kept on their desks permanently.”
                 </p>
               </div>
 
-              {/* Curiosity Cliffhanger & CTA */}
-              <div className="pt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                <div className="space-y-0.5">
-                  <p className="font-headline text-2xl font-bold" style={{ color: 'var(--ink)' }}>
+              {/* Curiosity Cliffhanger & High-Impact CTA */}
+              <div className="pt-3 flex flex-col sm:flex-row sm:items-center justify-between gap-5 relative z-10 border-t" style={{ borderColor: 'color-mix(in srgb, var(--primary) 18%, transparent)' }}>
+                <div className="space-y-1">
+                  <p className="font-headline text-2xl sm:text-3xl font-bold leading-tight" style={{ color: 'var(--ink)' }}>
                     Why did it work?
                   </p>
-                  <p className="text-xs" style={{ color: 'var(--forward)' }}>
-                    Discover the exact referral engineering framework and the 30-day experiment data.
+                  <p className="text-xs sm:text-sm font-medium" style={{ color: 'var(--forward)' }}>
+                    Read the operational pivot, the intuition test, and the 30-day trial data.
                   </p>
                 </div>
 
                 <Link
                   to={`/stories/${lead.slug}`}
-                  className="inline-flex items-center justify-center gap-2 text-sm font-semibold px-6 py-3 rounded-md shadow-sm transition-all hover:opacity-95 shrink-0"
-                  style={{ backgroundColor: 'var(--primary)', color: 'var(--paper)' }}
+                  className="btn-editorial-primary group inline-flex items-center justify-center gap-3 text-sm font-bold px-7 py-4 rounded-xl shadow-md transition-all shrink-0"
+                  style={{
+                    background: 'linear-gradient(180deg, color-mix(in srgb, var(--primary) 92%, white) 0%, var(--primary) 100%)',
+                    color: 'var(--paper)',
+                  }}
                 >
                   <span>Open the Letter</span>
-                  <ArrowRight className="w-4 h-4" />
+                  <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1.5" />
                 </Link>
               </div>
             </div>

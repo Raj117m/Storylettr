@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, User, Sparkles, MapPin, X } from 'lucide-react';
+import { ArrowRight, Sparkles, MapPin, X } from 'lucide-react';
 import PageMeta from '../components/PageMeta';
 import { MiniSeal } from '../components/Seal';
 import DemoBadge from '../components/DemoBadge';

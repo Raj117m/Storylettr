@@ -6,12 +6,12 @@ export default function RevealCard({ prompt, buttonText = 'Reveal what changed',
 
   return (
     <div
-      className="rounded-lg p-6 my-8 border transition-all duration-300 shadow-2xs font-interface"
+      className="rounded-2xl p-6 sm:p-8 my-10 border transition-all duration-300 card-depth-rich font-interface overflow-hidden"
       style={{
         backgroundColor: isRevealed
-          ? 'color-mix(in srgb, var(--primary) 6%, var(--paper))'
+          ? 'color-mix(in srgb, var(--primary) 7%, var(--paper))'
           : 'color-mix(in srgb, var(--forward) 6%, var(--paper))',
-        borderColor: isRevealed ? 'var(--primary)' : 'color-mix(in srgb, var(--forward) 40%, transparent)',
+        borderColor: isRevealed ? 'var(--primary)' : 'color-mix(in srgb, var(--forward) 35%, transparent)',
       }}
     >
       <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider mb-2" style={{ color: 'var(--forward)' }}>
@@ -19,14 +19,14 @@ export default function RevealCard({ prompt, buttonText = 'Reveal what changed',
         <span>Key Operational Pivot</span>
       </div>
 
-      <p className="font-headline text-2xl font-semibold mb-4 leading-tight" style={{ color: 'var(--ink)' }}>
+      <p className="font-headline text-2xl sm:text-3xl font-semibold mb-5 leading-tight" style={{ color: 'var(--ink)' }}>
         {prompt}
       </p>
 
       {!isRevealed ? (
         <button
           onClick={() => setIsRevealed(true)}
-          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-md text-sm font-semibold transition-all cursor-pointer hover:opacity-90 active:scale-98"
+          className="btn-editorial-action inline-flex items-center gap-2.5 px-5 py-3 rounded-lg text-sm font-bold cursor-pointer"
           style={{ backgroundColor: 'var(--action)', color: 'var(--action-ink)' }}
         >
           <Eye className="w-4 h-4" />
