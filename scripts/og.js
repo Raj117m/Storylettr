@@ -192,8 +192,8 @@ export function storyCard({ chapter, headline, summary, datelineText }) {
 
 export function defaultCard() {
   return frame(`
-    <text x="64" y="300" font-family="Cormorant Garamond" font-weight="600" font-size="84" fill="${C.ink}">Mumbai's news,</text>
-    <text x="64" y="390" font-family="Cormorant Garamond" font-weight="600" font-size="84" fill="${C.ink}">told as it happened.</text>
+    <text x="64" y="300" font-family="Cormorant Garamond" font-weight="600" font-size="84" fill="${C.ink}">Real stories,</text>
+    <text x="64" y="390" font-family="Cormorant Garamond" font-weight="600" font-size="84" fill="${C.ink}">tested in the real world.</text>
     <text x="64" y="470" font-family="Cormorant Garamond" font-weight="600" font-style="italic" font-size="40" fill="${C.primary}">Sharing stories, building real human connection.</text>
     ${sealBlock({ broken: false, datelineText: 'STORYLETTR.COM', markText: 'Verified' })}`);
 }

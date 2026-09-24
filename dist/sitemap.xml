@@ -1,16 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://storylettr.com/</loc></url>
+  <url><loc>https://storylettr.com/stories</loc></url>
+  <url><loc>https://storylettr.com/people</loc></url>
+  <url><loc>https://storylettr.com/atlas</loc></url>
   <url><loc>https://storylettr.com/mumbai</loc></url>
+  <url><loc>https://storylettr.com/experiments</loc></url>
   <url><loc>https://storylettr.com/truth-desk</loc></url>
   <url><loc>https://storylettr.com/about</loc></url>
   <url><loc>https://storylettr.com/corrections</loc></url>
   <url><loc>https://storylettr.com/newsletter</loc></url>
-  <url><loc>https://storylettr.com/chapters/city-life</loc></url>
-  <url><loc>https://storylettr.com/chapters/work-money</loc></url>
-  <url><loc>https://storylettr.com/chapters/politics</loc></url>
-  <url><loc>https://storylettr.com/chapters/culture</loc></url>
-  <url><loc>https://storylettr.com/chapters/environment</loc></url>
+  <url><loc>https://storylettr.com/chapters/all</loc></url>
+  <url><loc>https://storylettr.com/chapters/work-careers</loc></url>
+  <url><loc>https://storylettr.com/chapters/money-business</loc></url>
+  <url><loc>https://storylettr.com/chapters/technology</loc></url>
+  <url><loc>https://storylettr.com/chapters/systems</loc></url>
+  <url><loc>https://storylettr.com/chapters/creators</loc></url>
+  <url><loc>https://storylettr.com/chapters/unusual-experiences</loc></url>
+  <url><loc>https://storylettr.com/chapters/experiments</loc></url>
   <url><loc>https://storylettr.com/chapters/truth-desk</loc></url>
   <url><loc>https://storylettr.com/mumbai/colaba</loc></url>
   <url><loc>https://storylettr.com/mumbai/churchgate</loc></url>
@@ -27,13 +34,22 @@
   <url><loc>https://storylettr.com/mumbai/wadala</loc></url>
   <url><loc>https://storylettr.com/mumbai/vashi</loc></url>
   <url><loc>https://storylettr.com/mumbai/panvel</loc></url>
-  <url><loc>https://storylettr.com/authors/priya-nair</loc></url>
+  <url><loc>https://storylettr.com/authors/arjun-mehta</loc></url>
+  <url><loc>https://storylettr.com/authors/vikram-rao</loc></url>
+  <url><loc>https://storylettr.com/authors/maya-sen</loc></url>
+  <url><loc>https://storylettr.com/authors/marcus-vance</loc></url>
+  <url><loc>https://storylettr.com/authors/elena-rostova</loc></url>
+  <url><loc>https://storylettr.com/authors/suresh-patil</loc></url>
   <url><loc>https://storylettr.com/authors/aakash-fernandes</loc></url>
-  <url><loc>https://storylettr.com/glossary/fast-local</loc></url>
-  <url><loc>https://storylettr.com/glossary/season-ticket</loc></url>
-  <url><loc>https://storylettr.com/stories/the-802-from-andheri</loc></url>
-  <url><loc>https://storylettr.com/stories/dadar-flower-market</loc></url>
-  <url><loc>https://storylettr.com/stories/kurla-drainage</loc></url>
-  <url><loc>https://storylettr.com/explainers/how-mumbai-local-fares-work</loc></url>
+  <url><loc>https://storylettr.com/glossary/intensity-compression</loc></url>
+  <url><loc>https://storylettr.com/glossary/default-effect</loc></url>
+  <url><loc>https://storylettr.com/glossary/referral-loop</loc></url>
+  <url><loc>https://storylettr.com/stories/stopped-running-ads-growth</loc></url>
+  <url><loc>https://storylettr.com/stories/cafe-owner-price-change</loc></url>
+  <url><loc>https://storylettr.com/stories/recruiter-cv-mistake</loc></url>
+  <url><loc>https://storylettr.com/stories/manufacturer-unsung-salesperson</loc></url>
+  <url><loc>https://storylettr.com/stories/niche-creator-monetization</loc></url>
+  <url><loc>https://storylettr.com/stories/4-day-workweek-tech-ceo</loc></url>
   <url><loc>https://storylettr.com/fact-checks/will-mumbai-locals-stop-from-monday</loc></url>
+  <url><loc>https://storylettr.com/fact-checks/bank-digital-currency-lockout-hoax</loc></url>
 </urlset>

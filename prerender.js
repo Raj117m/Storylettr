@@ -29,7 +29,11 @@ function routeHrefFor(item) {
 
 const routes = new Set([
   '/',
+  '/stories',
+  '/people',
+  '/atlas',
   '/mumbai',
+  '/experiments',
   '/truth-desk',
   '/about',
   '/corrections',
@@ -60,7 +64,7 @@ for (const item of CONTENT) {
   og.writePng(path.join(clientDir, file), svg);
   OG_BY_ROUTE[route] = { url: `${ORIGIN}/${file}`, alt: item.type === 'fact-check' ? `${item.headline} ${item.finding || item.verdict}` : item.headline };
 }
-const DEFAULT_OG = { url: `${ORIGIN}/og/default.png`, alt: "StoryLettr.com: Mumbai's news, told as it happened." };
+const DEFAULT_OG = { url: `${ORIGIN}/og/default.png`, alt: "StoryLettr.com: Real stories, tested in the real world." };
 
 function buildHeadTags(head, urlPath) {
   if (!head) return '';
@@ -145,5 +149,7 @@ for (const entry of fs.readdirSync(clientDir)) {
 }
 fs.rmSync(clientDir, { recursive: true, force: true });
 fs.rmSync(serverDir, { recursive: true, force: true });
+fs.writeFileSync(path.join(finalDir, 'CNAME'), 'storylettr.com\n', 'utf-8');
+fs.writeFileSync(path.join(finalDir, '.nojekyll'), '', 'utf-8');
 
 console.log('dist/ is ready to deploy.');

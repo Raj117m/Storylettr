@@ -5,7 +5,9 @@ import Logo from './Logo';
 
 const NAV_ITEMS = [
   { to: '/', label: 'Stories', end: true },
-  { to: '/mumbai', label: 'Browse by neighbourhood' },
+  { to: '/people', label: 'People' },
+  { to: '/atlas', label: 'Story Atlas' },
+  { to: '/experiments', label: 'Experiments' },
   { to: '/truth-desk', label: 'Truth Desk' },
   { to: '/about', label: 'About' },
 ];
@@ -20,6 +22,7 @@ export default function Navbar({ onOpenSearch }) {
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
+          {/* Brand Logo */}
           <Link to="/" className="flex items-center gap-2.5 cursor-pointer focus:outline-none" onClick={() => setMobileMenuOpen(false)}>
             <Logo size={32} />
             <span className="font-headline text-[22px] font-semibold" style={{ color: 'var(--ink)' }}>
@@ -27,14 +30,17 @@ export default function Navbar({ onOpenSearch }) {
             </span>
           </Link>
 
-          <nav className="hidden lg:flex items-center gap-7">
+          {/* Desktop Navigation Links */}
+          <nav className="hidden lg:flex items-center gap-6">
             {NAV_ITEMS.map((item) => (
               <NavLink
                 key={item.to}
                 to={item.to}
                 end={item.end}
                 className={({ isActive }) =>
-                  `text-sm font-medium transition-opacity hover:opacity-100 ${isActive ? 'opacity-100 underline underline-offset-4' : 'opacity-75'}`
+                  `text-sm font-medium transition-opacity hover:opacity-100 ${
+                    isActive ? 'opacity-100 underline underline-offset-4 font-semibold' : 'opacity-75'
+                  }`
                 }
                 style={{ color: 'var(--primary)' }}
               >
@@ -43,10 +49,11 @@ export default function Navbar({ onOpenSearch }) {
             ))}
           </nav>
 
+          {/* Actions: Search Button & Get the letter */}
           <div className="flex items-center gap-2">
             <button
               onClick={onOpenSearch}
-              className="hidden sm:flex items-center gap-2 text-sm border rounded-md px-3 py-1.5 cursor-pointer"
+              className="hidden sm:flex items-center gap-2 text-sm border rounded-md px-3 py-1.5 cursor-pointer hover:bg-black/5 transition-colors"
               style={{ color: 'var(--ink)', borderColor: 'var(--forward)' }}
               title="Search StoryLettr.com"
             >
@@ -56,7 +63,7 @@ export default function Navbar({ onOpenSearch }) {
 
             <Link
               to="/newsletter"
-              className="hidden md:inline-flex items-center gap-1.5 text-sm font-semibold px-3 py-1.5 rounded-md"
+              className="hidden md:inline-flex items-center gap-1.5 text-sm font-semibold px-3 py-1.5 rounded-md shadow-2xs hover:opacity-95 transition-opacity"
               style={{ backgroundColor: 'var(--primary)', color: 'var(--paper)' }}
             >
               <Mail className="w-3.5 h-3.5" />
@@ -84,6 +91,7 @@ export default function Navbar({ onOpenSearch }) {
         </div>
       </div>
 
+      {/* Mobile Drawer */}
       {mobileMenuOpen && (
         <div className="lg:hidden border-t px-4 pt-3 pb-5 space-y-1" style={{ borderColor: 'var(--primary)' }}>
           {NAV_ITEMS.map((item) => (
