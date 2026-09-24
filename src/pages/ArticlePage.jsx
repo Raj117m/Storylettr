@@ -51,77 +51,78 @@ export default function ArticlePage({ type = 'story' }) {
       {/* Reading Progress Bar fixed near top */}
       <StoryProgress stages={item.stages || []} />
 
-      <article className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-10 pb-24 font-interface">
+      <article className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10 pb-24 font-interface">
         {/* Header */}
-        <header className="mb-6 space-y-4">
+        <header className="mb-8 space-y-5">
           <div className="flex items-center justify-between flex-wrap gap-2">
             <span
-              className="text-xs font-semibold uppercase tracking-wider px-2.5 py-0.5 rounded"
+              className="text-xs font-mono font-semibold uppercase tracking-wider px-3 py-1 rounded-full border"
               style={{
-                backgroundColor: 'color-mix(in srgb, var(--primary) 10%, transparent)',
-                color: 'var(--primary)',
+                backgroundColor: 'var(--sapphire-light)',
+                borderColor: 'var(--sapphire)',
+                color: 'var(--sapphire)',
               }}
             >
               {chapter?.name}
             </span>
 
-            {item.isDemo && <DemoBadge />}
+            {item.isDemo && <DemoBadge type="story" />}
           </div>
 
           <h1
-            className="font-headline text-[32px] sm:text-[46px] leading-[1.12] font-semibold"
-            style={{ color: 'var(--ink)' }}
+            className="font-headline text-[34px] sm:text-[54px] leading-[1.1] font-normal"
+            style={{ color: 'var(--text-primary)' }}
           >
             {item.headline}
           </h1>
 
-          <p className="text-base sm:text-lg leading-relaxed font-body" style={{ color: 'var(--ink)', opacity: 0.85 }}>
+          <p className="text-lg sm:text-xl leading-relaxed font-body italic" style={{ color: 'var(--text-secondary)' }}>
             {item.hook || item.summary}
           </p>
 
           {/* Contributor Profile Banner */}
           <div
-            className="rounded-lg p-4 border flex items-center justify-between flex-wrap gap-4"
+            className="rounded-2xl p-5 sm:p-6 border flex items-center justify-between flex-wrap gap-4 shadow-xs"
             style={{
-              backgroundColor: 'color-mix(in srgb, var(--paper) 98%, white)',
-              borderColor: 'color-mix(in srgb, var(--forward) 30%, transparent)',
+              backgroundColor: 'var(--bg-elevated)',
+              borderColor: 'var(--border-subtle)',
             }}
           >
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-4">
               {contributor && (
                 <img
                   src={contributor.avatar}
                   alt={contributor.name}
-                  className="w-12 h-12 rounded-full object-cover border-2 shrink-0"
-                  style={{ borderColor: 'var(--action)' }}
+                  className="w-14 h-14 rounded-full object-cover border-2 shadow-xs shrink-0 ring-1 ring-[var(--brass)]"
+                  style={{ borderColor: 'var(--bg-elevated)' }}
                 />
               )}
-              <div className="text-xs">
+              <div className="space-y-0.5">
                 {contributor && (
-                  <span className="font-headline text-lg font-bold block" style={{ color: 'var(--ink)' }}>
+                  <span className="font-headline text-xl sm:text-2xl font-normal block" style={{ color: 'var(--text-primary)' }}>
                     {contributor.name}
                   </span>
                 )}
-                <span className="font-medium block" style={{ color: 'var(--primary)' }}>
+                <span className="text-xs font-semibold block text-[var(--sapphire)]">
                   {contributor?.role || 'Contributor'}
                 </span>
                 {item.station && (
-                  <span className="flex items-center gap-1 text-[11px] mt-0.5" style={{ color: 'var(--forward)' }}>
-                    <MapPin className="w-3 h-3" />
+                  <span className="flex items-center gap-1 text-[11px] text-[var(--text-muted)] font-mono">
+                    <MapPin className="w-3 h-3 text-[var(--brass)]" />
                     {stationName(item.station)}
                   </span>
                 )}
               </div>
             </div>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-4">
               <div className="flex flex-col items-center">
-                <Seal station={item.station} date={item.postmark?.date} status={sealStatus(item)} size={64} animate seed={1} />
+                <Seal station={item.station} date={item.postmark?.date} status={sealStatus(item)} size={60} animate seed={1} />
                 <SealDateline station={item.station} date={item.postmark?.date} />
               </div>
-              <div className="text-xs flex items-center gap-1 font-mono" style={{ color: 'var(--forward)' }}>
+              <div className="text-xs flex items-center gap-1 font-mono text-[var(--text-muted)]">
                 <Clock className="w-3.5 h-3.5" />
-                {item.readingTimeMin}m
+                {item.readingTimeMin}m read
               </div>
             </div>
           </div>
@@ -132,8 +133,8 @@ export default function ArticlePage({ type = 'story' }) {
 
         {/* Progressive Body Text Section 1 */}
         <div
-          className="font-body space-y-5 my-8"
-          style={{ color: 'var(--ink)', fontSize: '19px', lineHeight: 1.7, maxWidth: '65ch' }}
+          className="font-body space-y-6 my-10"
+          style={{ color: 'var(--text-primary)', fontSize: '20px', lineHeight: 1.68, maxWidth: '68ch' }}
         >
           {item.body && item.body.slice(0, 2).map((p, i) => (
             <p key={i}>{p}</p>

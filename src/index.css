@@ -1,25 +1,84 @@
 @import "tailwindcss";
 
 :root {
-  --paper: #F1E9D8;
-  --ink: #2A211C;
-  --primary: #1C3D5C;
-  --seal: #6B2331;
-  /* lightened from the brief's literal #A6813C (a barely-visible shift) so
-     the --action-ink text on it still clears WCAG AA's 4.5:1. */
-  --action: #AE873F;
-  --action-ink: #2A211C; /* text on the action button is always the light-mode ink value */
-  --forward: #6E655A;
+  /* Semantic surface hierarchy - Light Mode */
+  --bg-primary: #F8F4EC;
+  --bg-elevated: #FFFFFF;
+  --bg-surface: #EFE6D5;
+  --bg-feature: #14283C;
+  --bg-feature-ink: #F8F4EC;
+
+  --text-primary: #1C1612;
+  --text-secondary: #4A3E36;
+  --text-muted: #72675C;
+
+  --sapphire: #1B3D5C;
+  --sapphire-bright: #25557E;
+  --sapphire-light: #EBF2F8;
+  --sapphire-glow: rgba(27, 61, 92, 0.28);
+
+  --oxblood: #6A1E2D;
+  --oxblood-deep: #4A121D;
+  --oxblood-surface: #F9EBEE;
+
+  --brass: #AE873F;
+  --brass-bright: #C99E4B;
+  --brass-glow: rgba(174, 135, 63, 0.32);
+
+  --stone: #E5DDCB;
+  --border-subtle: rgba(28, 22, 18, 0.12);
+  --border-medium: rgba(28, 22, 18, 0.22);
+  --border-strong: rgba(28, 22, 18, 0.38);
+
+  /* Legacy mappings */
+  --paper: var(--bg-primary);
+  --ink: var(--text-primary);
+  --primary: var(--sapphire);
+  --seal: var(--oxblood);
+  --action: var(--brass);
+  --action-ink: #1C1612;
+  --forward: var(--text-muted);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --paper: #211A14;
-    --ink: #EDE3CF;
-    --primary: #5B8CB3;
-    --seal: #C97A64;
-    --action: #C9A45C;
-    --forward: #A79C8C;
+    /* Semantic surface hierarchy - Dark Espresso Mode */
+    --bg-primary: #16120E;     /* Deep clean espresso base */
+    --bg-elevated: #221B16;    /* Visibly lifted secondary card surface */
+    --bg-surface: #2C231C;     /* Distinct interactive panel */
+    --bg-feature: #101D2B;     /* Rich dark sapphire accent surface */
+    --bg-feature-ink: #F5EFE6;
+
+    --text-primary: #F5EFE6;   /* Clear cream text */
+    --text-secondary: #D4C7B5; /* Warm readable secondary */
+    --text-muted: #9E9182;     /* Warm stone neutral (WCAG AA accessible) */
+
+    --sapphire: #5490C0;       /* Richer sapphire controls */
+    --sapphire-bright: #72A7D7;
+    --sapphire-light: #162638;
+    --sapphire-glow: rgba(84, 144, 192, 0.35);
+
+    --oxblood: #B85348;        /* Deeper oxblood accents */
+    --oxblood-deep: #D0695D;
+    --oxblood-surface: #2D191A;
+
+    --brass: #CCA352;          /* Intentional warm brass highlights */
+    --brass-bright: #E2B968;
+    --brass-glow: rgba(204, 163, 82, 0.35);
+
+    --stone: #3A3026;
+    --border-subtle: rgba(245, 239, 230, 0.12);
+    --border-medium: rgba(245, 239, 230, 0.22);
+    --border-strong: rgba(245, 239, 230, 0.38);
+
+    /* Legacy compatibility */
+    --paper: var(--bg-primary);
+    --ink: var(--text-primary);
+    --primary: var(--sapphire);
+    --seal: var(--oxblood);
+    --action: var(--brass);
+    --action-ink: #16120E;
+    --forward: var(--text-muted);
   }
 }
 
@@ -29,44 +88,44 @@
   }
 
   body {
-    background-color: var(--paper);
-    color: var(--ink);
-    font-family: 'Libre Franklin', system-ui, -apple-system, sans-serif;
-    line-height: 1.5;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.55;
   }
 
   .font-interface {
-    font-family: 'Libre Franklin', system-ui, -apple-system, sans-serif;
+    font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   }
 
   h1, h2, h3, .font-headline {
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    font-weight: 600;
+    font-family: 'Instrument Serif', 'Cormorant Garamond', Georgia, serif;
+    font-weight: 400;
+    letter-spacing: -0.01em;
   }
 
   .font-body {
-    font-family: 'Spectral', Georgia, serif;
+    font-family: 'Source Serif 4', 'Spectral', Georgia, serif;
+  }
+
+  .font-mono, .font-evidence {
+    font-family: 'IBM Plex Mono', monospace;
   }
 
   .font-devanagari-headline {
-    font-family: 'Tiro Devanagari Hindi', 'Tiro Devanagari Marathi', 'Cormorant Garamond', Georgia, serif;
+    font-family: 'Tiro Devanagari Hindi', 'Tiro Devanagari Marathi', 'Instrument Serif', Georgia, serif;
   }
 
   .font-devanagari-body {
-    font-family: 'Noto Serif Devanagari', 'Spectral', Georgia, serif;
+    font-family: 'Noto Serif Devanagari', 'Source Serif 4', Georgia, serif;
   }
 
-  /* Sentence case everywhere by convention (written into copy), except the
-     dateline under each wax seal, where full caps read like the line under
-     an old letter's seal. */
   a, button {
     text-underline-offset: 2px;
   }
 
-  /* Sapphire, not oxblood: oxblood is reserved for seals and
-     Checked/Verified marks. */
   :focus-visible {
-    outline: 2px solid var(--primary);
+    outline: 2px solid var(--sapphire);
     outline-offset: 2px;
   }
 }

@@ -37,33 +37,29 @@ export default function FactCheckPage() {
         type="article"
       />
 
-      <article className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-10 pb-24 font-interface">
+      <article className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-12 pb-24 font-interface">
         {/* Header */}
-        <header className="mb-8 space-y-4">
+        <header className="mb-10 space-y-4">
           <div className="flex items-center justify-between flex-wrap gap-2">
             <span
-              className="text-xs font-semibold uppercase tracking-wider px-2.5 py-0.5 rounded"
-              style={{
-                backgroundColor: 'color-mix(in srgb, var(--seal) 10%, transparent)',
-                color: 'var(--seal)',
-              }}
+              className="text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded bg-[var(--bg-feature)] text-[var(--oxblood)] border border-[rgba(184,83,72,0.3)] font-mono"
             >
               Truth Desk &bull; Claim Investigation
             </span>
-            {item.isDemo && <DemoBadge />}
+            {item.isDemo && <DemoBadge label="Verified investigation" />}
           </div>
 
-          <h1 className="font-headline text-[30px] sm:text-[42px] leading-[1.15] font-semibold" style={{ color: 'var(--ink)' }}>
+          <h1 className="font-headline text-3xl sm:text-4xl lg:text-5xl leading-[1.12] font-semibold text-[var(--text-primary)]">
             {item.headline}
           </h1>
 
-          <div className="flex items-center gap-3 text-xs" style={{ color: 'var(--forward)' }}>
+          <div className="flex items-center gap-3 text-xs text-[var(--text-muted)]">
             {author && (
-              <span>Investigated by <strong style={{ color: 'var(--ink)' }}>{author.name}</strong></span>
+              <span>Investigated by <strong className="text-[var(--text-primary)]">{author.name}</strong></span>
             )}
             <span>&bull;</span>
             <span className="flex items-center gap-1 font-mono">
-              <Clock className="w-3 h-3" />
+              <Clock className="w-3.5 h-3.5 text-[var(--sapphire)]" />
               {item.readingTimeMin}m read
             </span>
           </div>
@@ -72,22 +68,18 @@ export default function FactCheckPage() {
         {/* 1. CLAIM: What's being forwarded */}
         {item.rumour && (
           <div
-            className="rounded-lg p-5 mb-6 border space-y-2"
-            style={{
-              backgroundColor: 'color-mix(in srgb, var(--forward) 6%, var(--paper))',
-              borderColor: 'color-mix(in srgb, var(--forward) 40%, transparent)',
-            }}
+            className="rounded-xl p-5 sm:p-6 mb-8 border space-y-3 bg-[var(--bg-surface)] border-[rgba(184,83,72,0.25)] shadow-sm"
           >
-            <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider" style={{ color: 'var(--forward)' }}>
-              <MessageSquareWarning className="w-4 h-4 text-amber-600" />
+            <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[var(--oxblood)] font-mono">
+              <MessageSquareWarning className="w-4 h-4 text-[var(--oxblood)]" />
               <span>1. The Forwarded Claim</span>
             </div>
-            <p className="text-sm font-body italic leading-relaxed" style={{ color: 'var(--ink)' }}>
-              {item.rumour.text}
+            <p className="font-editorial text-base sm:text-lg italic leading-relaxed text-[var(--text-primary)] pl-2 border-l-2 border-[var(--oxblood)]">
+              "{item.rumour.text}"
             </p>
             {item.rumour.spread && (
-              <p className="text-xs font-mono" style={{ color: 'var(--forward)' }}>
-                Spread: {item.rumour.spread}
+              <p className="text-xs font-mono text-[var(--text-muted)] pt-1">
+                Reported spread: {item.rumour.spread}
               </p>
             )}
           </div>
@@ -95,28 +87,20 @@ export default function FactCheckPage() {
 
         {/* 2. VERDICT & WHAT ACTUALLY HAPPENED */}
         <div
-          className="rounded-xl p-6 mb-8 border flex flex-col-reverse sm:flex-row items-start gap-6 shadow-sm"
-          style={{
-            borderColor: 'var(--seal)',
-            backgroundColor: 'color-mix(in srgb, var(--seal) 5%, var(--paper))',
-          }}
+          className="rounded-xl p-6 sm:p-7 mb-10 border flex flex-col-reverse sm:flex-row items-start gap-6 shadow-md bg-[var(--bg-elevated)] border-[var(--border-light)]"
         >
-          <div className="flex-1 min-w-0 space-y-2">
+          <div className="flex-1 min-w-0 space-y-3">
             <span
-              className="text-xs font-bold uppercase tracking-wider px-2 py-0.5 rounded inline-block"
-              style={{
-                backgroundColor: 'color-mix(in srgb, var(--seal) 15%, transparent)',
-                color: 'var(--seal)',
-              }}
+              className="text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded inline-block bg-[var(--bg-feature)] text-[var(--oxblood)] border border-[rgba(184,83,72,0.3)] font-mono"
             >
               2. Official Verdict: {item.finding || 'False as stated'}
             </span>
-            <p className="font-headline text-2xl font-bold leading-tight" style={{ color: 'var(--ink)' }}>
+            <p className="font-headline text-2xl sm:text-3xl font-bold leading-tight text-[var(--text-primary)]">
               {item.verdict}
             </p>
           </div>
 
-          <div className="shrink-0 flex flex-col items-center gap-1 self-center sm:self-start">
+          <div className="shrink-0 flex flex-col items-center gap-1.5 self-center sm:self-start">
             <Seal station={item.station} date={item.postmark.date} status="checked" size={82} animate seed={2} />
             <SealDateline station={item.station} date={item.postmark.date} />
             <SealMark status="checked" />
@@ -124,13 +108,12 @@ export default function FactCheckPage() {
         </div>
 
         {/* 3. EVIDENCE & WHAT WE CHECKED */}
-        <div className="space-y-4 my-8">
-          <h3 className="font-headline text-2xl font-semibold" style={{ color: 'var(--ink)' }}>
+        <div className="space-y-4 my-10">
+          <h3 className="font-headline text-2xl sm:text-3xl font-semibold text-[var(--text-primary)]">
             3. What We Checked & Found
           </h3>
           <div
-            className="font-body space-y-4"
-            style={{ color: 'var(--ink)', fontSize: '18px', lineHeight: 1.7 }}
+            className="font-editorial space-y-5 text-base sm:text-lg leading-[1.68] text-[var(--text-primary)]"
           >
             {item.body.map((p, i) => (
               <p key={i}>{p}</p>
@@ -140,17 +123,13 @@ export default function FactCheckPage() {
 
         {/* 4. WHAT YOU SHOULD ACTUALLY KNOW */}
         <div
-          className="rounded-lg p-5 my-8 border space-y-2"
-          style={{
-            backgroundColor: 'color-mix(in srgb, var(--primary) 6%, var(--paper))',
-            borderColor: 'var(--primary)',
-          }}
+          className="rounded-xl p-5 sm:p-6 my-10 border space-y-2.5 bg-[var(--bg-surface)] border-l-4 border-l-[var(--brass)] border-[var(--border-subtle)]"
         >
-          <h4 className="text-xs font-bold uppercase tracking-wider flex items-center gap-2" style={{ color: 'var(--primary)' }}>
+          <h4 className="text-xs font-bold uppercase tracking-wider flex items-center gap-2 text-[var(--brass)]">
             <CheckCircle2 className="w-4 h-4" />
             <span>4. What You Should Actually Know</span>
           </h4>
-          <p className="text-sm font-body leading-relaxed" style={{ color: 'var(--ink)' }}>
+          <p className="font-editorial text-sm sm:text-base leading-relaxed text-[var(--text-secondary)]">
             When a disruption message urges you to "Forward to family immediately" without citing specific dates, hours, and official notifications, treat it as stripped-down misinformation.
           </p>
         </div>

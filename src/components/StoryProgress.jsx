@@ -30,61 +30,52 @@ export default function StoryProgress({ stages = [] }) {
     <div
       className="sticky top-16 z-30 border-b backdrop-blur-md transition-all font-interface"
       style={{
-        backgroundColor: 'color-mix(in srgb, var(--paper) 95%, transparent)',
-        borderColor: 'color-mix(in srgb, var(--primary) 20%, transparent)',
+        backgroundColor: 'color-mix(in srgb, var(--bg-primary) 92%, transparent)',
+        borderColor: 'var(--border-subtle)',
       }}
+      aria-label="Reading progress"
     >
-      {/* Progress Track */}
-      <div className="h-1 w-full bg-transparent overflow-hidden">
+      {/* Thin Sapphire Progress Track */}
+      <div className="h-0.5 w-full bg-[var(--border-subtle)] overflow-hidden">
         <div
           className="h-full transition-all duration-150 ease-out"
           style={{
             width: `${scrollProgress}%`,
-            backgroundColor: 'var(--primary)',
+            backgroundColor: 'var(--sapphire)',
+            boxShadow: '0 0 8px var(--sapphire-glow)',
           }}
         />
       </div>
 
-      {/* Stage Indicators */}
+      {/* Stage Indicators (derived naturally from story sections) */}
       {stages.length > 0 && (
-        <div className="max-w-2xl mx-auto px-4 py-1.5 flex items-center justify-between text-[11px] font-semibold tracking-wider uppercase">
+        <div className="max-w-2xl mx-auto px-4 py-1 flex items-center justify-between text-[11px] font-mono tracking-wider uppercase">
           <div className="flex items-center gap-3 overflow-x-auto no-scrollbar">
             {stages.map((stage, idx) => {
-              const isPast = idx <= activeStageIndex;
               const isCurrent = idx === activeStageIndex;
               return (
                 <span
                   key={stage.id || idx}
                   className="whitespace-nowrap transition-colors flex items-center gap-1.5"
                   style={{
-                    color: isCurrent
-                      ? 'var(--primary)'
-                      : isPast
-                      ? 'var(--ink)'
-                      : 'var(--forward)',
-                    opacity: isCurrent ? 1 : isPast ? 0.75 : 0.45,
+                    color: isCurrent ? 'var(--sapphire)' : 'var(--text-muted)',
+                    fontWeight: isCurrent ? 600 : 400,
                   }}
                 >
                   <span
                     className="w-1.5 h-1.5 rounded-full"
                     style={{
-                      backgroundColor: isCurrent
-                        ? 'var(--primary)'
-                        : isPast
-                        ? 'var(--ink)'
-                        : 'var(--forward)',
+                      backgroundColor: isCurrent ? 'var(--sapphire)' : 'transparent',
+                      border: `1px solid ${isCurrent ? 'var(--sapphire)' : 'var(--border-strong)'}`,
                     }}
                   />
-                  {stage.label || stage}
+                  <span>{stage.label || stage.id}</span>
                 </span>
               );
             })}
           </div>
 
-          <span
-            className="text-[11px] font-mono shrink-0 ml-3"
-            style={{ color: 'var(--forward)' }}
-          >
+          <span className="font-mono text-xs text-[var(--text-muted)] shrink-0 hidden sm:inline">
             {Math.round(scrollProgress)}%
           </span>
         </div>

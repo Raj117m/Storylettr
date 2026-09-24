@@ -7,62 +7,49 @@ export default function ExperimentBlock({ experiment }) {
 
   return (
     <div
-      className="relative rounded-2xl p-6 sm:p-9 my-12 border card-depth-rich font-interface space-y-6 overflow-hidden transition-all duration-300"
-      style={{
-        backgroundColor: 'color-mix(in srgb, var(--primary) 7%, var(--paper))',
-        borderColor: 'color-mix(in srgb, var(--primary) 35%, transparent)',
-      }}
+      className="relative rounded-2xl p-6 sm:p-9 my-12 border font-interface space-y-6 overflow-hidden transition-all duration-300 bg-[var(--bg-surface)] border-[var(--border-light)] shadow-xl"
     >
       {/* Header */}
-      <div className="flex items-center justify-between flex-wrap gap-3 border-b pb-4" style={{ borderColor: 'color-mix(in srgb, var(--primary) 20%, transparent)' }}>
-        <div className="flex items-center gap-2">
+      <div className="flex items-center justify-between flex-wrap gap-3 border-b pb-4 border-[var(--border-subtle)]">
+        <div className="flex items-center gap-3">
           <div
-            className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0"
-            style={{ backgroundColor: 'var(--primary)', color: 'var(--paper)' }}
+            className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0 bg-[var(--bg-feature)] text-[var(--sapphire)] border border-[var(--border-light)]"
           >
             <FlaskConical className="w-4 h-4" />
           </div>
           <div>
-            <span className="text-xs font-bold uppercase tracking-wider block" style={{ color: 'var(--primary)' }}>
+            <span className="text-[11px] font-bold uppercase tracking-wider block font-mono text-[var(--sapphire)]">
               StoryLettr Real-World Trial
             </span>
-            <h3 className="font-headline text-2xl font-semibold leading-tight" style={{ color: 'var(--ink)' }}>
+            <h3 className="font-headline text-2xl sm:text-3xl font-semibold leading-tight text-[var(--text-primary)]">
               {experiment.title}
             </h3>
           </div>
         </div>
 
-        <DemoBadge />
+        <DemoBadge label="Empirical trial" />
       </div>
 
       {/* Claim vs Test Setup */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div
-          className="p-4 rounded-md border space-y-1.5"
-          style={{
-            backgroundColor: 'color-mix(in srgb, var(--forward) 8%, var(--paper))',
-            borderColor: 'color-mix(in srgb, var(--forward) 30%, transparent)',
-          }}
+          className="p-4 rounded-xl border space-y-1.5 bg-[var(--bg-elevated)] border-[var(--border-subtle)]"
         >
-          <span className="text-[11px] font-bold uppercase tracking-wider block" style={{ color: 'var(--forward)' }}>
+          <span className="text-[10px] font-bold uppercase tracking-wider block font-mono text-[var(--text-muted)]">
             The Contributor Claim
           </span>
-          <p className="text-sm font-body italic leading-relaxed" style={{ color: 'var(--ink)' }}>
+          <p className="font-editorial text-sm italic leading-relaxed text-[var(--text-primary)]">
             "{experiment.contributorClaim}"
           </p>
         </div>
 
         <div
-          className="p-4 rounded-md border space-y-1.5"
-          style={{
-            backgroundColor: 'color-mix(in srgb, var(--primary) 10%, var(--paper))',
-            borderColor: 'color-mix(in srgb, var(--primary) 30%, transparent)',
-          }}
+          className="p-4 rounded-xl border space-y-1.5 bg-[var(--bg-elevated)] border-[var(--border-subtle)]"
         >
-          <span className="text-[11px] font-bold uppercase tracking-wider block" style={{ color: 'var(--primary)' }}>
+          <span className="text-[10px] font-bold uppercase tracking-wider block font-mono text-[var(--sapphire)]">
             StoryLettr Test Setup
           </span>
-          <p className="text-sm leading-relaxed" style={{ color: 'var(--ink)' }}>
+          <p className="font-editorial text-sm leading-relaxed text-[var(--text-secondary)]">
             {experiment.testSetup}
           </p>
         </div>
@@ -71,7 +58,7 @@ export default function ExperimentBlock({ experiment }) {
       {/* Sample Results */}
       {experiment.sampleResults && experiment.sampleResults.length > 0 && (
         <div className="space-y-3">
-          <h4 className="text-xs font-bold uppercase tracking-wider flex items-center gap-1.5" style={{ color: 'var(--primary)' }}>
+          <h4 className="text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 text-[var(--brass)] font-mono">
             <CheckCircle2 className="w-3.5 h-3.5" />
             Documented Results (Prototype Sample Data)
           </h4>
@@ -80,16 +67,12 @@ export default function ExperimentBlock({ experiment }) {
             {experiment.sampleResults.map((res, i) => (
               <div
                 key={i}
-                className="p-3.5 rounded-md border space-y-1"
-                style={{
-                  backgroundColor: 'color-mix(in srgb, var(--paper) 90%, white)',
-                  borderColor: 'color-mix(in srgb, var(--primary) 20%, transparent)',
-                }}
+                className="p-4 rounded-xl border space-y-1 bg-[var(--bg-feature)] border-[var(--border-light)]"
               >
-                <span className="text-xs font-semibold block" style={{ color: 'var(--forward)' }}>
+                <span className="text-xs font-semibold block text-[var(--text-secondary)]">
                   {res.metric}
                 </span>
-                <span className="font-headline text-lg font-bold block" style={{ color: 'var(--ink)' }}>
+                <span className="font-headline text-2xl font-bold block text-[var(--brass)]">
                   {res.value}
                 </span>
               </div>
@@ -99,30 +82,30 @@ export default function ExperimentBlock({ experiment }) {
       )}
 
       {/* What We Learned vs Limitations */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2 border-t text-xs" style={{ borderColor: 'color-mix(in srgb, var(--primary) 20%, transparent)' }}>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-3 border-t text-xs border-[var(--border-subtle)]">
         <div>
-          <span className="font-bold uppercase tracking-wider block mb-1" style={{ color: 'var(--primary)' }}>
+          <span className="font-bold uppercase tracking-wider block mb-1.5 font-mono text-[var(--brass)] text-[11px]">
             What We Learned
           </span>
-          <p className="leading-relaxed" style={{ color: 'var(--ink)', opacity: 0.9 }}>
+          <p className="font-editorial text-sm leading-relaxed text-[var(--text-primary)]">
             {experiment.whatWeLearned}
           </p>
         </div>
 
         <div>
-          <span className="font-bold uppercase tracking-wider block mb-1" style={{ color: 'var(--seal)' }}>
+          <span className="font-bold uppercase tracking-wider block mb-1.5 font-mono text-[var(--oxblood)] text-[11px]">
             What This Does Not Prove
           </span>
-          <p className="leading-relaxed" style={{ color: 'var(--ink)', opacity: 0.9 }}>
+          <p className="font-editorial text-sm leading-relaxed text-[var(--text-secondary)]">
             {experiment.whatThisDoesNotProve}
           </p>
         </div>
 
         <div>
-          <span className="font-bold uppercase tracking-wider block mb-1" style={{ color: 'var(--forward)' }}>
+          <span className="font-bold uppercase tracking-wider block mb-1.5 font-mono text-[var(--text-muted)] text-[11px]">
             Methodology Limitations
           </span>
-          <p className="leading-relaxed" style={{ color: 'var(--ink)', opacity: 0.9 }}>
+          <p className="font-editorial text-sm leading-relaxed text-[var(--text-secondary)]">
             {experiment.limitations}
           </p>
         </div>
@@ -130,16 +113,11 @@ export default function ExperimentBlock({ experiment }) {
 
       {/* Transparency Banner */}
       <div
-        className="p-3 rounded-md border flex items-start gap-2.5 text-xs"
-        style={{
-          backgroundColor: 'color-mix(in srgb, var(--action) 10%, var(--paper))',
-          borderColor: 'var(--action)',
-          color: 'var(--ink)',
-        }}
+        className="p-3.5 rounded-xl border flex items-start gap-3 text-xs bg-[var(--bg-elevated)] border-[var(--border-subtle)] text-[var(--text-muted)]"
       >
-        <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5" style={{ color: 'var(--action)' }} />
-        <span>
-          <strong>Scientific Transparency Disclaimer:</strong> StoryLettr experiments explore practical ideas in targeted scenarios. They transparently record observations and do not claim universal peer-reviewed scientific proof.
+        <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5 text-[var(--brass)]" />
+        <span className="leading-relaxed">
+          <strong className="text-[var(--brass)] font-semibold">Scientific Transparency Disclaimer:</strong> StoryLettr experiments explore practical ideas in targeted scenarios. They transparently record observations and do not claim universal peer-reviewed scientific proof.
         </span>
       </div>
     </div>

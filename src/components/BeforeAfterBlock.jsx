@@ -13,7 +13,6 @@ export default function BeforeAfterBlock({
   explanation,
   keyTakeaway,
 }) {
-  // If structured metrics aren't provided, parse piped strings if present
   let displayMetrics = metrics;
 
   if (!displayMetrics && beforeValue && afterValue) {
@@ -24,16 +23,15 @@ export default function BeforeAfterBlock({
       metric: `Metric ${idx + 1}`,
       before: b,
       after: afterParts[idx] || afterValue,
-      delta: 'Improved',
+      delta: 'Observed Shift',
       trend: 'better',
     }));
   }
 
-  // Fallback default rich metrics if it's the Paid Ads story and no metrics passed
   if (!displayMetrics && title && title.toLowerCase().includes('paid ads')) {
     displayMetrics = [
       {
-        metric: 'Blended Acquisition Cost (CAC)',
+        metric: 'Blended Customer Acquisition Cost (CAC)',
         before: '₹18,400',
         after: '₹5,800',
         delta: '-68.5% Cost Reduction',
@@ -77,46 +75,42 @@ export default function BeforeAfterBlock({
 
   return (
     <section
-      className="relative rounded-2xl p-6 sm:p-9 my-12 border card-depth-rich overflow-hidden font-interface transition-all duration-300"
+      className="relative rounded-2xl p-6 sm:p-9 my-12 border overflow-hidden font-interface transition-all duration-300"
       style={{
-        backgroundColor: 'color-mix(in srgb, var(--paper) 98%, white)',
-        borderColor: 'color-mix(in srgb, var(--primary) 32%, transparent)',
+        backgroundColor: 'var(--bg-elevated)',
+        borderColor: 'var(--border-medium)',
+        boxShadow: '0 10px 30px -10px var(--border-subtle)',
       }}
     >
-      {/* Background Soft Ambient Illumination */}
+      {/* Background Soft Lighting Depth */}
       <div
-        className="absolute top-0 right-1/4 w-96 h-96 rounded-full pointer-events-none pulse-glow blur-3xl opacity-20"
+        className="absolute top-0 right-1/4 w-96 h-96 rounded-full pointer-events-none blur-3xl opacity-15"
         style={{
-          background: 'radial-gradient(circle, color-mix(in srgb, var(--action) 40%, transparent) 0%, transparent 70%)',
+          background: 'radial-gradient(circle, var(--brass) 0%, transparent 70%)',
         }}
         aria-hidden="true"
       />
 
       {/* Header */}
-      <div className="space-y-2 mb-8 border-b pb-6 relative z-10" style={{ borderColor: 'color-mix(in srgb, var(--primary) 20%, transparent)' }}>
+      <div className="space-y-2 mb-8 border-b pb-6 relative z-10" style={{ borderColor: 'var(--border-subtle)' }}>
         <div className="flex items-center justify-between flex-wrap gap-2">
           <div className="flex items-center gap-2">
             <span
-              className="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-full border shadow-2xs"
-              style={{
-                backgroundColor: 'color-mix(in srgb, var(--primary) 12%, var(--paper))',
-                borderColor: 'color-mix(in srgb, var(--primary) 35%, transparent)',
-                color: 'var(--primary)',
-              }}
+              className="inline-flex items-center gap-1.5 text-xs font-mono font-medium uppercase tracking-wider text-[var(--sapphire)]"
             >
               <BarChart3 className="w-3.5 h-3.5" />
               <span>Performance Comparison &bull; Decision Framework</span>
             </span>
           </div>
 
-          <DemoBadge />
+          <DemoBadge type="data" />
         </div>
 
-        <h3 className="font-headline text-2xl sm:text-3xl md:text-4xl font-semibold leading-[1.2] pt-1" style={{ color: 'var(--ink)' }}>
+        <h3 className="font-headline text-2xl sm:text-3xl md:text-4xl font-normal leading-[1.18] pt-1" style={{ color: 'var(--text-primary)' }}>
           {title || 'Performance Comparison: Paid Ads vs Referral Architecture'}
         </h3>
 
-        <p className="text-xs sm:text-sm font-medium" style={{ color: 'var(--forward)' }}>
+        <p className="text-sm font-medium" style={{ color: 'var(--text-muted)' }}>
           {subtitle || 'Side-by-side empirical audit of unit economics, velocity, and compounding dynamics.'}
         </p>
       </div>
@@ -127,20 +121,20 @@ export default function BeforeAfterBlock({
         <div
           className="p-4 sm:p-5 rounded-xl border flex items-center justify-between gap-3"
           style={{
-            backgroundColor: 'color-mix(in srgb, var(--forward) 8%, var(--paper))',
-            borderColor: 'color-mix(in srgb, var(--forward) 30%, transparent)',
+            backgroundColor: 'var(--bg-surface)',
+            borderColor: 'var(--border-subtle)',
           }}
         >
           <div>
-            <span className="text-[10px] font-bold uppercase tracking-widest block" style={{ color: 'var(--forward)' }}>
+            <span className="text-[11px] font-mono uppercase tracking-wider block text-[var(--text-muted)]">
               Baseline Regime
             </span>
-            <span className="font-headline text-xl font-bold block pt-0.5" style={{ color: 'var(--ink)' }}>
+            <span className="font-headline text-xl font-normal block pt-0.5 text-[var(--text-primary)]">
               {beforeLabel}
             </span>
           </div>
-          <span className="text-xs font-semibold px-2.5 py-1 rounded border opacity-80" style={{ borderColor: 'var(--forward)', color: 'var(--forward)' }}>
-            Linear Return
+          <span className="text-xs font-mono px-2 py-0.5 rounded border border-[var(--border-subtle)] text-[var(--text-muted)]">
+            Linear return
           </span>
         </div>
 
@@ -148,24 +142,24 @@ export default function BeforeAfterBlock({
         <div
           className="p-4 sm:p-5 rounded-xl border flex items-center justify-between gap-3 shadow-xs"
           style={{
-            backgroundColor: 'color-mix(in srgb, var(--primary) 10%, var(--paper))',
-            borderColor: 'var(--primary)',
+            backgroundColor: 'var(--sapphire-light)',
+            borderColor: 'var(--sapphire)',
           }}
         >
           <div>
             <div className="flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full" style={{ backgroundColor: 'var(--action)' }} />
-              <span className="text-[10px] font-bold uppercase tracking-widest block" style={{ color: 'var(--primary)' }}>
+              <span className="w-2 h-2 rounded-full" style={{ backgroundColor: 'var(--brass)' }} />
+              <span className="text-[11px] font-mono uppercase tracking-wider block text-[var(--sapphire)]">
                 The Operational Pivot
               </span>
             </div>
-            <span className="font-headline text-xl font-bold block pt-0.5" style={{ color: 'var(--ink)' }}>
+            <span className="font-headline text-xl font-normal block pt-0.5 text-[var(--text-primary)]">
               {afterLabel}
             </span>
           </div>
-          <div className="flex items-center gap-1 text-xs font-bold px-2.5 py-1 rounded-full text-emerald-800 bg-emerald-100 border border-emerald-300">
-            <CheckCircle className="w-3.5 h-3.5 text-emerald-700" />
-            <span>Winning Model</span>
+          <div className="flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-full text-emerald-800 bg-emerald-100 border border-emerald-300 dark:bg-emerald-950 dark:text-emerald-300 dark:border-emerald-800">
+            <CheckCircle className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+            <span>Observed Lift</span>
           </div>
         </div>
       </div>
@@ -176,39 +170,39 @@ export default function BeforeAfterBlock({
           {displayMetrics.map((row, idx) => (
             <div
               key={idx}
-              className="p-4 sm:p-5 rounded-xl border transition-all duration-200 hover:shadow-xs"
+              className="p-4 sm:p-5 rounded-xl border transition-all duration-200"
               style={{
-                backgroundColor: 'color-mix(in srgb, var(--paper) 90%, white)',
-                borderColor: 'color-mix(in srgb, var(--primary) 18%, transparent)',
+                backgroundColor: 'var(--bg-surface)',
+                borderColor: 'var(--border-subtle)',
               }}
             >
               <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
                 {/* Metric Label & Note */}
                 <div className="space-y-1 lg:max-w-xs">
-                  <span className="font-semibold text-sm sm:text-base block" style={{ color: 'var(--ink)' }}>
+                  <span className="font-semibold text-sm sm:text-base block text-[var(--text-primary)]">
                     {row.metric}
                   </span>
                   {row.note && (
-                    <p className="text-xs leading-relaxed" style={{ color: 'var(--forward)' }}>
+                    <p className="text-xs leading-relaxed text-[var(--text-muted)]">
                       {row.note}
                     </p>
                   )}
                 </div>
 
-                {/* Values Comparison Strip */}
+                {/* Values Comparison Strip (Stacked naturally on mobile) */}
                 <div className="flex items-center gap-2 sm:gap-4 flex-wrap lg:justify-end grow">
                   {/* Before */}
                   <div
-                    className="p-2.5 sm:p-3 rounded-lg border text-center min-w-[120px] shrink-0"
+                    className="p-3 rounded-lg border text-center min-w-[120px] grow sm:grow-0 shrink-0"
                     style={{
-                      backgroundColor: 'color-mix(in srgb, var(--forward) 6%, var(--paper))',
-                      borderColor: 'color-mix(in srgb, var(--forward) 25%, transparent)',
+                      backgroundColor: 'var(--bg-elevated)',
+                      borderColor: 'var(--border-subtle)',
                     }}
                   >
-                    <span className="text-[10px] uppercase font-bold tracking-wider block" style={{ color: 'var(--forward)' }}>
+                    <span className="text-[10px] font-mono uppercase tracking-wider block text-[var(--text-muted)]">
                       Paid Ads
                     </span>
-                    <span className="font-headline text-lg sm:text-xl font-bold" style={{ color: 'var(--forward)' }}>
+                    <span className="font-headline text-lg sm:text-xl font-normal text-[var(--text-muted)]">
                       {row.before}
                     </span>
                   </div>
@@ -216,11 +210,11 @@ export default function BeforeAfterBlock({
                   {/* Transition Arrow / Directional Indicator */}
                   <div className="flex flex-col items-center justify-center px-1">
                     <span
-                      className="text-[11px] font-bold px-2 py-0.5 rounded-full border shadow-2xs whitespace-nowrap"
+                      className="text-xs font-mono font-semibold px-2 py-0.5 rounded-full border shadow-2xs whitespace-nowrap"
                       style={{
-                        backgroundColor: 'color-mix(in srgb, var(--primary) 12%, var(--paper))',
-                        borderColor: 'color-mix(in srgb, var(--primary) 35%, transparent)',
-                        color: 'var(--primary)',
+                        backgroundColor: 'var(--sapphire-light)',
+                        borderColor: 'var(--sapphire)',
+                        color: 'var(--sapphire)',
                       }}
                     >
                       {row.delta || '→'}
@@ -229,16 +223,16 @@ export default function BeforeAfterBlock({
 
                   {/* After */}
                   <div
-                    className="p-2.5 sm:p-3 rounded-lg border text-center min-w-[140px] shrink-0 shadow-xs"
+                    className="p-3 rounded-lg border text-center min-w-[140px] grow sm:grow-0 shrink-0 shadow-xs"
                     style={{
-                      backgroundColor: 'color-mix(in srgb, var(--primary) 10%, var(--paper))',
-                      borderColor: 'var(--primary)',
+                      backgroundColor: 'var(--bg-elevated)',
+                      borderColor: 'var(--sapphire)',
                     }}
                   >
-                    <span className="text-[10px] uppercase font-bold tracking-wider block" style={{ color: 'var(--primary)' }}>
+                    <span className="text-[10px] font-mono uppercase tracking-wider block text-[var(--sapphire)]">
                       Referral Loop
                     </span>
-                    <span className="font-headline text-lg sm:text-xl font-bold" style={{ color: 'var(--ink)' }}>
+                    <span className="font-headline text-lg sm:text-xl font-normal text-[var(--text-primary)]">
                       {row.after}
                     </span>
                   </div>
@@ -250,13 +244,13 @@ export default function BeforeAfterBlock({
       ) : (
         /* Legacy simple fallback */
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 relative z-10">
-          <div className="p-4 rounded-xl border" style={{ backgroundColor: 'color-mix(in srgb, var(--forward) 8%, var(--paper))', borderColor: 'color-mix(in srgb, var(--forward) 30%, transparent)' }}>
-            <span className="text-xs uppercase font-bold block" style={{ color: 'var(--forward)' }}>{beforeLabel}</span>
-            <p className="font-headline text-xl font-bold mt-1" style={{ color: 'var(--ink)' }}>{beforeValue}</p>
+          <div className="p-4 rounded-xl border bg-[var(--bg-surface)] border-[var(--border-subtle)]">
+            <span className="text-xs uppercase font-mono block text-[var(--text-muted)]">{beforeLabel}</span>
+            <p className="font-headline text-xl font-normal mt-1 text-[var(--text-primary)]">{beforeValue}</p>
           </div>
-          <div className="p-4 rounded-xl border" style={{ backgroundColor: 'color-mix(in srgb, var(--primary) 10%, var(--paper))', borderColor: 'var(--primary)' }}>
-            <span className="text-xs uppercase font-bold block" style={{ color: 'var(--primary)' }}>{afterLabel}</span>
-            <p className="font-headline text-xl font-bold mt-1" style={{ color: 'var(--ink)' }}>{afterValue}</p>
+          <div className="p-4 rounded-xl border bg-[var(--sapphire-light)] border-[var(--sapphire)]">
+            <span className="text-xs uppercase font-mono block text-[var(--sapphire)]">{afterLabel}</span>
+            <p className="font-headline text-xl font-normal mt-1 text-[var(--text-primary)]">{afterValue}</p>
           </div>
         </div>
       )}
@@ -265,16 +259,16 @@ export default function BeforeAfterBlock({
       <div
         className="mt-6 p-4 sm:p-5 rounded-xl border flex items-start gap-3 relative z-10"
         style={{
-          backgroundColor: 'color-mix(in srgb, var(--action) 10%, var(--paper))',
-          borderColor: 'color-mix(in srgb, var(--action) 45%, transparent)',
+          backgroundColor: 'color-mix(in srgb, var(--brass) 10%, var(--bg-surface))',
+          borderColor: 'var(--brass)',
         }}
       >
-        <Sparkles className="w-5 h-5 shrink-0 mt-0.5" style={{ color: 'var(--action)' }} />
+        <Sparkles className="w-5 h-5 shrink-0 mt-0.5 text-[var(--brass)]" />
         <div className="space-y-1 text-xs sm:text-sm">
-          <span className="font-bold uppercase tracking-wider block" style={{ color: 'var(--action-ink)' }}>
-            The Core Operational Insight:
+          <span className="font-semibold uppercase tracking-wider block text-[var(--brass)]">
+            The Strategic Pivot:
           </span>
-          <p className="leading-relaxed" style={{ color: 'var(--ink)' }}>
+          <p className="leading-relaxed text-[var(--text-primary)]">
             {keyTakeaway ||
               'Paid ads purchased fleeting attention on a rental model. The physical milestone artifact purchased permanent operational desk presence on shift managers’ desks, creating compounding word-of-mouth with zero recurring ad cost.'}
           </p>
@@ -283,9 +277,9 @@ export default function BeforeAfterBlock({
 
       {/* Explanation & Audit Footer */}
       {explanation && (
-        <div className="mt-4 pt-4 border-t flex items-center justify-between flex-wrap gap-2 text-[11px] relative z-10" style={{ borderColor: 'color-mix(in srgb, var(--forward) 20%, transparent)', color: 'var(--forward)' }}>
+        <div className="mt-4 pt-4 border-t flex items-center justify-between flex-wrap gap-2 text-xs relative z-10 border-[var(--border-subtle)] text-[var(--text-muted)]">
           <span>{explanation}</span>
-          <span className="font-mono opacity-80">Audited CRM Cohort &bull; 6-Month Trajectory</span>
+          <span className="font-mono text-[11px] opacity-75">Data source audited · 6-Month Cohort</span>
         </div>
       )}
     </section>

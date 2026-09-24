@@ -43,7 +43,7 @@ function CornerFan({ x, y, rotate }) {
     <g transform={`rotate(${rotate} ${x} ${y})`}>
       {[0, 1, 2, 3, 4].map((i) => {
         const rad = (((i / 4) * 60 - 30) * Math.PI) / 180;
-        return <line key={i} x1={x} y1={y} x2={x + 24 * Math.sin(rad)} y2={y - 24 * Math.cos(rad)} stroke="var(--primary)" strokeWidth="1" opacity="0.6" />;
+        return <line key={i} x1={x} y1={y} x2={x + 24 * Math.sin(rad)} y2={y - 24 * Math.cos(rad)} stroke="var(--brass)" strokeWidth="1" opacity="0.6" />;
       })}
     </g>
   );
@@ -51,12 +51,12 @@ function CornerFan({ x, y, rotate }) {
 
 function Compass({ x, y }) {
   return (
-    <g stroke="var(--primary)" fill="none" opacity="0.8">
+    <g stroke="var(--brass)" fill="none" opacity="0.8">
       <circle cx={x} cy={y} r="22" strokeWidth="1" />
       <circle cx={x} cy={y} r="17" strokeWidth="0.6" />
-      <path d={`M ${x} ${y - 30} L ${x + 5} ${y} L ${x} ${y + 30} L ${x - 5} ${y} Z`} fill="var(--primary)" fillOpacity="0.25" strokeWidth="0.8" />
+      <path d={`M ${x} ${y - 30} L ${x + 5} ${y} L ${x} ${y + 30} L ${x - 5} ${y} Z`} fill="var(--brass)" fillOpacity="0.25" strokeWidth="0.8" />
       <path d={`M ${x - 30} ${y} L ${x} ${y - 5} L ${x + 30} ${y} L ${x} ${y + 5} Z`} strokeWidth="0.8" />
-      <text x={x} y={y - 36} textAnchor="middle" fontSize="13" fill="var(--primary)" stroke="none" fontFamily="'Cormorant Garamond', Georgia, serif" fontWeight="600">N</text>
+      <text x={x} y={y - 36} textAnchor="middle" fontSize="13" fill="var(--brass)" stroke="none" fontFamily="'Instrument Serif', Georgia, serif" fontWeight="600">N</text>
     </g>
   );
 }
@@ -71,11 +71,11 @@ function RegionLabel({ x, y, rotate = 0, children }) {
       fontSize="17"
       fontStyle="italic"
       letterSpacing="1.5"
-      fill="var(--primary)"
-      fontFamily="'Cormorant Garamond', Georgia, serif"
+      fill="var(--brass)"
+      fontFamily="'Instrument Serif', Georgia, serif"
       fontWeight="600"
       paintOrder="stroke"
-      stroke="var(--paper)"
+      stroke="var(--bg-primary)"
       strokeWidth="5"
     >
       {children}
@@ -101,25 +101,21 @@ export default function StationsPage() {
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 font-interface">
         {/* Header */}
-        <div className="max-w-3xl mb-10 space-y-3">
-          <div className="flex items-center gap-2">
+        <div className="max-w-3xl mb-10 space-y-3.5">
+          <div className="flex items-center gap-2.5">
             <span
-              className="text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded"
-              style={{
-                backgroundColor: 'color-mix(in srgb, var(--primary) 10%, transparent)',
-                color: 'var(--primary)',
-              }}
+              className="text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded bg-[var(--bg-feature)] text-[var(--brass)] border border-[var(--border-light)] font-mono"
             >
               Story Atlas
             </span>
-            <DemoBadge />
+            <DemoBadge label="Curated field atlas" />
           </div>
 
-          <h1 className="font-headline text-4xl sm:text-5xl font-semibold leading-[1.1]" style={{ color: 'var(--ink)' }}>
+          <h1 className="font-headline text-4xl sm:text-5xl font-semibold leading-[1.1] text-[var(--text-primary)]">
             Interesting people are everywhere.
           </h1>
 
-          <p className="text-base sm:text-lg leading-relaxed" style={{ color: 'var(--ink)', opacity: 0.85 }}>
+          <p className="font-editorial text-lg sm:text-xl leading-relaxed text-[var(--text-secondary)]">
             Explore the people, experiences and experiments behind StoryLettr. The map does not represent municipal news; it documents where practitioners, founders and specialists do their work.
           </p>
         </div>
@@ -128,7 +124,7 @@ export default function StationsPage() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
           {/* Engraved Map Canvas */}
-          <div className="lg:col-span-7 overflow-x-auto rounded-xl border p-3 shadow-sm" style={{ borderColor: 'var(--primary)', backgroundColor: 'var(--paper)' }}>
+          <div className="lg:col-span-7 overflow-x-auto rounded-xl border p-3 shadow-md bg-[var(--bg-elevated)] border-[var(--border-light)]">
             <div className="w-fit mx-auto">
               <svg
                 viewBox={`0 0 ${W} ${H}`}
@@ -143,7 +139,7 @@ export default function StationsPage() {
                     <rect x="14" y="14" width={W - 28} height={H - 28} />
                   </clipPath>
                   <pattern id="atlas-hatch" width="7" height="7" patternUnits="userSpaceOnUse">
-                    <line x1="0" y1="3.5" x2="7" y2="3.5" stroke="var(--primary)" strokeWidth="0.8" opacity="0.35" />
+                    <line x1="0" y1="3.5" x2="7" y2="3.5" stroke="var(--brass)" strokeWidth="0.8" opacity="0.2" />
                   </pattern>
                 </defs>
 
@@ -151,12 +147,12 @@ export default function StationsPage() {
                 <g clipPath="url(#atlas-frame)">
                   <path d={ARABIAN_SEA} fill="url(#atlas-hatch)" />
                   <path d={HARBOUR_AND_CREEK} fill="url(#atlas-hatch)" />
-                  <path d={ARABIAN_SEA} fill="none" stroke="var(--primary)" strokeWidth="1.2" opacity="0.7" />
-                  <path d={HARBOUR_AND_CREEK} fill="none" stroke="var(--primary)" strokeWidth="1.2" opacity="0.7" />
+                  <path d={ARABIAN_SEA} fill="none" stroke="var(--brass)" strokeWidth="1.2" opacity="0.4" />
+                  <path d={HARBOUR_AND_CREEK} fill="none" stroke="var(--brass)" strokeWidth="1.2" opacity="0.4" />
                 </g>
 
-                <rect x="8" y="8" width={W - 16} height={H - 16} fill="none" stroke="var(--primary)" strokeWidth="1.5" />
-                <rect x="14" y="14" width={W - 28} height={H - 28} fill="none" stroke="var(--primary)" strokeWidth="0.6" />
+                <rect x="8" y="8" width={W - 16} height={H - 16} fill="none" stroke="var(--brass)" strokeWidth="1.5" opacity="0.7" />
+                <rect x="14" y="14" width={W - 28} height={H - 28} fill="none" stroke="var(--brass)" strokeWidth="0.6" opacity="0.4" />
                 <CornerFan x={30} y={30} rotate={45} />
                 <CornerFan x={W - 30} y={30} rotate={135} />
                 <CornerFan x={30} y={H - 30} rotate={-45} />
@@ -167,11 +163,11 @@ export default function StationsPage() {
                     key={i}
                     points={line.map((slug) => `${PLACES[slug].x},${PLACES[slug].y}`).join(' ')}
                     fill="none"
-                    stroke="var(--ink)"
+                    stroke="var(--text-muted)"
                     strokeWidth="1"
                     strokeDasharray="1 4"
                     strokeLinecap="round"
-                    opacity="0.45"
+                    opacity="0.4"
                   />
                 ))}
 
@@ -201,9 +197,9 @@ export default function StationsPage() {
                         <circle
                           cx={p.x}
                           cy={p.y}
-                          r={22}
-                          fill="var(--primary)"
-                          fillOpacity="0.2"
+                          r={24}
+                          fill="var(--brass)"
+                          fillOpacity="0.25"
                           className="animate-pulse"
                         />
                       )}
@@ -211,19 +207,19 @@ export default function StationsPage() {
                       {populated ? (
                         <MiniSeal x={p.x} y={p.y} r={14} seed={i} id={`atlas-seal-${slug}`} />
                       ) : (
-                        <circle cx={p.x} cy={p.y} r="5" fill="var(--paper)" stroke="var(--forward)" strokeWidth="1.5" />
+                        <circle cx={p.x} cy={p.y} r="5" fill="var(--bg-primary)" stroke="var(--text-muted)" strokeWidth="1.5" />
                       )}
 
                       <text
                         x={p.x + dx}
                         y={p.y + 5}
                         textAnchor={p.label === 'right' ? 'start' : 'end'}
-                        fontSize={populated ? 17 : 15}
-                        fontWeight={isSelected ? 700 : populated ? 600 : 400}
-                        fill={isSelected ? 'var(--primary)' : populated ? 'var(--ink)' : 'var(--forward)'}
-                        fontFamily={populated ? "'Cormorant Garamond', Georgia, serif" : "'Libre Franklin', system-ui, sans-serif"}
+                        fontSize={populated ? 17 : 14}
+                        fontWeight={isSelected ? 700 : populated ? 600 : 500}
+                        fill={isSelected ? 'var(--brass)' : populated ? 'var(--text-primary)' : 'var(--text-muted)'}
+                        fontFamily={populated ? "'Instrument Serif', Georgia, serif" : "'Manrope', sans-serif"}
                         paintOrder="stroke"
-                        stroke="var(--paper)"
+                        stroke="var(--bg-primary)"
                         strokeWidth="4"
                       >
                         {stationName(slug)}
@@ -237,21 +233,15 @@ export default function StationsPage() {
 
           {/* Interactive Pin Inspector Panel */}
           <div className="lg:col-span-5 space-y-4 sticky top-24">
-            <div
-              className="rounded-xl p-6 sm:p-7 border shadow-md space-y-5"
-              style={{
-                backgroundColor: 'color-mix(in srgb, var(--paper) 98%, white)',
-                borderColor: 'var(--primary)',
-              }}
-            >
-              <div className="flex items-center justify-between border-b pb-3" style={{ borderColor: 'color-mix(in srgb, var(--primary) 20%, transparent)' }}>
+            <div className="rounded-xl p-6 sm:p-7 border shadow-xl space-y-5 bg-[var(--bg-surface)] border-[var(--border-light)]">
+              <div className="flex items-center justify-between border-b pb-3.5 border-[var(--border-subtle)]">
                 <div className="flex items-center gap-2">
-                  <MapPin className="w-4 h-4" style={{ color: 'var(--primary)' }} />
-                  <span className="font-headline text-2xl font-bold uppercase tracking-wider" style={{ color: 'var(--ink)' }}>
+                  <MapPin className="w-4 h-4 text-[var(--sapphire)]" />
+                  <span className="font-headline text-2xl font-bold uppercase tracking-wider text-[var(--text-primary)]">
                     {stationName(selectedStation)}
                   </span>
                 </div>
-                {stationStory?.isDemo && <DemoBadge />}
+                {stationStory?.isDemo && <DemoBadge label="Field note" />}
               </div>
 
               {stationStory ? (
@@ -262,45 +252,38 @@ export default function StationsPage() {
                       <img
                         src={contributor.avatar}
                         alt={contributor.name}
-                        className="w-12 h-12 rounded-full object-cover border-2 shrink-0"
-                        style={{ borderColor: 'var(--action)' }}
+                        className="w-12 h-12 rounded-full object-cover border-2 border-[var(--brass)] shrink-0 shadow-sm"
                       />
                       <div>
-                        <span className="font-headline text-xl font-bold block" style={{ color: 'var(--ink)' }}>
+                        <span className="font-headline text-xl font-bold block text-[var(--text-primary)]">
                           {contributor.name}
                         </span>
-                        <span className="text-xs font-semibold" style={{ color: 'var(--primary)' }}>
+                        <span className="text-xs font-semibold uppercase tracking-wider text-[var(--brass)]">
                           {contributor.role}
                         </span>
                       </div>
                     </div>
                   ) : (
-                    <div className="text-xs" style={{ color: 'var(--forward)' }}>StoryLettr Desk Investigation</div>
+                    <div className="text-xs text-[var(--text-muted)] font-mono uppercase tracking-wider">StoryLettr Desk Investigation</div>
                   )}
 
                   {/* Story Hook */}
                   <div className="space-y-1">
-                    <span className="text-[11px] font-bold uppercase tracking-wider block" style={{ color: 'var(--forward)' }}>
+                    <span className="text-[10px] font-bold uppercase tracking-wider block text-[var(--text-muted)]">
                       The Experience / Problem:
                     </span>
-                    <p className="font-headline text-xl font-semibold leading-snug" style={{ color: 'var(--ink)' }}>
+                    <p className="font-headline text-xl font-semibold leading-snug text-[var(--text-primary)]">
                       "{stationStory.hook || stationStory.headline}"
                     </p>
                   </div>
 
                   {/* Tiny Payoff */}
                   {stationStory.tinyPayoff && (
-                    <div
-                      className="p-3.5 rounded-md border-l-3 space-y-1 text-xs"
-                      style={{
-                        backgroundColor: 'color-mix(in srgb, var(--primary) 6%, var(--paper))',
-                        borderColor: 'var(--primary)',
-                      }}
-                    >
-                      <span className="font-bold uppercase tracking-wider block" style={{ color: 'var(--primary)' }}>
+                    <div className="p-3.5 rounded-md border-l-3 space-y-1 text-xs bg-[var(--bg-elevated)] border-l-[var(--brass)] border border-[var(--border-subtle)]">
+                      <span className="font-bold uppercase tracking-wider block text-[var(--brass)] text-[10px]">
                         Tiny Insight:
                       </span>
-                      <p className="font-medium leading-relaxed" style={{ color: 'var(--ink)' }}>
+                      <p className="font-editorial text-sm leading-relaxed text-[var(--text-primary)]">
                         {stationStory.tinyPayoff}
                       </p>
                     </div>
@@ -310,8 +293,7 @@ export default function StationsPage() {
                   <div className="pt-3">
                     <Link
                       to={stationStory.type === 'fact-check' ? `/fact-checks/${stationStory.slug}` : `/stories/${stationStory.slug}`}
-                      className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-md text-sm font-semibold transition-all hover:opacity-95"
-                      style={{ backgroundColor: 'var(--primary)', color: 'var(--paper)' }}
+                      className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-md text-sm font-semibold uppercase tracking-wider transition-all min-h-[44px] bg-[var(--sapphire)] text-[#F5EFE6] hover:bg-[#629dcd] hover:shadow-[0_0_16px_rgba(84,144,192,0.35)]"
                     >
                       <span>Open the Letter</span>
                       <ArrowRight className="w-4 h-4" />
@@ -320,10 +302,10 @@ export default function StationsPage() {
                 </div>
               ) : (
                 <div className="py-8 text-center space-y-2">
-                  <p className="text-sm" style={{ color: 'var(--forward)' }}>
+                  <p className="text-sm text-[var(--text-secondary)]">
                     No recorded StoryLettr dispatch from {stationName(selectedStation)} yet.
                   </p>
-                  <p className="text-xs" style={{ color: 'var(--ink)', opacity: 0.8 }}>
+                  <p className="text-xs text-[var(--text-muted)]">
                     Know an operator or problem solver here? Suggest a practitioner for us to interview.
                   </p>
                 </div>
@@ -331,8 +313,8 @@ export default function StationsPage() {
             </div>
 
             {/* Quick Station Select List */}
-            <div className="rounded-lg p-4 border text-xs" style={{ borderColor: 'color-mix(in srgb, var(--forward) 20%, transparent)' }}>
-              <span className="font-bold uppercase tracking-wider block mb-2" style={{ color: 'var(--forward)' }}>
+            <div className="rounded-lg p-4 border text-xs bg-[var(--bg-surface)] border-[var(--border-subtle)]">
+              <span className="font-bold uppercase tracking-wider block mb-2 text-[var(--text-muted)] text-[11px]">
                 Active Contributor Hubs:
               </span>
               <div className="flex flex-wrap gap-1.5">
@@ -340,12 +322,11 @@ export default function StationsPage() {
                   <button
                     key={slug}
                     onClick={() => setSelectedStation(slug)}
-                    className="px-2.5 py-1 rounded border text-xs font-medium cursor-pointer transition-colors"
-                    style={{
-                      backgroundColor: selectedStation === slug ? 'var(--primary)' : 'transparent',
-                      color: selectedStation === slug ? 'var(--paper)' : 'var(--ink)',
-                      borderColor: 'var(--primary)',
-                    }}
+                    className={`px-2.5 py-1.5 rounded border text-xs font-semibold cursor-pointer transition-all min-h-[32px] ${
+                      selectedStation === slug
+                        ? 'bg-[var(--brass)] text-[#16120E] border-[var(--brass)] font-bold shadow-sm'
+                        : 'bg-[var(--bg-feature)] text-[var(--text-secondary)] border-[var(--border-subtle)] hover:text-[var(--text-primary)] hover:border-[var(--border-light)]'
+                    }`}
                   >
                     {stationName(slug)}
                   </button>

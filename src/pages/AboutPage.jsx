@@ -74,22 +74,18 @@ export default function AboutPage() {
               return (
                 <div
                   key={item.step}
-                  className="p-4 rounded-lg border space-y-2 font-interface"
-                  style={{
-                    backgroundColor: 'color-mix(in srgb, var(--paper) 98%, white)',
-                    borderColor: 'color-mix(in srgb, var(--primary) 20%, transparent)',
-                  }}
+                  className="p-5 rounded-xl border space-y-2.5 font-interface bg-[var(--bg-surface)] border-[var(--border-light)] hover:border-[var(--brass)] transition-colors"
                 >
                   <div className="flex items-center justify-between">
-                    <span className="font-mono text-xs font-bold" style={{ color: 'var(--primary)' }}>
+                    <span className="font-mono text-xs font-bold text-[var(--brass)]">
                       {item.step}
                     </span>
-                    <Icon className="w-4 h-4" style={{ color: 'var(--action)' }} />
+                    <Icon className="w-4 h-4 text-[var(--sapphire)]" />
                   </div>
-                  <h3 className="font-headline text-xl font-bold" style={{ color: 'var(--ink)' }}>
+                  <h3 className="font-headline text-xl font-bold text-[var(--text-primary)]">
                     {item.title}
                   </h3>
-                  <p className="text-xs leading-relaxed" style={{ color: 'var(--forward)' }}>
+                  <p className="text-xs leading-relaxed text-[var(--text-secondary)]">
                     {item.desc}
                   </p>
                 </div>
