@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useLayoutEffect, useRef } from "react";
+import React, { useState, useEffect, useLayoutEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAnimate, useReducedMotion } from "motion/react";
 
@@ -325,6 +325,7 @@ export default function StarfieldButton({
   disabled = false,
 }) {
   const navigate = useNavigate ? useNavigate() : null;
+  const [isExpanding, setIsExpanding] = useState(false);
   const vConfig = VARIANTS[variant] || VARIANTS.sapphire;
   const sPreset = SIZES[size] || SIZES.md;
 
@@ -639,9 +640,14 @@ export default function StarfieldButton({
       e.preventDefault();
       return;
     }
+    setIsExpanding(true);
+    setTimeout(() => setIsExpanding(false), 460);
+
     if (to && navigate) {
       e.preventDefault();
-      navigate(to);
+      setTimeout(() => {
+        navigate(to);
+      }, 80);
     } else if (onClick) {
       onClick(e);
     }
@@ -868,6 +874,18 @@ export default function StarfieldButton({
             </>
           )}
         </span>
+
+        {/* Expanding bloom ripple on click */}
+        {isExpanding && (
+          <span
+            aria-hidden
+            className="animate-button-expand pointer-events-none absolute inset-0 z-30 rounded-[inherit]"
+            style={{
+              boxShadow: `0 0 0 2px ${lightColor}, 0 0 30px 8px ${glowColor}`,
+              border: `1.5px solid ${lightColor}`,
+            }}
+          />
+        )}
       </Tag>
     </div>
   );

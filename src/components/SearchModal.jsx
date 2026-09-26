@@ -47,7 +47,7 @@ export default function SearchModal({ isOpen, onClose }) {
       onClick={onClose}
     >
       <div
-        className="w-full max-w-2xl rounded-2xl border overflow-hidden flex flex-col max-h-[80vh]"
+        className="w-full max-w-2xl rounded-2xl border overflow-hidden flex flex-col max-h-[80vh] animate-modal-expand shadow-2xl"
         style={{ backgroundColor: 'var(--paper)', borderColor: 'var(--primary)' }}
         onClick={(e) => e.stopPropagation()}
       >

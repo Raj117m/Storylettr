@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import SearchModal from './components/SearchModal';
+import AsciiBackground from './components/AsciiBackground';
+import PageTransitionOverlay from './components/PageTransitionOverlay';
 
 import HomePage from './pages/HomePage';
 import ChapterPage from './pages/ChapterPage';
@@ -22,9 +24,43 @@ import NotFoundPage from './pages/NotFoundPage';
 
 export default function App() {
   const [searchOpen, setSearchOpen] = useState(false);
+  const location = useLocation();
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-revealed');
+          }
+        });
+      },
+      {
+        threshold: 0.08,
+        rootMargin: '0px 0px -30px 0px',
+      }
+    );
+
+    const observeElements = () => {
+      const targets = document.querySelectorAll('.reveal-on-scroll:not(.is-revealed)');
+      targets.forEach((el) => observer.observe(el));
+    };
+
+    observeElements();
+    const timer = setTimeout(observeElements, 120);
+
+    return () => {
+      clearTimeout(timer);
+      observer.disconnect();
+    };
+  }, [location.pathname]);
 
   return (
-    <div className="min-h-screen flex flex-col justify-between" style={{ backgroundColor: 'var(--paper)' }}>
+    <div className="relative min-h-screen flex flex-col justify-between" style={{ backgroundColor: 'var(--paper)' }}>
+      <AsciiBackground />
+      <PageTransitionOverlay />
       <Navbar onOpenSearch={() => setSearchOpen(true)} />
 
       <main className="grow">

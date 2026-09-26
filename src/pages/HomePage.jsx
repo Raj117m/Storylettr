@@ -95,7 +95,7 @@ export default function HomePage() {
 
       {/* TODAY'S LETTER: The Homepage's Strongest Editorial Composition */}
       {lead && (
-        <section id="todays-letter" className="py-14 sm:py-20 border-b" style={{ borderColor: 'var(--border-subtle)' }}>
+        <section id="todays-letter" className="py-14 sm:py-20 border-b reveal-on-scroll" style={{ borderColor: 'var(--border-subtle)' }}>
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 font-interface">
             
             <div
@@ -215,7 +215,7 @@ export default function HomePage() {
       <StoryBookshelfSection items={bookshelfStories} />
 
       {/* FAST DISCOVERY FEED */}
-      <section id="stories" className="py-16 sm:py-20 font-interface">
+      <section id="stories" className="py-16 sm:py-20 font-interface reveal-on-scroll">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           
           {/* Feed Header */}
@@ -270,7 +270,7 @@ export default function HomePage() {
 
           {/* Story Atlas Discovery Callout */}
           <div
-            className="mt-14 p-7 sm:p-10 rounded-2xl border text-center space-y-3 relative overflow-hidden"
+            className="mt-14 p-7 sm:p-10 rounded-2xl border text-center space-y-3 relative overflow-hidden reveal-on-scroll reveal-delay-2"
             style={{
               backgroundColor: 'var(--bg-elevated)',
               borderColor: 'var(--border-medium)',

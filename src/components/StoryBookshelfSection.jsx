@@ -60,7 +60,7 @@ export default function StoryBookshelfSection({ items = [] }) {
   }, []);
 
   return (
-    <section id="bookshelf" className="py-16 sm:py-20 border-b font-interface relative" style={{ borderColor: 'var(--border-subtle)' }}>
+    <section id="bookshelf" className="py-16 sm:py-20 border-b font-interface relative reveal-on-scroll" style={{ borderColor: 'var(--border-subtle)' }}>
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
