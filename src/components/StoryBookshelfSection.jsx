@@ -44,7 +44,7 @@ export default function StoryBookshelfSection({ items = [] }) {
     }
 
     // Lazy load the 3D bookshelf component on the client
-    import('@/components/ui/newsletter-bookshelf')
+    import('./ui/newsletter-bookshelf')
       .then((mod) => {
         setBookshelfComponent(() => mod.NewsletterBookshelf);
       })

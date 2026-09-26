@@ -190,7 +190,7 @@ export default function ArticlePage({ type = 'story' }) {
         )}
 
         {/* Built-In Truth & Rigor Mechanism: Devil's Advocate */}
-        <DevilsAdvocate data={item.devilsAdvocate} />
+        <DevilsAdvocate data={item.devilsAdvocate} storySlug={item.slug} storyTitle={item.headline} />
 
         {/* Remaining Body Text */}
         {item.body && item.body.length > 4 && (

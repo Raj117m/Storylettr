@@ -225,35 +225,35 @@ function renderIconPath(iconType, strokeWidth) {
 const VARIANTS = {
   sapphire: {
     fill: "#1C3D5C",
-    textColor: "#F5EFE6",
+    textColor: "#FFFFFF",
     glowColor: "#5490C0",
-    strokeColor: "#7EB5DE",
-    pixelColor: "#CCA352", // warm celestial brass stars
-    borderColor: "rgba(84, 144, 192, 0.35)",
+    strokeColor: "#93CDFC",
+    pixelColor: "#BCE0FD",
+    borderColor: "rgba(126, 181, 222, 0.45)",
   },
   brass: {
     fill: "#221B16",
     textColor: "#F5EFE6",
     glowColor: "#CCA352",
-    strokeColor: "#E5C378",
-    pixelColor: "#CCA352",
-    borderColor: "rgba(204, 163, 82, 0.38)",
+    strokeColor: "#F4D99B",
+    pixelColor: "#FFE3A3",
+    borderColor: "rgba(204, 163, 82, 0.5)",
   },
   oxblood: {
     fill: "#221B16",
     textColor: "#F5EFE6",
     glowColor: "#B85348",
-    strokeColor: "#D96B60",
-    pixelColor: "#CCA352",
-    borderColor: "rgba(184, 83, 72, 0.4)",
+    strokeColor: "#FF8C80",
+    pixelColor: "#FFB0A8",
+    borderColor: "rgba(184, 83, 72, 0.5)",
   },
   ghost: {
     fill: "rgba(34, 27, 22, 0.85)",
     textColor: "#F5EFE6",
     glowColor: "#5490C0",
-    strokeColor: "#5490C0",
-    pixelColor: "#CCA352",
-    borderColor: "rgba(245, 239, 230, 0.15)",
+    strokeColor: "#93CDFC",
+    pixelColor: "#BCE0FD",
+    borderColor: "rgba(245, 239, 230, 0.25)",
   },
 };
 
@@ -350,21 +350,21 @@ export default function StarfieldButton({
 
   const lightCountProp = strokeProp?.count ?? 1;
   const lightColor = strokeProp?.color ?? vConfig.strokeColor;
-  const lightSize = strokeProp?.size ?? 72;
-  const lightThickness = strokeProp?.thickness ?? 2;
+  const lightSize = strokeProp?.size ?? 96;
+  const lightThickness = strokeProp?.thickness ?? 3;
   const speedPct = strokeProp?.speed ?? 45;
   const direction = strokeProp?.direction ?? "ccw";
   const movement = strokeProp?.movement ?? "continuous";
 
   const pixelColor = pixelProp?.color ?? vConfig.pixelColor;
   const pixelSize = pixelProp?.size ?? 3.5;
-  const pixelDensity = pixelProp?.density ?? 45;
-  const pixelBrightness = pixelProp?.brightness ?? 95;
+  const pixelDensity = pixelProp?.density ?? 55;
+  const pixelBrightness = pixelProp?.brightness ?? 100;
 
   const border = {
     borderColor: vConfig.borderColor,
     borderStyle: "solid",
-    borderWidth: 1,
+    borderWidth: 1.5,
     ...borderProp,
   };
 
@@ -425,7 +425,8 @@ export default function StarfieldButton({
     return () => ro.disconnect();
   }, [rounded, ringInset, band.top, band.right, band.bottom, band.left]);
 
-  const reveal = useRef(0);
+  const BASE_REVEAL = 0.65;
+  const reveal = useRef(BASE_REVEAL);
   const revealCtrl = useRef(null);
   const tickCtrl = useRef(null);
   const reducedMotion = useReducedMotion();
@@ -627,7 +628,7 @@ export default function StarfieldButton({
   };
 
   const onLeave = () => {
-    animateReveal(0);
+    animateReveal(BASE_REVEAL);
     scaleTo(1);
   };
 
@@ -725,7 +726,7 @@ export default function StarfieldButton({
             left: ringInset,
             boxSizing: "border-box",
             padding: lightThick,
-            zIndex: 0,
+            zIndex: 3,
             pointerEvents: "none",
             ...BAND_MASK,
           }}
