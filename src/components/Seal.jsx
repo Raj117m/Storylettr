@@ -83,11 +83,11 @@ export default function Seal({ station, date, status = 'verified', size = 84, an
 
   const sheen = (
     <defs>
-      <radialGradient id={gradientId} cx="38%" cy="32%" r="65%">
+      <radialgradient id={gradientId} cx="38%" cy="32%" r="65%">
         <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.32" />
         <stop offset="55%" stopColor="#FFFFFF" stopOpacity="0.08" />
         <stop offset="100%" stopColor="#FFFFFF" stopOpacity="0" />
-      </radialGradient>
+      </radialgradient>
     </defs>
   );
 
@@ -174,11 +174,11 @@ export function MiniSeal({ x, y, r = 13, seed = 0, id }) {
   return (
     <g transform={`translate(${x - 50 * k} ${y - 50 * k}) scale(${k}) rotate(-4 50 50)`}>
       <defs>
-        <radialGradient id={id} cx="38%" cy="32%" r="65%">
+        <radialgradient id={id} cx="38%" cy="32%" r="65%">
           <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.32" />
           <stop offset="55%" stopColor="#FFFFFF" stopOpacity="0.08" />
           <stop offset="100%" stopColor="#FFFFFF" stopOpacity="0" />
-        </radialGradient>
+        </radialgradient>
       </defs>
       <path d={blob} fill="var(--seal)" />
       <path d={blob} fill={`url(#${id})`} />

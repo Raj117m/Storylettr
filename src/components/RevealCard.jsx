@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Sparkles, Eye, Check } from 'lucide-react';
+import StarfieldButton from './ui/StarfieldButton';
 
 export default function RevealCard({ prompt, buttonText = 'Reveal what changed', revealedText, explanation }) {
   const [isRevealed, setIsRevealed] = useState(false);
@@ -24,14 +25,14 @@ export default function RevealCard({ prompt, buttonText = 'Reveal what changed',
       </p>
 
       {!isRevealed ? (
-        <button
+        <StarfieldButton
           onClick={() => setIsRevealed(true)}
-          className="btn-editorial-action inline-flex items-center gap-2.5 px-5 py-3 rounded-lg text-sm font-bold cursor-pointer"
-          style={{ backgroundColor: 'var(--action)', color: 'var(--action-ink)' }}
+          variant="brass"
+          size="md"
         >
           <Eye className="w-4 h-4" />
           <span>{buttonText}</span>
-        </button>
+        </StarfieldButton>
       ) : (
         <div className="space-y-3 animate-fade-in">
           <div

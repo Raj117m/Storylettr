@@ -844,3 +844,40 @@ export const pickRotatingLead = () => {
   // Returns Today's Letter lead
   return CONTENT.find((c) => c.slug === 'stopped-running-ads-growth') || CONTENT[0];
 };
+
+const MONTH_NAMES = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+
+const formatBookshelfDate = (iso) => {
+  if (!iso) return '2026';
+  const [y, m, d] = iso.split('-').map(Number);
+  return `${MONTH_NAMES[(m || 1) - 1]} ${d || 1}, ${y}`;
+};
+
+const BOOKSHELF_PALETTE_MAP = {
+  'stopped-running-ads-growth': { color: '#1C3D5C', foil: '#CCA352' }, // StoryLettr Sapphire & Brass
+  'cafe-owner-price-change': { color: '#221B16', foil: '#CCA352' }, // Dark Espresso & Brass
+  'will-mumbai-locals-stop-from-monday': { color: '#5C1D24', foil: '#F5EFE6' }, // Oxblood & Cream
+  'recruiter-cv-mistake': { color: '#1B2A38', foil: '#CCA352' }, // Deep Slate & Brass
+  'bank-digital-currency-lockout-hoax': { color: '#4A1A20', foil: '#CCA352' }, // Deep Oxblood & Brass
+  'manufacturer-unsung-salesperson': { color: '#2A211B', foil: '#CCA352' }, // Roasted Walnut & Brass
+  'niche-creator-monetization': { color: '#18334D', foil: '#F5EFE6' }, // Midnight Sapphire & Cream
+  '4-day-workweek-tech-ceo': { color: '#1F1A15', foil: '#CCA352' }, // Charcoal Espresso & Brass
+};
+
+export const getBookshelfStories = () => {
+  return allSortedByDate().map((item) => {
+    const styling = BOOKSHELF_PALETTE_MAP[item.slug] || { color: '#1C3D5C', foil: '#CCA352' };
+    const href = item.type === 'fact-check' ? `/fact-checks/${item.slug}` : `/stories/${item.slug}`;
+
+    return {
+      id: item.slug,
+      title: item.headline,
+      date: formatBookshelfDate(item.postmark?.date),
+      subtitle: item.summary || item.hook || item.tinyPayoff || '',
+      href,
+      color: styling.color,
+      foil: styling.foil,
+    };
+  });
+};
+

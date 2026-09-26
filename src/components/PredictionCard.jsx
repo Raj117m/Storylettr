@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ArrowRight, RotateCcw } from 'lucide-react';
 import DemoBadge from './DemoBadge';
+import StarfieldButton from './ui/StarfieldButton';
 
 export default function PredictionCard({
   question,
@@ -210,16 +211,16 @@ export default function PredictionCard({
           </div>
 
           {/* Reset / Explore Option */}
-          <div className="pt-2 flex items-center justify-between border-t border-[var(--border-subtle)] text-xs text-[var(--text-muted)]">
+          <div className="pt-2 flex items-center justify-between border-t border-[var(--border-subtle)] text-xs text-[var(--text-muted)] flex-wrap gap-2">
             <span>Evidence and real-world trials continue below.</span>
-            <button
-              type="button"
+            <StarfieldButton
               onClick={handleReset}
-              className="inline-flex items-center gap-1.5 font-semibold text-[var(--sapphire)] hover:underline cursor-pointer"
+              variant="ghost"
+              size="sm"
             >
               <RotateCcw className="w-3.5 h-3.5" />
               <span>Test another hypothesis</span>
-            </button>
+            </StarfieldButton>
           </div>
         </div>
       )}

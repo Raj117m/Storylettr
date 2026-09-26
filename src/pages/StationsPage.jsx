@@ -4,6 +4,7 @@ import { ArrowRight, Sparkles, MapPin, X } from 'lucide-react';
 import PageMeta from '../components/PageMeta';
 import { MiniSeal } from '../components/Seal';
 import DemoBadge from '../components/DemoBadge';
+import StarfieldButton from '../components/ui/StarfieldButton';
 import { STATIONS, stationName, stationsWithContent, CONTENT, CONTRIBUTORS } from '../data/content';
 
 const W = 600;
@@ -291,13 +292,15 @@ export default function StationsPage() {
 
                   {/* CTA */}
                   <div className="pt-3">
-                    <Link
+                    <StarfieldButton
                       to={stationStory.type === 'fact-check' ? `/fact-checks/${stationStory.slug}` : `/stories/${stationStory.slug}`}
-                      className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-md text-sm font-semibold uppercase tracking-wider transition-all min-h-[44px] bg-[var(--sapphire)] text-[#F5EFE6] hover:bg-[#629dcd] hover:shadow-[0_0_16px_rgba(84,144,192,0.35)]"
+                      variant="sapphire"
+                      size="md"
+                      className="w-full"
                     >
                       <span>Open the Letter</span>
                       <ArrowRight className="w-4 h-4" />
-                    </Link>
+                    </StarfieldButton>
                   </div>
                 </div>
               ) : (

@@ -4,7 +4,9 @@ import { ArrowRight, Sparkles, Layers, BookOpen } from 'lucide-react';
 import PageMeta from '../components/PageMeta';
 import FastStoryCard from '../components/FastStoryCard';
 import DemoBadge from '../components/DemoBadge';
-import { CHAPTERS, CONTENT, CONTRIBUTORS, pickRotatingLead } from '../data/content';
+import StoryBookshelfSection from '../components/StoryBookshelfSection';
+import StarfieldButton from '../components/ui/StarfieldButton';
+import { CHAPTERS, CONTENT, CONTRIBUTORS, pickRotatingLead, getBookshelfStories } from '../data/content';
 
 export default function HomePage() {
   const [selectedChapter, setSelectedChapter] = useState('all');
@@ -12,6 +14,7 @@ export default function HomePage() {
   // Featured Today's Letter: curiosity-driven module
   const lead = pickRotatingLead();
   const contributor = lead ? CONTRIBUTORS[lead.byline] : null;
+  const bookshelfStories = getBookshelfStories();
 
   // Filter stories based on selected chapter
   const filteredStories = CONTENT.filter((item) => {
@@ -69,30 +72,23 @@ export default function HomePage() {
 
           {/* Action CTAs */}
           <div className="flex items-center justify-center gap-4 flex-wrap">
-            <a
+            <StarfieldButton
               href="#todays-letter"
-              className="btn-editorial-primary group inline-flex items-center gap-2.5 text-sm font-semibold px-6 py-3.5 rounded-xl shadow-md"
-              style={{
-                backgroundColor: 'var(--sapphire)',
-                color: '#FFFFFF',
-              }}
+              variant="sapphire"
+              size="lg"
             >
               <span>Open Today’s Letter</span>
               <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
-            </a>
+            </StarfieldButton>
 
-            <a
-              href="#stories"
-              className="inline-flex items-center gap-2.5 text-sm font-semibold px-6 py-3.5 rounded-xl border transition-all duration-200 hover:-translate-y-0.5 hover:shadow-xs"
-              style={{
-                borderColor: 'var(--border-medium)',
-                backgroundColor: 'var(--bg-surface)',
-                color: 'var(--text-primary)',
-              }}
+            <StarfieldButton
+              href="#bookshelf"
+              variant="brass"
+              size="lg"
             >
-              <Layers className="w-4 h-4 text-[var(--sapphire)]" />
-              <span>Explore Dispatches</span>
-            </a>
+              <Layers className="w-4 h-4" />
+              <span>Explore Archive</span>
+            </StarfieldButton>
           </div>
         </div>
       </section>
@@ -199,23 +195,24 @@ export default function HomePage() {
                   </p>
                 </div>
 
-                <Link
+                <StarfieldButton
                   to={`/stories/${lead.slug}`}
-                  className="btn-editorial-primary group inline-flex items-center justify-center gap-3 text-sm font-semibold px-7 py-4 rounded-xl shadow-md transition-all shrink-0"
-                  style={{
-                    backgroundColor: 'var(--sapphire)',
-                    color: '#FFFFFF',
-                  }}
+                  variant="sapphire"
+                  size="lg"
+                  className="shrink-0"
                 >
                   <span>Open the Letter</span>
                   <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1.5" />
-                </Link>
+                </StarfieldButton>
               </div>
             </div>
 
           </div>
         </section>
       )}
+
+      {/* 3D STORY ARCHIVE BOOKSHELF */}
+      <StoryBookshelfSection items={bookshelfStories} />
 
       {/* FAST DISCOVERY FEED */}
       <section id="stories" className="py-16 sm:py-20 font-interface">
@@ -289,18 +286,15 @@ export default function HomePage() {
             <p className="text-sm max-w-xl mx-auto text-[var(--text-secondary)]">
               Explore dispatches through our interactive map connecting Mumbai's neighborhoods to the founders, operators, and specialists working within them.
             </p>
-            <div className="pt-2">
-              <Link
+            <div className="pt-2 flex justify-center">
+              <StarfieldButton
                 to="/atlas"
-                className="inline-flex items-center gap-2 text-xs font-semibold px-5 py-2.5 rounded-lg border transition-all hover:bg-[var(--sapphire)] hover:text-white"
-                style={{
-                  borderColor: 'var(--sapphire)',
-                  color: 'var(--sapphire)',
-                }}
+                variant="brass"
+                size="sm"
               >
                 <span>Explore the Story Atlas</span>
                 <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
+              </StarfieldButton>
             </div>
           </div>
 

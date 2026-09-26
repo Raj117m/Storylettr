@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { Search, Menu, X, Mail } from 'lucide-react';
 import Logo from './Logo';
+import StarfieldButton from './ui/StarfieldButton';
 
 const NAV_ITEMS = [
   { to: '/', label: 'Stories', end: true },
@@ -56,22 +57,25 @@ export default function Navbar({ onOpenSearch }) {
 
           {/* Actions: Search Button & Get the letter */}
           <div className="flex items-center gap-2 sm:gap-3">
-            <button
+            <StarfieldButton
               onClick={onOpenSearch}
-              className="hidden sm:inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider border rounded-md px-3.5 py-2 min-h-[40px] cursor-pointer transition-colors bg-[var(--bg-elevated)] border-[var(--border-subtle)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[var(--border-light)]"
-              title="Search StoryLettr.com"
+              variant="ghost"
+              size="sm"
+              className="hidden sm:inline-grid"
             >
               <Search className="w-3.5 h-3.5 text-[var(--sapphire)]" />
               <span>Search</span>
-            </button>
+            </StarfieldButton>
 
-            <Link
+            <StarfieldButton
               to="/newsletter"
-              className="hidden md:inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider px-4 py-2 min-h-[40px] rounded-md transition-all duration-200 shadow-sm bg-[var(--sapphire)] text-[#F5EFE6] hover:bg-[#629dcd] hover:shadow-[0_0_16px_rgba(84,144,192,0.35)]"
+              variant="sapphire"
+              size="sm"
+              className="hidden md:inline-grid"
             >
               <Mail className="w-3.5 h-3.5" />
-              Get the letter
-            </Link>
+              <span>Get the letter</span>
+            </StarfieldButton>
 
             <button
               onClick={onOpenSearch}
@@ -113,14 +117,16 @@ export default function Navbar({ onOpenSearch }) {
             </NavLink>
           ))}
           <div className="pt-2">
-            <Link
+            <StarfieldButton
               to="/newsletter"
+              variant="sapphire"
+              size="md"
+              className="w-full"
               onClick={() => setMobileMenuOpen(false)}
-              className="flex items-center justify-center gap-2 text-sm font-semibold px-4 py-3 rounded-md bg-[var(--sapphire)] text-[#F5EFE6] min-h-[44px]"
             >
               <Mail className="w-4 h-4" />
-              Get the letter
-            </Link>
+              <span>Get the letter</span>
+            </StarfieldButton>
           </div>
         </div>
       )}

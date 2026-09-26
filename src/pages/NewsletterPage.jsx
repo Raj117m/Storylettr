@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PageMeta from '../components/PageMeta';
 import { ArrowRight, Check } from 'lucide-react';
+import StarfieldButton from '../components/ui/StarfieldButton';
 
 export default function NewsletterPage() {
   const [email, setEmail] = useState('');
@@ -31,24 +32,25 @@ export default function NewsletterPage() {
             You're on the list.
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="flex items-center border rounded-md overflow-hidden" style={{ borderColor: 'var(--forward)' }}>
+          <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row items-center gap-3">
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Email address"
               aria-label="Email address"
-              className="w-full bg-transparent px-3 py-2.5 text-sm focus:outline-none"
-              style={{ color: 'var(--ink)' }}
+              className="w-full bg-[var(--bg-surface)] border border-[var(--border-light)] rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[var(--sapphire)] text-[var(--text-primary)] placeholder-[var(--text-muted)] min-h-[46px]"
               required
             />
-            <button
+            <StarfieldButton
               type="submit"
-              className="font-semibold px-4 py-2.5 text-sm flex items-center gap-1.5 shrink-0"
-              style={{ backgroundColor: 'var(--action)', color: 'var(--action-ink)' }}
+              variant="sapphire"
+              size="md"
+              className="w-full sm:w-auto shrink-0"
             >
-              Join <ArrowRight className="w-4 h-4" />
-            </button>
+              <span>Join StoryLettr</span>
+              <ArrowRight className="w-4 h-4" />
+            </StarfieldButton>
           </form>
         )}
       </div>

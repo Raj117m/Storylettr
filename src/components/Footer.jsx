@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Check } from 'lucide-react';
 import Logo from './Logo';
+import StarfieldButton from './ui/StarfieldButton';
 import { CHAPTERS } from '../data/content';
 
 export default function Footer() {
@@ -58,7 +59,7 @@ export default function Footer() {
             <h4 className="font-semibold text-xs uppercase tracking-wider text-[var(--brass)]">Get the Letter</h4>
             <form
               onSubmit={handleSubscribe}
-              className="flex items-center border rounded-md overflow-hidden bg-[var(--bg-surface)] border-[var(--border-light)] focus-within:border-[var(--sapphire)] focus-within:ring-1 focus-within:ring-[var(--sapphire)] transition-all"
+              className="flex items-center gap-2"
             >
               <input
                 type="email"
@@ -66,12 +67,14 @@ export default function Footer() {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Your email address"
                 aria-label="Email subscription input"
-                className="w-full bg-transparent px-3.5 py-2.5 text-sm focus:outline-none text-[var(--text-primary)] placeholder-[var(--text-muted)]"
+                className="w-full bg-[var(--bg-surface)] border border-[var(--border-light)] rounded-lg px-3.5 py-2 text-xs focus:outline-none focus:border-[var(--sapphire)] text-[var(--text-primary)] placeholder-[var(--text-muted)] min-h-[40px]"
                 required
               />
-              <button
+              <StarfieldButton
                 type="submit"
-                className="font-semibold px-4 py-2.5 text-xs uppercase tracking-wider flex items-center gap-1.5 shrink-0 cursor-pointer min-h-[42px] transition-all bg-[var(--sapphire)] text-[#F5EFE6] hover:bg-[#629dcd]"
+                variant="sapphire"
+                size="sm"
+                className="shrink-0"
               >
                 {subscribed ? (
                   <>
@@ -84,7 +87,7 @@ export default function Footer() {
                     <ArrowRight className="w-3.5 h-3.5" />
                   </>
                 )}
-              </button>
+              </StarfieldButton>
             </form>
           </div>
         </div>

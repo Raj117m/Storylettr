@@ -11,10 +11,13 @@
     "preview": "vite preview --outDir dist"
   },
   "dependencies": {
+    "@react-three/fiber": "^9.8.1",
     "lucide-react": "^0.475.0",
+    "motion": "^13.4.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-router-dom": "^7.18.4"
+    "react-router-dom": "^7.18.4",
+    "three": "^0.186.1"
   },
   "devDependencies": {
     "@expo-google-fonts/cormorant-garamond": "^0.4.1",
