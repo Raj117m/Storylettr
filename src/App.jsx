@@ -4,7 +4,6 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import SearchModal from './components/SearchModal';
 import AsciiBackground from './components/AsciiBackground';
-import PageTransitionOverlay from './components/PageTransitionOverlay';
 
 import HomePage from './pages/HomePage';
 import ChapterPage from './pages/ChapterPage';
@@ -60,7 +59,6 @@ export default function App() {
   return (
     <div className="relative min-h-screen flex flex-col justify-between" style={{ backgroundColor: 'var(--paper)' }}>
       <AsciiBackground />
-      <PageTransitionOverlay />
       <Navbar onOpenSearch={() => setSearchOpen(true)} />
 
       <main className="grow">
