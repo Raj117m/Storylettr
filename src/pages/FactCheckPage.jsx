@@ -6,6 +6,7 @@ import Seal, { SealDateline, SealMark } from '../components/Seal';
 import HowWeKnowThis from '../components/HowWeKnowThis';
 import SendThisInstead from '../components/SendThisInstead';
 import DemoBadge from '../components/DemoBadge';
+import CounterpointSection from '../components/CounterpointSection';
 import { getBySlug, AUTHORS, relatedFor, stationName } from '../data/content';
 
 const ORIGIN = 'https://storylettr.com';
@@ -68,7 +69,8 @@ export default function FactCheckPage() {
         {/* 1. CLAIM: What's being forwarded */}
         {item.rumour && (
           <div
-            className="rounded-xl p-5 sm:p-6 mb-8 border space-y-3 bg-[var(--bg-surface)] border-[rgba(184,83,72,0.25)] shadow-sm"
+            className="rounded-none p-5 sm:py-5 sm:pl-6 sm:pr-2 mb-8 border-y border-x-0 border-l-4 space-y-3 bg-transparent shadow-none"
+            style={{ borderColor: 'var(--oxblood)' }}
           >
             <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[var(--oxblood)] font-mono">
               <MessageSquareWarning className="w-4 h-4 text-[var(--oxblood)]" />
@@ -87,7 +89,8 @@ export default function FactCheckPage() {
 
         {/* 2. VERDICT & WHAT ACTUALLY HAPPENED */}
         <div
-          className="rounded-xl p-6 sm:p-7 mb-10 border flex flex-col-reverse sm:flex-row items-start gap-6 shadow-md bg-[var(--bg-elevated)] border-[var(--border-light)]"
+          className="rounded-none p-5 sm:p-7 mb-10 border-y-2 border-x-0 border-l-4 flex flex-col-reverse sm:flex-row items-start gap-6 shadow-none bg-transparent"
+          style={{ borderColor: 'var(--oxblood)' }}
         >
           <div className="flex-1 min-w-0 space-y-3">
             <span
@@ -123,7 +126,7 @@ export default function FactCheckPage() {
 
         {/* 4. WHAT YOU SHOULD ACTUALLY KNOW */}
         <div
-          className="rounded-xl p-5 sm:p-6 my-10 border space-y-2.5 bg-[var(--bg-surface)] border-l-4 border-l-[var(--brass)] border-[var(--border-subtle)]"
+          className="rounded-none p-0 pl-5 my-10 border-0 border-l-2 border-l-[var(--brass)] space-y-2.5 bg-transparent"
         >
           <h4 className="text-xs font-bold uppercase tracking-wider flex items-center gap-2 text-[var(--brass)]">
             <CheckCircle2 className="w-4 h-4" />
@@ -145,7 +148,16 @@ export default function FactCheckPage() {
         </div>
       </article>
 
-      <SendThisInstead headline={item.headline} summary={item.finding || item.verdict} url={url} sticky />
+      <div className="mx-auto w-full max-w-[1500px] px-[clamp(1.25rem,4vw,4rem)] pb-8">
+        <CounterpointSection
+          key={item.slug}
+          storySlug={item.slug}
+          storyTitle={item.headline}
+          variant="truth-desk"
+          initialCounterpoints={[]}
+        />
+      </div>
+
     </>
   );
 }

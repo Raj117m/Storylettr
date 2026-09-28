@@ -186,6 +186,35 @@ html.dark {
     text-underline-offset: 2px;
   }
 
+  button:not(:disabled),
+  [role="button"],
+  [role="option"],
+  select,
+  input[type="checkbox"],
+  input[type="radio"] {
+    transition: translate 160ms ease, scale 160ms ease, box-shadow 180ms ease, color 180ms ease, background-color 180ms ease;
+  }
+
+  button:not(:disabled):hover,
+  [role="button"]:hover,
+  [role="option"]:hover,
+  select:hover {
+    translate: 0 -1px;
+  }
+
+  button:not(:disabled):active,
+  [role="button"]:active,
+  [role="option"]:active,
+  select:active {
+    translate: 0 1px;
+    scale: 0.985;
+  }
+
+  input[type="checkbox"]:active,
+  input[type="radio"]:active {
+    scale: 0.92;
+  }
+
   :focus-visible {
     outline: 2px solid var(--sapphire);
     outline-offset: 2px;
@@ -386,6 +415,17 @@ html.dark {
   .btn-editorial-action:hover {
     transform: none !important;
   }
+
+  button,
+  [role="button"],
+  [role="option"],
+  select,
+  input[type="checkbox"],
+  input[type="radio"] {
+    transition: none !important;
+    translate: none !important;
+    scale: none !important;
+  }
 }
 
 /* --- Intuitive Scroll Reveal System --- */
@@ -499,5 +539,4 @@ html.dark {
   animation: blue-pulse-3 24s ease-in-out infinite alternate;
   will-change: transform, opacity;
 }
-
 
