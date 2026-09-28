@@ -16,22 +16,27 @@ export default function TruthDeskPage() {
       />
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 font-interface">
-        <div className="max-w-2xl mb-12 space-y-3.5">
+        <div className="max-w-3xl mb-12 space-y-3.5">
           <div className="flex items-center gap-2.5">
             <span
-              className="text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded bg-[var(--bg-feature)] text-[var(--oxblood)] border border-[rgba(184,83,72,0.3)] font-mono"
+              className="text-xs font-mono font-semibold uppercase tracking-wider px-3 py-1 rounded-full border flex items-center gap-1.5"
+              style={{
+                backgroundColor: 'var(--oxblood-surface)',
+                borderColor: 'var(--oxblood)',
+                color: 'var(--oxblood)',
+              }}
             >
-              Investigation Bureau
+              Verification & Public Evidence
             </span>
-            <DemoBadge label="Evidence audit" />
+            <DemoBadge label="Public records audit" />
           </div>
 
-          <h1 className="font-headline text-4xl sm:text-5xl font-semibold leading-[1.1] text-[var(--text-primary)]">
+          <h1 className="font-headline text-4xl sm:text-6xl font-normal leading-[1.08] text-[var(--text-primary)]">
             Truth Desk
           </h1>
 
-          <p className="font-editorial text-lg sm:text-xl leading-relaxed text-[var(--text-secondary)]">
-            Forward vs. Letter: When a viral panic message spreads through WhatsApp and Instagram groups, we cross-check the claim against verified records and publish the plain finding.
+          <p className="font-editorial text-base sm:text-xl leading-relaxed text-[var(--text-secondary)]">
+            When viral panic messages or false claims circulate through community groups, we cross-check the claims against primary records, interview officials, and publish the verified finding.
           </p>
         </div>
 

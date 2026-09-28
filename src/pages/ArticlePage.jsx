@@ -9,7 +9,7 @@ import RevealCard from '../components/RevealCard';
 import PredictionCard from '../components/PredictionCard';
 import BeforeAfterBlock from '../components/BeforeAfterBlock';
 import ExperimentBlock from '../components/ExperimentBlock';
-import DevilsAdvocate from '../components/DevilsAdvocate';
+import CounterpointSection from '../components/CounterpointSection';
 import HowWeKnowThis from '../components/HowWeKnowThis';
 import SendThisInstead from '../components/SendThisInstead';
 import FastStoryCard from '../components/FastStoryCard';
@@ -189,8 +189,8 @@ export default function ArticlePage({ type = 'story' }) {
           />
         )}
 
-        {/* Built-In Truth & Rigor Mechanism: Devil's Advocate */}
-        <DevilsAdvocate data={item.devilsAdvocate} storySlug={item.slug} storyTitle={item.headline} />
+        {/* Readers & Practitioners Counterargument System */}
+        <CounterpointSection storySlug={item.slug} storyTitle={item.headline} />
 
         {/* Remaining Body Text */}
         {item.body && item.body.length > 4 && (

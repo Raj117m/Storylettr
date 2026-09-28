@@ -214,30 +214,28 @@ export default function HomePage() {
       {/* 3D STORY ARCHIVE BOOKSHELF */}
       <StoryBookshelfSection items={bookshelfStories} />
 
-      {/* FAST DISCOVERY FEED */}
-      <section id="stories" className="py-16 sm:py-20 font-interface reveal-on-scroll">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* DISCOVERY FEED */}
+      <section id="stories" className="py-16 sm:py-24 font-interface reveal-on-scroll">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           
           {/* Feed Header */}
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
-            <div>
-              <div className="flex items-center gap-2 mb-1.5">
-                <span className="text-xs font-mono font-semibold uppercase tracking-wider text-[var(--sapphire)]">
-                  The Discovery Feed
-                </span>
-              </div>
-              <h2 className="font-headline text-3xl sm:text-4xl font-normal text-[var(--text-primary)]">
-                Tested dispatches from the field.
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 border-b pb-6" style={{ borderColor: 'var(--border-subtle)' }}>
+            <div className="space-y-2">
+              <span className="text-xs font-mono font-semibold uppercase tracking-wider text-[var(--sapphire)]">
+                The Discovery Feed
+              </span>
+              <h2 className="font-headline text-3xl sm:text-5xl font-normal text-[var(--text-primary)]">
+                Discover something worth knowing.
               </h2>
             </div>
 
-            <p className="text-sm max-w-md text-[var(--text-muted)]">
-              Scan in 10 seconds or read the full verified evidence, predictions, and real-world experiments.
+            <p className="text-sm sm:text-base font-editorial max-w-md text-[var(--text-secondary)]">
+              Real people. Uncommon lessons. Stories you can understand in seconds or explore deeply.
             </p>
           </div>
 
-          {/* Chapter / Topic Filter Pills */}
-          <div className="flex items-center gap-2 overflow-x-auto pb-4 mb-8 no-scrollbar">
+          {/* Elegant Horizontally Scrollable Floating Filter Row */}
+          <div className="flex items-center gap-2 overflow-x-auto pb-4 mb-10 no-scrollbar">
             {CHAPTERS.map((chap) => {
               const isActive = selectedChapter === chap.id;
               return (
@@ -246,14 +244,9 @@ export default function HomePage() {
                   onClick={() => setSelectedChapter(chap.id)}
                   className={`text-xs font-semibold px-4 py-2 rounded-full border whitespace-nowrap transition-all cursor-pointer min-h-[44px] flex items-center ${
                     isActive
-                      ? 'shadow-xs'
-                      : 'hover:border-[var(--sapphire)] hover:text-[var(--sapphire)]'
+                      ? 'bg-[var(--sapphire)] text-[#F5EFE6] border-[var(--sapphire)] shadow-xs'
+                      : 'bg-[var(--bg-surface)] text-[var(--text-secondary)] border-[var(--border-subtle)] hover:border-[var(--sapphire)] hover:text-[var(--text-primary)]'
                   }`}
-                  style={{
-                    backgroundColor: isActive ? 'var(--sapphire)' : 'var(--bg-surface)',
-                    borderColor: isActive ? 'var(--sapphire)' : 'var(--border-subtle)',
-                    color: isActive ? '#FFFFFF' : 'var(--text-secondary)',
-                  }}
                 >
                   {chap.name}
                 </button>
@@ -261,39 +254,72 @@ export default function HomePage() {
             })}
           </div>
 
-          {/* Stories Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {filteredStories.map((item, idx) => (
-              <FastStoryCard key={item.slug} item={item} seed={idx} />
-            ))}
-          </div>
+          {/* Dynamic Editorial Layout */}
+          {selectedChapter === 'all' ? (
+            <div className="space-y-8">
+              {/* 1. Large Feature Card */}
+              {filteredStories[0] && (
+                <FastStoryCard item={filteredStories[0]} seed={1} layout="feature" />
+              )}
+
+              {/* 2. Two Medium Stories */}
+              {filteredStories.length > 1 && (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-7">
+                  {filteredStories.slice(1, 3).map((item, idx) => (
+                    <FastStoryCard key={item.slug} item={item} seed={idx + 2} layout="standard" />
+                  ))}
+                </div>
+              )}
+
+              {/* 3. Full-Width Quote Story */}
+              {filteredStories[3] && (
+                <FastStoryCard item={filteredStories[3]} seed={4} layout="quote" />
+              )}
+
+              {/* 4. Smaller Discovery Row */}
+              {filteredStories.length > 4 && (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-2">
+                  {filteredStories.slice(4).map((item, idx) => (
+                    <FastStoryCard key={item.slug} item={item} seed={idx + 5} layout="standard" />
+                  ))}
+                </div>
+              )}
+            </div>
+          ) : (
+            /* Filtered Category Stories Grid */
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-7">
+              {filteredStories.map((item, idx) => (
+                <FastStoryCard key={item.slug} item={item} seed={idx} layout="standard" />
+              ))}
+            </div>
+          )}
 
           {/* Story Atlas Discovery Callout */}
           <div
-            className="mt-14 p-7 sm:p-10 rounded-2xl border text-center space-y-3 relative overflow-hidden reveal-on-scroll reveal-delay-2"
+            className="mt-16 p-8 sm:p-12 rounded-3xl border text-center space-y-3.5 relative overflow-hidden reveal-on-scroll reveal-delay-2"
             style={{
               backgroundColor: 'var(--bg-elevated)',
               borderColor: 'var(--border-medium)',
-              boxShadow: '0 8px 25px -8px var(--border-subtle)',
+              boxShadow: '0 12px 32px -12px var(--border-subtle)',
             }}
           >
             <span className="text-xs font-mono font-semibold uppercase tracking-wider text-[var(--brass)] block">
               Story Atlas Discovery
             </span>
-            <h3 className="font-headline text-2xl sm:text-3xl font-normal text-[var(--text-primary)]">
+            <h3 className="font-headline text-3xl sm:text-4xl font-normal text-[var(--text-primary)]">
               Interesting people are everywhere.
             </h3>
-            <p className="text-sm max-w-xl mx-auto text-[var(--text-secondary)]">
-              Explore dispatches through our interactive map connecting Mumbai's neighborhoods to the founders, operators, and specialists working within them.
+            <p className="text-sm sm:text-base font-editorial max-w-xl mx-auto text-[var(--text-secondary)]">
+              Explore where the people and stories behind StoryLettr come from through our interactive geographic map connecting Mumbai, Thane, and Navi Mumbai.
             </p>
             <div className="pt-2 flex justify-center">
               <StarfieldButton
                 to="/atlas"
                 variant="brass"
-                size="sm"
+                size="md"
               >
                 <span>Explore the Story Atlas</span>
-                <ArrowRight className="w-3.5 h-3.5" />
+                <ArrowRight className="w-4 h-4" />
               </StarfieldButton>
             </div>
           </div>

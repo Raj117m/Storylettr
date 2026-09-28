@@ -4,6 +4,7 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import SearchModal from './components/SearchModal';
 import AsciiBackground from './components/AsciiBackground';
+import { ThemeProvider } from './context/ThemeContext';
 
 import HomePage from './pages/HomePage';
 import ChapterPage from './pages/ChapterPage';
@@ -57,36 +58,38 @@ export default function App() {
   }, [location.pathname]);
 
   return (
-    <div className="relative min-h-screen flex flex-col justify-between" style={{ backgroundColor: 'var(--paper)' }}>
-      <AsciiBackground />
-      <Navbar onOpenSearch={() => setSearchOpen(true)} />
+    <ThemeProvider>
+      <div className="relative min-h-screen flex flex-col justify-between" style={{ backgroundColor: 'var(--paper)' }}>
+        <AsciiBackground />
+        <Navbar onOpenSearch={() => setSearchOpen(true)} />
 
-      <main className="grow">
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/stories" element={<HomePage />} />
-          <Route path="/people" element={<PeoplePage />} />
-          <Route path="/atlas" element={<StationsPage />} />
-          <Route path="/mumbai" element={<StationsPage />} />
-          <Route path="/mumbai/:station" element={<LocalityPage />} />
-          <Route path="/experiments" element={<ExperimentsPage />} />
-          <Route path="/chapters/:chapterId" element={<ChapterPage />} />
-          <Route path="/stories/:slug" element={<ArticlePage type="story" />} />
-          <Route path="/explainers/:slug" element={<ArticlePage type="explainer" />} />
-          <Route path="/fact-checks/:slug" element={<FactCheckPage />} />
-          <Route path="/truth-desk" element={<TruthDeskPage />} />
-          <Route path="/authors/:authorSlug" element={<AuthorPage />} />
-          <Route path="/glossary/:term" element={<GlossaryTermPage />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/corrections" element={<CorrectionsPage />} />
-          <Route path="/newsletter" element={<NewsletterPage />} />
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-      </main>
+        <main className="grow">
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/stories" element={<HomePage />} />
+            <Route path="/people" element={<PeoplePage />} />
+            <Route path="/atlas" element={<StationsPage />} />
+            <Route path="/mumbai" element={<StationsPage />} />
+            <Route path="/mumbai/:station" element={<LocalityPage />} />
+            <Route path="/experiments" element={<ExperimentsPage />} />
+            <Route path="/chapters/:chapterId" element={<ChapterPage />} />
+            <Route path="/stories/:slug" element={<ArticlePage type="story" />} />
+            <Route path="/explainers/:slug" element={<ArticlePage type="explainer" />} />
+            <Route path="/fact-checks/:slug" element={<FactCheckPage />} />
+            <Route path="/truth-desk" element={<TruthDeskPage />} />
+            <Route path="/authors/:authorSlug" element={<AuthorPage />} />
+            <Route path="/glossary/:term" element={<GlossaryTermPage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/corrections" element={<CorrectionsPage />} />
+            <Route path="/newsletter" element={<NewsletterPage />} />
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+        </main>
 
-      <Footer />
+        <Footer />
 
-      <SearchModal isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
-    </div>
+        <SearchModal isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
+      </div>
+    </ThemeProvider>
   );
 }

@@ -12,7 +12,7 @@ const PROCESS_STEPS = [
   { step: '06', title: 'Present', desc: 'Format progressively with 10-second takeaways, reveal cards, and data.', icon: Layout },
   { step: '07', title: 'Experiment', desc: 'Where reasonably testable, run internal real-world trials to document results.', icon: FlaskConical },
   { step: '08', title: 'Learn', desc: 'Record what succeeded, what failed, and the limits of the finding.', icon: BookOpen },
-  { step: '09', title: 'Share', desc: 'Publish open transparent dispatches sealed with our authenticity mark.', icon: Share2 },
+  { step: '09', title: 'Share', desc: 'Publish transparent letters sealed with our authenticity mark.', icon: Share2 },
 ];
 
 export default function AboutPage() {
@@ -64,7 +64,7 @@ export default function AboutPage() {
               The StoryLettr Method
             </h2>
             <p className="text-sm font-interface" style={{ color: 'var(--forward)' }}>
-              Our 9-stage pipeline from raw human conversation to verified dispatch.
+              Our 9-stage pipeline from raw human conversation to verified publication.
             </p>
           </div>
 

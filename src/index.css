@@ -1,16 +1,19 @@
 @import "tailwindcss";
+@import "maplibre-gl/dist/maplibre-gl.css";
 
-:root {
-  /* Semantic surface hierarchy - Light Mode */
-  --bg-primary: #F8F4EC;
-  --bg-elevated: #FFFFFF;
-  --bg-surface: #EFE6D5;
-  --bg-feature: #14283C;
+:root,
+html[data-theme="light"],
+html.light {
+  /* Semantic surface hierarchy - Light Mode (Warm Parchment/Ivory) */
+  --bg-primary: #F8F4EC;     /* Warm parchment / ivory */
+  --bg-elevated: #FCFAF6;    /* Soft cream elevated card */
+  --bg-surface: #EFE7D8;     /* Distinct interactive panel */
+  --bg-feature: #1A344D;     /* Rich dark sapphire accent surface */
   --bg-feature-ink: #F8F4EC;
 
-  --text-primary: #1C1612;
-  --text-secondary: #4A3E36;
-  --text-muted: #72675C;
+  --text-primary: #1C1612;   /* Deep espresso */
+  --text-secondary: #4A3E36; /* Warm readable secondary */
+  --text-muted: #72675C;     /* Warm stone neutral */
 
   --sapphire: #1B3D5C;
   --sapphire-bright: #25557E;
@@ -21,14 +24,20 @@
   --oxblood-deep: #4A121D;
   --oxblood-surface: #F9EBEE;
 
-  --brass: #AE873F;
+  --brass: #9E742D;
   --brass-bright: #C99E4B;
-  --brass-glow: rgba(174, 135, 63, 0.32);
+  --brass-glow: rgba(158, 116, 45, 0.32);
 
   --stone: #E5DDCB;
   --border-subtle: rgba(28, 22, 18, 0.12);
   --border-medium: rgba(28, 22, 18, 0.22);
   --border-strong: rgba(28, 22, 18, 0.38);
+
+  /* Glass navigation tokens */
+  --glass-bg: rgba(248, 244, 236, 0.85);
+  --glass-border: rgba(28, 22, 18, 0.12);
+  --glass-highlight: rgba(255, 255, 255, 0.7);
+  --glass-shadow: 0 10px 30px -8px rgba(28, 22, 18, 0.12);
 
   /* Legacy mappings */
   --paper: var(--bg-primary);
@@ -41,7 +50,7 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]):not(.light) {
     /* Semantic surface hierarchy - Dark Espresso Mode */
     --bg-primary: #16120E;     /* Deep clean espresso base */
     --bg-elevated: #221B16;    /* Visibly lifted secondary card surface */
@@ -71,6 +80,12 @@
     --border-medium: rgba(245, 239, 230, 0.22);
     --border-strong: rgba(245, 239, 230, 0.38);
 
+    /* Glass navigation tokens */
+    --glass-bg: rgba(22, 18, 14, 0.85);
+    --glass-border: rgba(245, 239, 230, 0.14);
+    --glass-highlight: rgba(255, 255, 255, 0.08);
+    --glass-shadow: 0 12px 36px -8px rgba(0, 0, 0, 0.55);
+
     /* Legacy compatibility */
     --paper: var(--bg-primary);
     --ink: var(--text-primary);
@@ -80,6 +95,53 @@
     --action-ink: #16120E;
     --forward: var(--text-muted);
   }
+}
+
+html[data-theme="dark"],
+html.dark {
+  /* Explicit Dark Espresso Mode override */
+  --bg-primary: #16120E;     /* Deep clean espresso base */
+  --bg-elevated: #221B16;    /* Visibly lifted secondary card surface */
+  --bg-surface: #2C231C;     /* Distinct interactive panel */
+  --bg-feature: #101D2B;     /* Rich dark sapphire accent surface */
+  --bg-feature-ink: #F5EFE6;
+
+  --text-primary: #F5EFE6;   /* Clear cream text */
+  --text-secondary: #D4C7B5; /* Warm readable secondary */
+  --text-muted: #9E9182;     /* Warm stone neutral (WCAG AA accessible) */
+
+  --sapphire: #5490C0;       /* Richer sapphire controls */
+  --sapphire-bright: #72A7D7;
+  --sapphire-light: #162638;
+  --sapphire-glow: rgba(84, 144, 192, 0.35);
+
+  --oxblood: #B85348;        /* Deeper oxblood accents */
+  --oxblood-deep: #D0695D;
+  --oxblood-surface: #2D191A;
+
+  --brass: #CCA352;          /* Intentional warm brass highlights */
+  --brass-bright: #E2B968;
+  --brass-glow: rgba(204, 163, 82, 0.35);
+
+  --stone: #3A3026;
+  --border-subtle: rgba(245, 239, 230, 0.12);
+  --border-medium: rgba(245, 239, 230, 0.22);
+  --border-strong: rgba(245, 239, 230, 0.38);
+
+  /* Glass navigation tokens */
+  --glass-bg: rgba(22, 18, 14, 0.85);
+  --glass-border: rgba(245, 239, 230, 0.14);
+  --glass-highlight: rgba(255, 255, 255, 0.08);
+  --glass-shadow: 0 12px 36px -8px rgba(0, 0, 0, 0.55);
+
+  /* Legacy compatibility */
+  --paper: var(--bg-primary);
+  --ink: var(--text-primary);
+  --primary: var(--sapphire);
+  --seal: var(--oxblood);
+  --action: var(--brass);
+  --action-ink: #16120E;
+  --forward: var(--text-muted);
 }
 
 @layer base {

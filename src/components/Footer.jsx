@@ -44,7 +44,6 @@ export default function Footer() {
               <li><Link to="/" className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:underline transition-colors">Stories & Letters</Link></li>
               <li><Link to="/people" className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:underline transition-colors">People & Contributors</Link></li>
               <li><Link to="/atlas" className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:underline transition-colors">Story Atlas</Link></li>
-              <li><Link to="/experiments" className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:underline transition-colors">Real-World Experiments</Link></li>
               <li><Link to="/truth-desk" className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:underline transition-colors">Truth Desk</Link></li>
             </ul>
           </div>

@@ -1,344 +1,214 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Sparkles, MapPin, X } from 'lucide-react';
+import { ArrowRight, MapPin, Sparkles, BookOpen } from 'lucide-react';
 import PageMeta from '../components/PageMeta';
-import { MiniSeal } from '../components/Seal';
 import DemoBadge from '../components/DemoBadge';
 import StarfieldButton from '../components/ui/StarfieldButton';
-import { STATIONS, stationName, stationsWithContent, CONTENT, CONTRIBUTORS } from '../data/content';
-
-const W = 600;
-const H = 780;
-
-const PLACES = {
-  borivali: { x: 170, y: 100, label: 'right' },
-  thane: { x: 400, y: 150, label: 'right' },
-  andheri: { x: 178, y: 262, label: 'right' },
-  ghatkopar: { x: 300, y: 318, label: 'left' },
-  bandra: { x: 162, y: 382, label: 'left' },
-  kurla: { x: 268, y: 392, label: 'right' },
-  vashi: { x: 452, y: 402, label: 'right' },
-  dadar: { x: 190, y: 470, label: 'left' },
-  wadala: { x: 268, y: 482, label: 'right' },
-  panvel: { x: 520, y: 520, label: 'left' },
-  byculla: { x: 242, y: 556, label: 'right' },
-  'mumbai-central': { x: 176, y: 560, label: 'left' },
-  csmt: { x: 252, y: 632, label: 'right' },
-  churchgate: { x: 192, y: 642, label: 'left' },
-  colaba: { x: 206, y: 716, label: 'left' },
-};
-
-const ARABIAN_SEA = 'M 0 0 L 125 0 L 118 150 L 128 250 L 112 330 L 128 410 L 142 470 L 132 540 L 150 610 L 172 665 L 190 780 L 0 780 Z';
-const HARBOUR_AND_CREEK =
-  'M 240 780 L 262 700 L 285 640 L 300 580 L 318 520 L 335 450 L 350 400 L 360 340 L 368 270 L 378 210 L 392 185 ' +
-  'L 410 190 L 405 260 L 400 330 L 410 370 L 425 420 L 430 470 L 470 540 L 560 600 L 600 640 L 600 780 Z';
-
-const RAIL = [
-  ['borivali', 'andheri', 'bandra', 'dadar', 'mumbai-central', 'churchgate'],
-  ['thane', 'ghatkopar', 'kurla', 'dadar', 'byculla', 'csmt'],
-  ['csmt', 'wadala', 'kurla', 'vashi', 'panvel'],
-];
-
-function CornerFan({ x, y, rotate }) {
-  return (
-    <g transform={`rotate(${rotate} ${x} ${y})`}>
-      {[0, 1, 2, 3, 4].map((i) => {
-        const rad = (((i / 4) * 60 - 30) * Math.PI) / 180;
-        return <line key={i} x1={x} y1={y} x2={x + 24 * Math.sin(rad)} y2={y - 24 * Math.cos(rad)} stroke="var(--brass)" strokeWidth="1" opacity="0.6" />;
-      })}
-    </g>
-  );
-}
-
-function Compass({ x, y }) {
-  return (
-    <g stroke="var(--brass)" fill="none" opacity="0.8">
-      <circle cx={x} cy={y} r="22" strokeWidth="1" />
-      <circle cx={x} cy={y} r="17" strokeWidth="0.6" />
-      <path d={`M ${x} ${y - 30} L ${x + 5} ${y} L ${x} ${y + 30} L ${x - 5} ${y} Z`} fill="var(--brass)" fillOpacity="0.25" strokeWidth="0.8" />
-      <path d={`M ${x - 30} ${y} L ${x} ${y - 5} L ${x + 30} ${y} L ${x} ${y + 5} Z`} strokeWidth="0.8" />
-      <text x={x} y={y - 36} textAnchor="middle" fontSize="13" fill="var(--brass)" stroke="none" fontFamily="'Instrument Serif', Georgia, serif" fontWeight="600">N</text>
-    </g>
-  );
-}
-
-function RegionLabel({ x, y, rotate = 0, children }) {
-  return (
-    <text
-      x={x}
-      y={y}
-      transform={rotate ? `rotate(${rotate} ${x} ${y})` : undefined}
-      textAnchor="middle"
-      fontSize="17"
-      fontStyle="italic"
-      letterSpacing="1.5"
-      fill="var(--brass)"
-      fontFamily="'Instrument Serif', Georgia, serif"
-      fontWeight="600"
-      paintOrder="stroke"
-      stroke="var(--bg-primary)"
-      strokeWidth="5"
-    >
-      {children}
-    </text>
-  );
-}
+import StoryMap from '../components/StoryMap';
+import { STATIONS_GEO } from '../data/stationsGeo';
+import { CONTENT, CONTRIBUTORS } from '../data/content';
 
 export default function StationsPage() {
-  const hasContent = stationsWithContent();
   const [selectedStation, setSelectedStation] = useState('thane');
 
-  // Find active story and contributor associated with the selected station
+  const stationInfo = STATIONS_GEO[selectedStation] || STATIONS_GEO.thane;
   const stationStory = CONTENT.find((c) => c.station === selectedStation);
   const contributor = stationStory ? CONTRIBUTORS[stationStory.byline] : null;
 
   return (
     <>
       <PageMeta
-        title="Story Atlas | Interesting People Are Everywhere"
-        description="Explore the people, experiences and experiments behind StoryLettr. Location as human context, not local news."
+        title="Story Atlas | Discover Where the People and Stories Come From"
+        description="Discover where the people and stories behind StoryLettr come from across Mumbai, Thane, and Navi Mumbai. Real geography, real practitioners, real lessons."
         path="/atlas"
       />
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 font-interface">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 font-interface">
         {/* Header */}
-        <div className="max-w-3xl mb-10 space-y-3.5">
+        <div className="max-w-3xl mb-10 space-y-3">
           <div className="flex items-center gap-2.5">
             <span
-              className="text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded bg-[var(--bg-feature)] text-[var(--brass)] border border-[var(--border-light)] font-mono"
+              className="text-xs font-mono font-semibold uppercase tracking-wider px-3 py-1 rounded-full border flex items-center gap-1.5"
+              style={{
+                backgroundColor: 'var(--bg-surface)',
+                borderColor: 'var(--border-medium)',
+                color: 'var(--sapphire)',
+              }}
             >
-              Story Atlas
+              <Sparkles className="w-3.5 h-3.5 text-[var(--brass)]" />
+              People &bull; Stories &bull; Places
             </span>
-            <DemoBadge label="Curated field atlas" />
+            <DemoBadge label="Interactive geographic atlas" />
           </div>
 
-          <h1 className="font-headline text-4xl sm:text-5xl font-semibold leading-[1.1] text-[var(--text-primary)]">
-            Interesting people are everywhere.
+          <h1 className="font-headline text-4xl sm:text-6xl font-normal leading-[1.08] text-[var(--text-primary)]">
+            Story Atlas
           </h1>
 
-          <p className="font-editorial text-lg sm:text-xl leading-relaxed text-[var(--text-secondary)]">
-            Explore the people, experiences and experiments behind StoryLettr. The map does not represent municipal news; it documents where practitioners, founders and specialists do their work.
+          <p className="text-base sm:text-xl font-editorial leading-relaxed text-[var(--text-secondary)]">
+            Discover where the people and stories behind StoryLettr come from. We meet operators, founders, and specialists where they work across Mumbai, Thane, and Navi Mumbai.
           </p>
         </div>
 
-        {/* Interactive Layout: Map + Active Pin Inspector */}
+        {/* Panoramic Map & Interactive Detail Card */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          
-          {/* Engraved Map Canvas */}
-          <div className="lg:col-span-7 overflow-x-auto rounded-xl border p-3 shadow-md bg-[var(--bg-elevated)] border-[var(--border-light)]">
-            <div className="w-fit mx-auto">
-              <svg
-                viewBox={`0 0 ${W} ${H}`}
-                width={W}
-                height={H}
-                className="block max-w-none select-none"
-                role="img"
-                aria-label="Story Atlas engraved map"
-              >
-                <defs>
-                  <clipPath id="atlas-frame">
-                    <rect x="14" y="14" width={W - 28} height={H - 28} />
-                  </clipPath>
-                  <pattern id="atlas-hatch" width="7" height="7" patternUnits="userSpaceOnUse">
-                    <line x1="0" y1="3.5" x2="7" y2="3.5" stroke="var(--brass)" strokeWidth="0.8" opacity="0.2" />
-                  </pattern>
-                </defs>
-
-                {/* Water hatching */}
-                <g clipPath="url(#atlas-frame)">
-                  <path d={ARABIAN_SEA} fill="url(#atlas-hatch)" />
-                  <path d={HARBOUR_AND_CREEK} fill="url(#atlas-hatch)" />
-                  <path d={ARABIAN_SEA} fill="none" stroke="var(--brass)" strokeWidth="1.2" opacity="0.4" />
-                  <path d={HARBOUR_AND_CREEK} fill="none" stroke="var(--brass)" strokeWidth="1.2" opacity="0.4" />
-                </g>
-
-                <rect x="8" y="8" width={W - 16} height={H - 16} fill="none" stroke="var(--brass)" strokeWidth="1.5" opacity="0.7" />
-                <rect x="14" y="14" width={W - 28} height={H - 28} fill="none" stroke="var(--brass)" strokeWidth="0.6" opacity="0.4" />
-                <CornerFan x={30} y={30} rotate={45} />
-                <CornerFan x={W - 30} y={30} rotate={135} />
-                <CornerFan x={30} y={H - 30} rotate={-45} />
-                <CornerFan x={W - 30} y={H - 30} rotate={-135} />
-
-                {RAIL.map((line, i) => (
-                  <polyline
-                    key={i}
-                    points={line.map((slug) => `${PLACES[slug].x},${PLACES[slug].y}`).join(' ')}
-                    fill="none"
-                    stroke="var(--text-muted)"
-                    strokeWidth="1"
-                    strokeDasharray="1 4"
-                    strokeLinecap="round"
-                    opacity="0.4"
-                  />
-                ))}
-
-                <Compass x={66} y={96} />
-                <RegionLabel x={62} y={420} rotate={-90}>Arabian Sea</RegionLabel>
-                <RegionLabel x={392} y={246} rotate={-84}>Thane Creek</RegionLabel>
-                <RegionLabel x={372} y={712}>Mumbai Harbour</RegionLabel>
-                <RegionLabel x={505} y={458}>Navi Mumbai</RegionLabel>
-
-                {/* Location Pins */}
-                {Object.entries(PLACES).map(([slug, p], i) => {
-                  const populated = hasContent.has(slug);
-                  const isSelected = selectedStation === slug;
-                  const dx = p.label === 'right' ? (populated ? 20 : 11) : -(populated ? 20 : 11);
-
-                  return (
-                    <g
-                      key={slug}
-                      onClick={() => setSelectedStation(slug)}
-                      className="cursor-pointer group"
-                      role="button"
-                      tabIndex={0}
-                      aria-label={`Select ${stationName(slug)}`}
-                    >
-                      {/* Highlight aura for selected */}
-                      {isSelected && (
-                        <circle
-                          cx={p.x}
-                          cy={p.y}
-                          r={24}
-                          fill="var(--brass)"
-                          fillOpacity="0.25"
-                          className="animate-pulse"
-                        />
-                      )}
-
-                      {populated ? (
-                        <MiniSeal x={p.x} y={p.y} r={14} seed={i} id={`atlas-seal-${slug}`} />
-                      ) : (
-                        <circle cx={p.x} cy={p.y} r="5" fill="var(--bg-primary)" stroke="var(--text-muted)" strokeWidth="1.5" />
-                      )}
-
-                      <text
-                        x={p.x + dx}
-                        y={p.y + 5}
-                        textAnchor={p.label === 'right' ? 'start' : 'end'}
-                        fontSize={populated ? 17 : 14}
-                        fontWeight={isSelected ? 700 : populated ? 600 : 500}
-                        fill={isSelected ? 'var(--brass)' : populated ? 'var(--text-primary)' : 'var(--text-muted)'}
-                        fontFamily={populated ? "'Instrument Serif', Georgia, serif" : "'Manrope', sans-serif"}
-                        paintOrder="stroke"
-                        stroke="var(--bg-primary)"
-                        strokeWidth="4"
-                      >
-                        {stationName(slug)}
-                      </text>
-                    </g>
-                  );
-                })}
-              </svg>
-            </div>
+          {/* Main Panoramic Map */}
+          <div className="lg:col-span-8 w-full">
+            <StoryMap
+              selectedStation={selectedStation}
+              onSelectStation={(slug) => setSelectedStation(slug)}
+            />
           </div>
 
-          {/* Interactive Pin Inspector Panel */}
-          <div className="lg:col-span-5 space-y-4 sticky top-24">
-            <div className="rounded-xl p-6 sm:p-7 border shadow-xl space-y-5 bg-[var(--bg-surface)] border-[var(--border-light)]">
-              <div className="flex items-center justify-between border-b pb-3.5 border-[var(--border-subtle)]">
-                <div className="flex items-center gap-2">
-                  <MapPin className="w-4 h-4 text-[var(--sapphire)]" />
-                  <span className="font-headline text-2xl font-bold uppercase tracking-wider text-[var(--text-primary)]">
-                    {stationName(selectedStation)}
+          {/* Connected Location & Story Card */}
+          <div className="lg:col-span-4 w-full">
+            <div
+              className="rounded-3xl p-6 sm:p-7 border shadow-xl relative overflow-hidden transition-all duration-300"
+              style={{
+                backgroundColor: 'var(--bg-elevated)',
+                borderColor: 'var(--border-medium)',
+              }}
+            >
+              {/* Station Badge Header */}
+              <div className="flex items-center justify-between pb-4 border-b border-[var(--border-subtle)] mb-5">
+                <div>
+                  <span className="text-[11px] font-mono uppercase tracking-wider text-[var(--brass)] block font-semibold">
+                    {stationInfo.region}
                   </span>
+                  <h3 className="font-headline text-3xl font-semibold text-[var(--text-primary)] flex items-center gap-2 mt-0.5">
+                    <MapPin className="w-5 h-5 text-[var(--oxblood)]" />
+                    {stationInfo.name}
+                  </h3>
                 </div>
-                {stationStory?.isDemo && <DemoBadge label="Field note" />}
+
+                <div className="w-9 h-9 rounded-full flex items-center justify-center font-mono text-xs font-bold text-[#F5EFE6] bg-[var(--sapphire)] border border-[#CCA352] shadow-sm">
+                  SL
+                </div>
               </div>
 
-              {stationStory ? (
-                <div className="space-y-4">
-                  {/* Person & Role */}
-                  {contributor ? (
-                    <div className="flex items-center gap-3">
-                      <img
-                        src={contributor.avatar}
-                        alt={contributor.name}
-                        className="w-12 h-12 rounded-full object-cover border-2 border-[var(--brass)] shrink-0 shadow-sm"
-                      />
-                      <div>
-                        <span className="font-headline text-xl font-bold block text-[var(--text-primary)]">
-                          {contributor.name}
-                        </span>
-                        <span className="text-xs font-semibold uppercase tracking-wider text-[var(--brass)]">
-                          {contributor.role}
-                        </span>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="text-xs text-[var(--text-muted)] font-mono uppercase tracking-wider">StoryLettr Desk Investigation</div>
-                  )}
+              {/* Station Geographic Context */}
+              <p className="text-xs sm:text-sm font-editorial leading-relaxed text-[var(--text-secondary)] mb-6">
+                {stationInfo.description}
+              </p>
 
-                  {/* Story Hook */}
-                  <div className="space-y-1">
-                    <span className="text-[10px] font-bold uppercase tracking-wider block text-[var(--text-muted)]">
-                      The Experience / Problem:
+              {/* Featured Practitioner & Story for this Station */}
+              {stationStory && contributor ? (
+                <div
+                  className="rounded-2xl p-5 border space-y-4 mb-6 transition-all"
+                  style={{
+                    backgroundColor: 'var(--bg-surface)',
+                    borderColor: 'var(--border-medium)',
+                  }}
+                >
+                  <div className="flex items-start gap-3">
+                    <img
+                      src={contributor.avatar}
+                      alt={contributor.name}
+                      className="w-12 h-12 rounded-full object-cover border-2 border-[var(--brass)] shrink-0 shadow-sm"
+                      loading="lazy"
+                    />
+                    <div>
+                      <h4 className="font-headline text-xl font-semibold text-[var(--text-primary)] leading-tight">
+                        {contributor.name}
+                      </h4>
+                      <p className="text-xs font-medium text-[var(--brass)] mt-0.5">
+                        {contributor.role}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div>
+                    <span className="text-[10px] font-mono uppercase tracking-wider text-[var(--text-muted)] block mb-1">
+                      Featured Story
                     </span>
-                    <p className="font-headline text-xl font-semibold leading-snug text-[var(--text-primary)]">
-                      "{stationStory.hook || stationStory.headline}"
+                    <p className="font-headline text-base font-semibold leading-snug text-[var(--text-primary)]">
+                      &ldquo;{stationStory.headline}&rdquo;
                     </p>
                   </div>
 
-                  {/* Tiny Payoff */}
-                  {stationStory.tinyPayoff && (
-                    <div className="p-3.5 rounded-md border-l-3 space-y-1 text-xs bg-[var(--bg-elevated)] border-l-[var(--brass)] border border-[var(--border-subtle)]">
-                      <span className="font-bold uppercase tracking-wider block text-[var(--brass)] text-[10px]">
-                        Tiny Insight:
+                  {contributor.featuredInsight && (
+                    <div className="p-3 rounded-xl border-l-2 bg-[var(--bg-elevated)] border-l-[var(--brass)] border border-[var(--border-subtle)] text-xs">
+                      <span className="font-mono text-[10px] uppercase tracking-wider text-[var(--brass)] block mb-0.5 font-bold">
+                        Quick Insight:
                       </span>
-                      <p className="font-editorial text-sm leading-relaxed text-[var(--text-primary)]">
-                        {stationStory.tinyPayoff}
+                      <p className="italic text-[var(--text-secondary)] font-editorial">
+                        &ldquo;{contributor.featuredInsight}&rdquo;
                       </p>
                     </div>
                   )}
 
-                  {/* CTA */}
-                  <div className="pt-3">
+                  <div className="pt-1">
                     <StarfieldButton
-                      to={stationStory.type === 'fact-check' ? `/fact-checks/${stationStory.slug}` : `/stories/${stationStory.slug}`}
+                      to={`/stories/${stationStory.slug}`}
                       variant="sapphire"
-                      size="md"
+                      size="sm"
                       className="w-full"
                     >
-                      <span>Open the Letter</span>
-                      <ArrowRight className="w-4 h-4" />
+                      <span>Open Story</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
                     </StarfieldButton>
                   </div>
                 </div>
               ) : (
-                <div className="py-8 text-center space-y-2">
-                  <p className="text-sm text-[var(--text-secondary)]">
-                    No recorded StoryLettr dispatch from {stationName(selectedStation)} yet.
+                <div
+                  className="rounded-2xl p-5 border text-center space-y-2 mb-6"
+                  style={{
+                    backgroundColor: 'var(--bg-surface)',
+                    borderColor: 'var(--border-subtle)',
+                  }}
+                >
+                  <BookOpen className="w-6 h-6 mx-auto text-[var(--text-muted)]" />
+                  <h4 className="font-headline text-lg text-[var(--text-primary)]">
+                    Field Research in Progress
+                  </h4>
+                  <p className="text-xs text-[var(--text-muted)] font-editorial max-w-xs mx-auto">
+                    We are currently conducting practitioner interviews in {stationInfo.name}. Subscribe to receive the letter once verified.
                   </p>
-                  <p className="text-xs text-[var(--text-muted)]">
-                    Know an operator or problem solver here? Suggest a practitioner for us to interview.
-                  </p>
+                  <div className="pt-2">
+                    <Link
+                      to="/newsletter"
+                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-[var(--sapphire)] hover:underline"
+                    >
+                      <span>Get notified for {stationInfo.name}</span>
+                      <ArrowRight className="w-3 h-3" />
+                    </Link>
+                  </div>
                 </div>
               )}
-            </div>
 
-            {/* Quick Station Select List */}
-            <div className="rounded-lg p-4 border text-xs bg-[var(--bg-surface)] border-[var(--border-subtle)]">
-              <span className="font-bold uppercase tracking-wider block mb-2 text-[var(--text-muted)] text-[11px]">
-                Active Contributor Hubs:
-              </span>
-              <div className="flex flex-wrap gap-1.5">
-                {Array.from(hasContent).map((slug) => (
-                  <button
-                    key={slug}
-                    onClick={() => setSelectedStation(slug)}
-                    className={`px-2.5 py-1.5 rounded border text-xs font-semibold cursor-pointer transition-all min-h-[32px] ${
-                      selectedStation === slug
-                        ? 'bg-[var(--brass)] text-[#16120E] border-[var(--brass)] font-bold shadow-sm'
-                        : 'bg-[var(--bg-feature)] text-[var(--text-secondary)] border-[var(--border-subtle)] hover:text-[var(--text-primary)] hover:border-[var(--border-light)]'
-                    }`}
-                  >
-                    {stationName(slug)}
-                  </button>
-                ))}
+              {/* Station Quick Selector Chips */}
+              <div className="pt-4 border-t border-[var(--border-subtle)]">
+                <span className="text-[11px] font-mono uppercase tracking-wider text-[var(--text-muted)] block mb-2 font-semibold">
+                  Jump to Locality:
+                </span>
+                <div className="flex flex-wrap gap-1.5 max-h-36 overflow-y-auto pr-1">
+                  {Object.entries(STATIONS_GEO).map(([slug, s]) => {
+                    const isSelected = slug === selectedStation;
+                    const hasStory = CONTENT.some((c) => c.station === slug);
+                    return (
+                      <button
+                        key={slug}
+                        type="button"
+                        onClick={() => setSelectedStation(slug)}
+                        className={`text-xs px-2.5 py-1 rounded-lg border transition-all cursor-pointer ${
+                          isSelected
+                            ? 'bg-[var(--sapphire)] text-[#F5EFE6] border-[var(--sapphire)] shadow-xs font-semibold'
+                            : hasStory
+                            ? 'bg-[var(--bg-surface)] text-[var(--text-primary)] border-[var(--border-medium)] hover:border-[var(--brass)]'
+                            : 'bg-[var(--bg-surface)] text-[var(--text-muted)] border-[var(--border-subtle)] hover:text-[var(--text-primary)]'
+                        }`}
+                      >
+                        {s.name}
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
+
             </div>
           </div>
-
         </div>
+
       </div>
     </>
   );

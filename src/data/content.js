@@ -10,7 +10,6 @@ export const CHAPTERS = [
   { id: 'systems', name: 'Systems' },
   { id: 'creators', name: 'Creators' },
   { id: 'unusual-experiences', name: 'Unusual Experiences' },
-  { id: 'experiments', name: 'Experiments' },
   { id: 'truth-desk', name: 'Truth Desk' },
 ];
 
