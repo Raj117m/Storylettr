@@ -203,19 +203,17 @@ export function writePng(file, svg, width = W) {
   fs.writeFileSync(file, render(svg, width));
 }
 
-// App icons: full-bleed (platforms apply their own rounding/mask), plus a manifest.
+// App icons are sourced from public/ (logo-dark.png etc.) and copied to dist/ by Vite.
+// We only write the manifest here; icon PNGs are NOT regenerated from SVG.
 export function writeIcons(outDir) {
-  writePng(path.join(outDir, 'apple-touch-icon.png'), logoSvg({ rounded: false }), 180);
-  writePng(path.join(outDir, 'icon-192.png'), logoSvg({ rounded: false }), 192);
-  writePng(path.join(outDir, 'icon-512.png'), logoSvg({ rounded: false }), 512);
   const manifest = {
     name: 'StoryLettr.com',
     short_name: 'StoryLettr.com',
     description: 'Sharing stories, building real human connection.',
     start_url: '/',
     display: 'standalone',
-    background_color: C.paper,
-    theme_color: C.primary,
+    background_color: '#000000',
+    theme_color: '#000000',
     icons: [
       { src: '/icon-192.png', sizes: '192x192', type: 'image/png', purpose: 'any maskable' },
       { src: '/icon-512.png', sizes: '512x512', type: 'image/png', purpose: 'any maskable' },

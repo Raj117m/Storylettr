@@ -4,6 +4,7 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import SearchModal from './components/SearchModal';
 import AsciiBackground from './components/AsciiBackground';
+import AmbientBlueGlow from './components/AmbientBlueGlow';
 import { ThemeProvider } from './context/ThemeContext';
 
 import HomePage from './pages/HomePage';
@@ -60,6 +61,7 @@ export default function App() {
   return (
     <ThemeProvider>
       <div className="relative min-h-screen flex flex-col justify-between" style={{ backgroundColor: 'var(--paper)' }}>
+        <AmbientBlueGlow />
         <AsciiBackground />
         <Navbar onOpenSearch={() => setSearchOpen(true)} />
 

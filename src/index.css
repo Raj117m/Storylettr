@@ -51,40 +51,40 @@ html.light {
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]):not(.light) {
-    /* Semantic surface hierarchy - Dark Espresso Mode */
-    --bg-primary: #16120E;     /* Deep clean espresso base */
-    --bg-elevated: #221B16;    /* Visibly lifted secondary card surface */
-    --bg-surface: #2C231C;     /* Distinct interactive panel */
-    --bg-feature: #101D2B;     /* Rich dark sapphire accent surface */
-    --bg-feature-ink: #F5EFE6;
+    /* Complete Black Theme with White Shades */
+    --bg-primary: #000000;     /* Pure pitch black base */
+    --bg-elevated: #09090B;    /* Lifted dark card surface */
+    --bg-surface: #121215;     /* Distinct interactive card panel */
+    --bg-feature: #050B14;     /* Deep midnight blue-black accent surface */
+    --bg-feature-ink: #FFFFFF;
 
-    --text-primary: #F5EFE6;   /* Clear cream text */
-    --text-secondary: #D4C7B5; /* Warm readable secondary */
-    --text-muted: #9E9182;     /* Warm stone neutral (WCAG AA accessible) */
+    --text-primary: #FFFFFF;   /* Pure crisp white */
+    --text-secondary: #E4E4E7; /* High-contrast clean white shade (zinc-200) */
+    --text-muted: #A1A1AA;     /* Soft silvery white shade (zinc-400) */
 
-    --sapphire: #5490C0;       /* Richer sapphire controls */
-    --sapphire-bright: #72A7D7;
-    --sapphire-light: #162638;
-    --sapphire-glow: rgba(84, 144, 192, 0.35);
+    --sapphire: #38BDF8;       /* Electric radiant sky blue */
+    --sapphire-bright: #60A5FA;
+    --sapphire-light: #0B1929;
+    --sapphire-glow: rgba(56, 189, 248, 0.45);
 
-    --oxblood: #B85348;        /* Deeper oxblood accents */
-    --oxblood-deep: #D0695D;
-    --oxblood-surface: #2D191A;
+    --oxblood: #F43F5E;        /* Vibrant rose oxblood */
+    --oxblood-deep: #FB7185;
+    --oxblood-surface: #1F0D11;
 
-    --brass: #CCA352;          /* Intentional warm brass highlights */
-    --brass-bright: #E2B968;
-    --brass-glow: rgba(204, 163, 82, 0.35);
+    --brass: #FCD34D;          /* Luminous warm amber/brass */
+    --brass-bright: #FDE68A;
+    --brass-glow: rgba(252, 211, 77, 0.4);
 
-    --stone: #3A3026;
-    --border-subtle: rgba(245, 239, 230, 0.12);
-    --border-medium: rgba(245, 239, 230, 0.22);
-    --border-strong: rgba(245, 239, 230, 0.38);
+    --stone: #18181B;
+    --border-subtle: rgba(255, 255, 255, 0.12);
+    --border-medium: rgba(255, 255, 255, 0.22);
+    --border-strong: rgba(255, 255, 255, 0.42);
 
-    /* Glass navigation tokens */
-    --glass-bg: rgba(22, 18, 14, 0.85);
-    --glass-border: rgba(245, 239, 230, 0.14);
-    --glass-highlight: rgba(255, 255, 255, 0.08);
-    --glass-shadow: 0 12px 36px -8px rgba(0, 0, 0, 0.55);
+    /* Glass navigation tokens - Pure black glass */
+    --glass-bg: rgba(0, 0, 0, 0.85);
+    --glass-border: rgba(255, 255, 255, 0.16);
+    --glass-highlight: rgba(255, 255, 255, 0.15);
+    --glass-shadow: 0 16px 48px -8px rgba(0, 0, 0, 0.9);
 
     /* Legacy compatibility */
     --paper: var(--bg-primary);
@@ -92,47 +92,47 @@ html.light {
     --primary: var(--sapphire);
     --seal: var(--oxblood);
     --action: var(--brass);
-    --action-ink: #16120E;
+    --action-ink: #000000;
     --forward: var(--text-muted);
   }
 }
 
 html[data-theme="dark"],
 html.dark {
-  /* Explicit Dark Espresso Mode override */
-  --bg-primary: #16120E;     /* Deep clean espresso base */
-  --bg-elevated: #221B16;    /* Visibly lifted secondary card surface */
-  --bg-surface: #2C231C;     /* Distinct interactive panel */
-  --bg-feature: #101D2B;     /* Rich dark sapphire accent surface */
-  --bg-feature-ink: #F5EFE6;
+  /* Complete Black Theme with White Shades */
+  --bg-primary: #000000;     /* Pure pitch black base */
+  --bg-elevated: #09090B;    /* Lifted dark card surface */
+  --bg-surface: #121215;     /* Distinct interactive card panel */
+  --bg-feature: #050B14;     /* Deep midnight blue-black accent surface */
+  --bg-feature-ink: #FFFFFF;
 
-  --text-primary: #F5EFE6;   /* Clear cream text */
-  --text-secondary: #D4C7B5; /* Warm readable secondary */
-  --text-muted: #9E9182;     /* Warm stone neutral (WCAG AA accessible) */
+  --text-primary: #FFFFFF;   /* Pure crisp white */
+  --text-secondary: #E4E4E7; /* High-contrast clean white shade (zinc-200) */
+  --text-muted: #A1A1AA;     /* Soft silvery white shade (zinc-400) */
 
-  --sapphire: #5490C0;       /* Richer sapphire controls */
-  --sapphire-bright: #72A7D7;
-  --sapphire-light: #162638;
-  --sapphire-glow: rgba(84, 144, 192, 0.35);
+  --sapphire: #38BDF8;       /* Electric radiant sky blue */
+  --sapphire-bright: #60A5FA;
+  --sapphire-light: #0B1929;
+  --sapphire-glow: rgba(56, 189, 248, 0.45);
 
-  --oxblood: #B85348;        /* Deeper oxblood accents */
-  --oxblood-deep: #D0695D;
-  --oxblood-surface: #2D191A;
+  --oxblood: #F43F5E;        /* Vibrant rose oxblood */
+  --oxblood-deep: #FB7185;
+  --oxblood-surface: #1F0D11;
 
-  --brass: #CCA352;          /* Intentional warm brass highlights */
-  --brass-bright: #E2B968;
-  --brass-glow: rgba(204, 163, 82, 0.35);
+  --brass: #FCD34D;          /* Luminous warm amber/brass */
+  --brass-bright: #FDE68A;
+  --brass-glow: rgba(252, 211, 77, 0.4);
 
-  --stone: #3A3026;
-  --border-subtle: rgba(245, 239, 230, 0.12);
-  --border-medium: rgba(245, 239, 230, 0.22);
-  --border-strong: rgba(245, 239, 230, 0.38);
+  --stone: #18181B;
+  --border-subtle: rgba(255, 255, 255, 0.12);
+  --border-medium: rgba(255, 255, 255, 0.22);
+  --border-strong: rgba(255, 255, 255, 0.42);
 
-  /* Glass navigation tokens */
-  --glass-bg: rgba(22, 18, 14, 0.85);
-  --glass-border: rgba(245, 239, 230, 0.14);
-  --glass-highlight: rgba(255, 255, 255, 0.08);
-  --glass-shadow: 0 12px 36px -8px rgba(0, 0, 0, 0.55);
+  /* Glass navigation tokens - Pure black glass */
+  --glass-bg: rgba(0, 0, 0, 0.85);
+  --glass-border: rgba(255, 255, 255, 0.16);
+  --glass-highlight: rgba(255, 255, 255, 0.15);
+  --glass-shadow: 0 16px 48px -8px rgba(0, 0, 0, 0.9);
 
   /* Legacy compatibility */
   --paper: var(--bg-primary);
@@ -140,7 +140,7 @@ html.dark {
   --primary: var(--sapphire);
   --seal: var(--oxblood);
   --action: var(--brass);
-  --action-ink: #16120E;
+  --action-ink: #000000;
   --forward: var(--text-muted);
 }
 
@@ -438,4 +438,66 @@ html.dark {
 .animate-modal-expand {
   animation: modal-expand-in 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
+
+/* --- Constant Blurred Blue Ambient Aura Animations --- */
+@keyframes blue-pulse-1 {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.55;
+  }
+  50% {
+    transform: translate3d(70px, -45px, 0) scale(1.22);
+    opacity: 0.9;
+  }
+  100% {
+    transform: translate3d(-35px, 40px, 0) scale(0.95);
+    opacity: 0.6;
+  }
+}
+
+@keyframes blue-pulse-2 {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1.15);
+    opacity: 0.45;
+  }
+  50% {
+    transform: translate3d(-85px, 60px, 0) scale(0.88);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate3d(40px, -30px, 0) scale(1.05);
+    opacity: 0.5;
+  }
+}
+
+@keyframes blue-pulse-3 {
+  0% {
+    transform: translate3d(0, 0, 0) scale(0.95);
+    opacity: 0.4;
+  }
+  50% {
+    transform: translate3d(55px, 70px, 0) scale(1.28);
+    opacity: 0.75;
+  }
+  100% {
+    transform: translate3d(-50px, -40px, 0) scale(1.02);
+    opacity: 0.45;
+  }
+}
+
+.animate-blue-orb-1 {
+  animation: blue-pulse-1 14s ease-in-out infinite alternate;
+  will-change: transform, opacity;
+}
+
+.animate-blue-orb-2 {
+  animation: blue-pulse-2 19s ease-in-out infinite alternate;
+  will-change: transform, opacity;
+}
+
+.animate-blue-orb-3 {
+  animation: blue-pulse-3 24s ease-in-out infinite alternate;
+  will-change: transform, opacity;
+}
+
 
