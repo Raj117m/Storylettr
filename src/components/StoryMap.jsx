@@ -23,38 +23,46 @@ export default function StoryMap({ selectedStation, onSelectStation }) {
     async function initMap() {
       if (typeof window === 'undefined' || !mapContainerRef.current) return;
 
-      const maplibre = await import('maplibre-gl');
-      if (isCancelled || !mapContainerRef.current) return;
+      try {
+        const [maplibre, workerModule] = await Promise.all([
+          import('maplibre-gl'),
+          import('maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url')
+        ]);
+        if (isCancelled || !mapContainerRef.current) return;
 
-      const styleUrl = isDark
-        ? 'https://tiles.openfreemap.org/styles/dark'
-        : 'https://tiles.openfreemap.org/styles/positron';
+        if (workerModule?.default) {
+          maplibre.setWorkerUrl(workerModule.default);
+        }
 
-      map = new maplibre.Map({
-        container: mapContainerRef.current,
-        style: styleUrl,
-        center: [72.92, 19.06],
-        zoom: 10.3,
-        minZoom: 9,
-        maxZoom: 16,
-        attributionControl: false,
-      });
+        const styleUrl = isDark
+          ? 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json'
+          : 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json';
 
-      map.addControl(
-        new maplibre.AttributionControl({
-          compact: true,
-          customAttribution: '© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> · <a href="https://openfreemap.org" target="_blank" rel="noopener">OpenFreeMap</a>',
-        }),
-        'bottom-right'
-      );
+        map = new maplibre.Map({
+          container: mapContainerRef.current,
+          style: styleUrl,
+          center: [72.92, 19.06],
+          zoom: 10.3,
+          minZoom: 9,
+          maxZoom: 16,
+          attributionControl: false,
+        });
 
-      mapInstanceRef.current = map;
+        map.on('error', (err) => {
+          console.warn('[StoryMap] Map error:', err);
+        });
 
-      map.on('load', () => {
-        if (isCancelled) return;
-        setMapLoaded(true);
+        map.addControl(
+          new maplibre.AttributionControl({
+            compact: true,
+            customAttribution: '© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> · <a href="https://carto.com/attributions" target="_blank" rel="noopener">CARTO</a>',
+          }),
+          'bottom-right'
+        );
 
-        // Add station markers
+        mapInstanceRef.current = map;
+
+        // Add station markers immediately to ensure instant rendering
         Object.entries(STATIONS_GEO).forEach(([slug, station]) => {
           const el = document.createElement('button');
           el.className = 'storylettr-map-pin group cursor-pointer';
@@ -111,7 +119,15 @@ export default function StoryMap({ selectedStation, onSelectStation }) {
 
           markersRef.current[slug] = { marker, element: el };
         });
-      });
+
+        map.on('load', () => {
+          if (isCancelled) return;
+          setMapLoaded(true);
+          map.resize();
+        });
+      } catch (err) {
+        console.error('[StoryMap] Failed to initialize map:', err);
+      }
     }
 
     initMap();
@@ -126,13 +142,16 @@ export default function StoryMap({ selectedStation, onSelectStation }) {
   }, []);
 
   // Update map style when theme changes
+  const currentThemeRef = useRef(isDark);
   useEffect(() => {
     const map = mapInstanceRef.current;
     if (!map || !mapLoaded) return;
+    if (currentThemeRef.current === isDark) return;
+    currentThemeRef.current = isDark;
 
     const styleUrl = isDark
-      ? 'https://tiles.openfreemap.org/styles/dark'
-      : 'https://tiles.openfreemap.org/styles/positron';
+      ? 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json'
+      : 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json';
 
     map.setStyle(styleUrl);
   }, [isDark, mapLoaded]);
@@ -143,14 +162,19 @@ export default function StoryMap({ selectedStation, onSelectStation }) {
     const station = STATIONS_GEO[selectedStation];
 
     // Smoothly fly camera to selected station
-    if (mapInstanceRef.current && mapLoaded) {
-      mapInstanceRef.current.flyTo({
-        center: station.coordinates,
-        zoom: Math.max(mapInstanceRef.current.getZoom(), 11.8),
-        speed: 1.1,
-        curve: 1.2,
-        essential: true,
-      });
+    if (mapInstanceRef.current) {
+      try {
+        const currentZoom = typeof mapInstanceRef.current.getZoom === 'function' ? mapInstanceRef.current.getZoom() : 11.8;
+        mapInstanceRef.current.flyTo({
+          center: station.coordinates,
+          zoom: Math.max(currentZoom, 11.8),
+          speed: 1.1,
+          curve: 1.2,
+          essential: true,
+        });
+      } catch (err) {
+        // camera animation in progress
+      }
     }
 
     // Refresh marker DOM classes

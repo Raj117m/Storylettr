@@ -18,7 +18,14 @@ const app = (
 // hydrate; a bare dev-server load (no prerendered content) falls back to
 // a plain client render.
 if (container.hasChildNodes()) {
-  hydrateRoot(container, app);
+  hydrateRoot(container, app, {
+    onRecoverableError(err) {
+      if (err?.message?.includes('418') || err?.message?.includes('Hydration')) {
+        return;
+      }
+      console.warn(err);
+    },
+  });
 } else {
   createRoot(container).render(app);
 }
