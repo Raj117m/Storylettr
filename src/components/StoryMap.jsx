@@ -3,6 +3,60 @@ import { ZoomIn, ZoomOut, RotateCcw } from 'lucide-react';
 import { STATIONS_GEO } from '../data/stationsGeo';
 import { CONTENT, CONTRIBUTORS } from '../data/content';
 import { useTheme } from '../context/ThemeContext';
+import { getCommunityDispatches } from '../data/communityDispatches';
+
+function buildPinHtml(station, isSelected, hasStoryDispatch, opinionCount) {
+  const hasOpinion = opinionCount > 0;
+
+  return `
+    <div class="relative flex items-center justify-center transition-all duration-300 ${
+      isSelected ? 'scale-125 z-30' : 'hover:scale-110 z-10'
+    }">
+      <!-- Soft Glow Aura -->
+      <span class="absolute -inset-2 rounded-full blur-xs ${
+        isSelected
+          ? 'bg-[#CCA352] opacity-95 animate-pulse'
+          : hasOpinion
+          ? 'bg-[#CCA352] opacity-60 animate-pulse'
+          : hasStoryDispatch
+          ? 'bg-[#5490C0] opacity-50'
+          : 'bg-black/20 opacity-30'
+      }"></span>
+      
+      <!-- Pin Core -->
+      <div class="relative w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center border-2 shadow-md transition-colors ${
+        isSelected
+          ? 'bg-[#6A1E2D] border-[#CCA352] text-[#F5EFE6]'
+          : hasOpinion && !hasStoryDispatch
+          ? 'bg-[#CCA352] border-[#1C1612] text-[#1C1612]'
+          : hasStoryDispatch
+          ? 'bg-[#1B3D5C] border-[#F5EFE6] text-[#F5EFE6]'
+          : 'bg-[#221B16] border-[#72675C] text-[#D4C7B5]'
+      }">
+        <span class="font-mono text-[10px] font-bold tracking-tight">
+          ${hasStoryDispatch ? 'SL' : hasOpinion ? '💬' : '•'}
+        </span>
+
+        ${
+          hasOpinion
+            ? `<span class="absolute -top-1.5 -right-1.5 w-4 h-4 rounded-full bg-[#E54B4B] text-[#FFFFFF] text-[9px] font-mono font-bold flex items-center justify-center border border-white/80 shadow-xs">
+                ${opinionCount}
+              </span>`
+            : ''
+        }
+      </div>
+
+      <!-- Station Label Tag -->
+      <span class="absolute top-full mt-1.5 px-2 py-0.5 rounded-md text-[10px] sm:text-[11px] font-semibold tracking-wide whitespace-nowrap shadow-sm border transition-all ${
+        isSelected
+          ? 'bg-[#1B3D5C] text-[#F5EFE6] border-[#CCA352] font-bold z-40'
+          : 'bg-[#16120E]/90 text-[#F5EFE6] border-white/10 opacity-85 group-hover:opacity-100'
+      }">
+        ${station.name}${hasOpinion ? ` · ${opinionCount} 💬` : ''}
+      </span>
+    </div>
+  `;
+}
 
 export default function StoryMap({ selectedStation, onSelectStation }) {
   const mapContainerRef = useRef(null);
@@ -10,7 +64,19 @@ export default function StoryMap({ selectedStation, onSelectStation }) {
   const markersRef = useRef({});
   const { theme } = useTheme();
   const [mapLoaded, setMapLoaded] = useState(false);
+  const [dispatches, setDispatches] = useState(getCommunityDispatches());
   const isDark = theme === 'dark';
+
+  // Synchronize dispatches
+  useEffect(() => {
+    const handleUpdate = (e) => {
+      setDispatches(e.detail || getCommunityDispatches());
+    };
+    if (typeof window !== 'undefined') {
+      window.addEventListener('storylettr:dispatches-updated', handleUpdate);
+      return () => window.removeEventListener('storylettr:dispatches-updated', handleUpdate);
+    }
+  }, []);
 
   // Station stories lookup
   const hasStory = (slug) => CONTENT.some((c) => c.station === slug);
@@ -70,43 +136,10 @@ export default function StoryMap({ selectedStation, onSelectStation }) {
 
           const hasDispatch = hasStory(slug);
           const isSelected = slug === selectedStation;
+          const stationOpinions = dispatches.filter((d) => d.localitySlug === slug);
+          const opinionCount = stationOpinions.length;
 
-          el.innerHTML = `
-            <div class="relative flex items-center justify-center transition-all duration-300 ${
-              isSelected ? 'scale-125 z-30' : 'hover:scale-110 z-10'
-            }">
-              <!-- Soft Glow Aura -->
-              <span class="absolute -inset-2 rounded-full blur-xs opacity-75 ${
-                isSelected
-                  ? 'bg-[#CCA352] opacity-90 animate-pulse'
-                  : hasDispatch
-                  ? 'bg-[#5490C0] opacity-50'
-                  : 'bg-black/20'
-              }"></span>
-              
-              <!-- Pin Core -->
-              <div class="relative w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center border-2 shadow-md transition-colors ${
-                isSelected
-                  ? 'bg-[#6A1E2D] border-[#CCA352] text-[#F5EFE6]'
-                  : hasDispatch
-                  ? 'bg-[#1B3D5C] border-[#F5EFE6] text-[#F5EFE6]'
-                  : 'bg-[#221B16] border-[#72675C] text-[#D4C7B5]'
-              }">
-                <span class="font-mono text-[10px] font-bold tracking-tight">
-                  ${hasDispatch ? 'SL' : '•'}
-                </span>
-              </div>
-
-              <!-- Station Label Tag -->
-              <span class="absolute top-full mt-1.5 px-2 py-0.5 rounded-md text-[10px] sm:text-[11px] font-semibold tracking-wide whitespace-nowrap shadow-sm border transition-all ${
-                isSelected
-                  ? 'bg-[#1B3D5C] text-[#F5EFE6] border-[#CCA352] font-bold z-40'
-                  : 'bg-[#16120E]/90 text-[#F5EFE6] border-white/10 opacity-85 group-hover:opacity-100'
-              }">
-                ${station.name}
-              </span>
-            </div>
-          `;
+          el.innerHTML = buildPinHtml(station, isSelected, hasDispatch, opinionCount);
 
           el.addEventListener('click', (e) => {
             e.stopPropagation();
@@ -181,46 +214,13 @@ export default function StoryMap({ selectedStation, onSelectStation }) {
     Object.entries(markersRef.current).forEach(([slug, { element }]) => {
       const isSelected = slug === selectedStation;
       const hasDispatch = hasStory(slug);
-      const stationName = STATIONS_GEO[slug]?.name || slug;
+      const station = STATIONS_GEO[slug] || { name: slug };
+      const stationOpinions = dispatches.filter((d) => d.localitySlug === slug);
+      const opinionCount = stationOpinions.length;
 
-      element.innerHTML = `
-        <div class="relative flex items-center justify-center transition-all duration-300 ${
-          isSelected ? 'scale-125 z-30' : 'hover:scale-110 z-10'
-        }">
-          <!-- Soft Glow Aura -->
-          <span class="absolute -inset-2 rounded-full blur-xs ${
-            isSelected
-              ? 'bg-[#CCA352] opacity-95 animate-pulse'
-              : hasDispatch
-              ? 'bg-[#5490C0] opacity-50'
-              : 'bg-black/20 opacity-30'
-          }"></span>
-          
-          <!-- Pin Core -->
-          <div class="relative w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center border-2 shadow-md transition-colors ${
-            isSelected
-              ? 'bg-[#6A1E2D] border-[#CCA352] text-[#F5EFE6]'
-              : hasDispatch
-              ? 'bg-[#1B3D5C] border-[#F5EFE6] text-[#F5EFE6]'
-              : 'bg-[#221B16] border-[#72675C] text-[#D4C7B5]'
-          }">
-            <span class="font-mono text-[10px] font-bold tracking-tight">
-              ${hasDispatch ? 'SL' : '•'}
-            </span>
-          </div>
-
-          <!-- Station Label Tag -->
-          <span class="absolute top-full mt-1.5 px-2 py-0.5 rounded-md text-[10px] sm:text-[11px] font-semibold tracking-wide whitespace-nowrap shadow-sm border transition-all ${
-            isSelected
-              ? 'bg-[#1B3D5C] text-[#F5EFE6] border-[#CCA352] font-bold z-40'
-              : 'bg-[#16120E]/90 text-[#F5EFE6] border-white/10 opacity-85'
-          }">
-            ${stationName}
-          </span>
-        </div>
-      `;
+      element.innerHTML = buildPinHtml(station, isSelected, hasDispatch, opinionCount);
     });
-  }, [selectedStation, mapLoaded]);
+  }, [selectedStation, mapLoaded, dispatches]);
 
   const handleResetView = () => {
     if (mapInstanceRef.current) {
@@ -285,25 +285,26 @@ export default function StoryMap({ selectedStation, onSelectStation }) {
 
       {/* Legend & Geography Badges Overlay */}
       <div
-        className="absolute bottom-4 left-4 z-20 hidden sm:flex items-center gap-2 p-2 px-3 rounded-xl border text-[11px] font-mono shadow-md backdrop-blur-md"
+        className="absolute bottom-4 left-4 z-20 hidden sm:flex items-center gap-2.5 p-2.5 px-3.5 rounded-xl border text-[11px] font-mono shadow-md backdrop-blur-md"
         style={{
           backgroundColor: 'var(--glass-bg)',
           borderColor: 'var(--glass-border)',
           color: 'var(--text-secondary)',
         }}
       >
-        <span className="flex items-center gap-1.5">
+        <span className="flex items-center gap-1.5 font-medium">
           <span className="w-2.5 h-2.5 rounded-full bg-[#1B3D5C] border border-[#CCA352] shadow-xs"></span>
-          Story Verified
+          Story Verified (SL)
+        </span>
+        <span className="text-[var(--border-strong)]">•</span>
+        <span className="flex items-center gap-1.5 font-medium">
+          <span className="w-2.5 h-2.5 rounded-full bg-[#CCA352] border border-[#1C1612] shadow-xs"></span>
+          Reader Opinion Pinned
         </span>
         <span className="text-[var(--border-strong)]">•</span>
         <span className="flex items-center gap-1.5">
           <span className="w-2 h-2 rounded-full bg-[#72675C]"></span>
-          Location Context
-        </span>
-        <span className="text-[var(--border-strong)]">•</span>
-        <span className="text-[var(--text-muted)] italic">
-          Arabian Sea &bull; Thane Creek &bull; Mumbai Harbour
+          Location Hub
         </span>
       </div>
     </div>

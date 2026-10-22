@@ -107,4 +107,25 @@ export const STATIONS_GEO = {
     region: 'Navi Mumbai Hub',
     description: 'Industrial growth node, transit terminus, and gateway to western Maharashtra trade routes.',
   },
+  'bkc': {
+    slug: 'bkc',
+    name: 'BKC',
+    coordinates: [72.8688, 19.0657],
+    region: 'Central Financial Hub',
+    description: 'Bandra Kurla Complex; modern financial institutions, global corporate campuses, and Atlas SkillTech University.',
+  },
+  'lower-parel': {
+    slug: 'lower-parel',
+    name: 'Lower Parel',
+    coordinates: [72.8295, 19.0016],
+    region: 'South Central Mumbai',
+    description: 'Transformed mill district, bustling co-working compounds, media agencies, and high-energy dining.',
+  },
+  'powai': {
+    slug: 'powai',
+    name: 'Powai',
+    coordinates: [72.9052, 19.1176],
+    region: 'Eastern Suburbs',
+    description: 'Startup ecosystem hub, venture incubation, tech talent density, and lakefront campus life.',
+  },
 };

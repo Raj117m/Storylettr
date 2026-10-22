@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Sparkles, Layers, BookOpen } from 'lucide-react';
+import { ArrowRight, Sparkles, Layers, BookOpen, MessageSquareQuote } from 'lucide-react';
 import PageMeta from '../components/PageMeta';
 import FastStoryCard from '../components/FastStoryCard';
 import DemoBadge from '../components/DemoBadge';
 import StoryBookshelfSection from '../components/StoryBookshelfSection';
+import CommunityDispatchesSection from '../components/CommunityDispatchesSection';
 import StarfieldButton from '../components/ui/StarfieldButton';
 import { CHAPTERS, CONTENT, CONTRIBUTORS, pickRotatingLead, getBookshelfStories } from '../data/content';
 
@@ -88,6 +89,15 @@ export default function HomePage() {
             >
               <Layers className="w-4 h-4" />
               <span>Explore Archive</span>
+            </StarfieldButton>
+
+            <StarfieldButton
+              href="#community-dispatches"
+              variant="sapphire"
+              size="lg"
+            >
+              <MessageSquareQuote className="w-4 h-4 text-[var(--brass)]" />
+              <span>Letters from the City</span>
             </StarfieldButton>
           </div>
         </div>
@@ -293,6 +303,11 @@ export default function HomePage() {
               ))}
             </div>
           )}
+
+          {/* Reader-Powered Newsroom: Letters from the City & Community Dispatches */}
+          <div className="mt-14">
+            <CommunityDispatchesSection />
+          </div>
 
           {/* Story Atlas Discovery Callout */}
           <div
