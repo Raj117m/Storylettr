@@ -99,6 +99,17 @@ export default function HomePage() {
               <MessageSquareQuote className="w-4 h-4 text-[var(--brass)]" />
               <span>Letters from the City</span>
             </StarfieldButton>
+
+            <Link
+              to="/poker"
+              className="inline-flex items-center gap-2 px-5 py-3 rounded-full text-sm font-bold text-amber-300 bg-slate-950 border border-amber-500/50 hover:bg-amber-500/20 hover:border-amber-400 shadow-lg transition-all group"
+            >
+              <span className="text-amber-400 text-base group-hover:scale-125 transition-transform">♠</span>
+              <span>Play Texas Hold'em Live</span>
+              <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-amber-400 text-slate-950">
+                3 & 4-MAX
+              </span>
+            </Link>
           </div>
         </div>
       </section>

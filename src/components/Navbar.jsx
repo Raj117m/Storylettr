@@ -9,6 +9,7 @@ const NAV_ITEMS = [
   { to: '/people', label: 'People' },
   { to: '/atlas', label: 'Story Atlas' },
   { to: '/truth-desk', label: 'Truth Desk' },
+  { to: '/poker', label: 'Poker Club' },
   { to: '/about', label: 'About' },
 ];
 
@@ -132,6 +133,19 @@ export default function Navbar({ onOpenSearch }) {
               <span className="hidden md:inline">Search</span>
             </button>
 
+            {/* Play Poker Live CTA Button */}
+            <Link
+              to="/poker"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold text-amber-300 bg-slate-950/80 border border-amber-500/50 hover:bg-amber-500/20 hover:border-amber-400 transition-all shadow-xs group"
+              title="Play Texas Hold'em (3 & 4-Player Real-Time Live)"
+            >
+              <span className="text-amber-400 text-sm group-hover:scale-110 transition-transform">♠</span>
+              <span>Play Poker</span>
+              <span className="hidden sm:inline px-1.5 py-0.2 rounded-full text-[9px] font-mono font-bold bg-amber-400 text-slate-950">
+                LIVE
+              </span>
+            </Link>
+
             {/* Newsletter CTA Button */}
             <Link
               to="/newsletter"
@@ -199,6 +213,18 @@ export default function Navbar({ onOpenSearch }) {
             ))}
 
             <div className="pt-3 mt-2 border-t flex flex-col gap-2" style={{ borderColor: 'var(--border-subtle)' }}>
+              <Link
+                to="/poker"
+                onClick={() => setMobileMenuOpen(false)}
+                className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-sm font-bold text-amber-300 bg-slate-950 border border-amber-500/50 shadow-md"
+              >
+                <span className="text-amber-400 text-base">♠</span>
+                <span>Play Texas Hold'em Poker</span>
+                <span className="px-1.5 py-0.2 rounded-full text-[10px] font-mono font-bold bg-amber-400 text-slate-950">
+                  3/4-MAX
+                </span>
+              </Link>
+
               <button
                 onClick={() => {
                   setMobileMenuOpen(false);

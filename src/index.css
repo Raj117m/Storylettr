@@ -540,3 +540,59 @@ html.dark {
   will-change: transform, opacity;
 }
 
+/* Texas Hold'em Poker Animations & Utilities */
+@keyframes pokerFlipIn {
+  from {
+    transform: rotateY(90deg) scale(0.92);
+    opacity: 0;
+  }
+  to {
+    transform: rotateY(0deg) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes pokerFlyAcross {
+  0% {
+    transform: scale(0.6) translate(0, 0);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+    transform: scale(1.3) translate(25px, -35px);
+  }
+  100% {
+    transform: scale(1) translate(40px, -50px);
+    opacity: 0;
+  }
+}
+
+@keyframes pokerBounceShort {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.animate-flip-in {
+  animation: pokerFlipIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-fly-across {
+  animation: pokerFlyAcross 1.5s ease-out forwards;
+}
+
+.animate-bounce-short {
+  animation: pokerBounceShort 0.4s ease-in-out;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+

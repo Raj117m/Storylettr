@@ -21,6 +21,7 @@ import GlossaryTermPage from './pages/GlossaryTermPage';
 import AboutPage from './pages/AboutPage';
 import CorrectionsPage from './pages/CorrectionsPage';
 import NewsletterPage from './pages/NewsletterPage';
+import PokerPage from './pages/PokerPage';
 import NotFoundPage from './pages/NotFoundPage';
 
 export default function App() {
@@ -84,6 +85,8 @@ export default function App() {
             <Route path="/about" element={<AboutPage />} />
             <Route path="/corrections" element={<CorrectionsPage />} />
             <Route path="/newsletter" element={<NewsletterPage />} />
+            <Route path="/poker" element={<PokerPage />} />
+            <Route path="/poker/:roomCode" element={<PokerPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </main>

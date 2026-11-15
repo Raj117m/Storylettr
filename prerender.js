@@ -38,6 +38,7 @@ const routes = new Set([
   '/about',
   '/corrections',
   '/newsletter',
+  '/poker',
 ]);
 CHAPTERS.forEach((c) => routes.add(`/chapters/${c.id}`));
 Object.keys(STATIONS).forEach((slug) => routes.add(`/mumbai/${slug}`));
